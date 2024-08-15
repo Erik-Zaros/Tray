@@ -74,49 +74,45 @@ const logout = () => {
             <div class="content-1">
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio" checked>
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-flag"><span class="text-icon px-2">Início</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-line"><span class="text-icon px-2">Performance</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-simple"><span class="text-icon px-2">Relatórios</span></i>
                 </label>
             </div>
 
             <div class="content-2">
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-cart-shopping"><span class="text-icon px-2">Vendas</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span class="text-icon px-2">Produtos</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span class="text-icon px-2">Marketing</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-shop"><span class="text-icon px-2">Marketplaces</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-gear"><span class="text-icon px-2">Configurações</span></i>
                 </label>
             </div>
 
             <div class="content-3">
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
-                </label>
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span class="text-icon px-2">Ajuda</span></i>
                 </label>
                 <label class="icon-wrapper my-1" @click="logout">
                     <input type="radio" name="icon-selection" class="icon-radio">

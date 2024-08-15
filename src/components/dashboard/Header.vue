@@ -179,6 +179,7 @@ const logout = () => {
     transition: .3s;
     & .text-icon {
         display: block;
+        transition: .5s;
     }
 }
 

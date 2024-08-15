@@ -171,10 +171,12 @@ const logout = () => {
     background-color: #484848;
     height: 92vh;
     width: 80px;
+    transition: .3s;
 }
 
 .vertical.expanded {
     width: 150px;
+    transition: .3s;
     & .text-icon {
         display: block;
     }

@@ -44,7 +44,7 @@ const logout = () => {
                 <form class="search-input me-2 mb-2 mb-lg-0 position-relative">
                     <input type="text" class="search form-control form-control-sm rounded-5 px-3 py-2 pe-5"
                         placeholder="Pedidos, Clientes e Recursos" />
-                    <i class="fas fa-search position-absolute"
+                    <i class="search-icon fas fa-search position-absolute"
                         style="top: 50%; right: 15px; transform: translateY(-50%);"></i>
                 </form>
 
@@ -154,6 +154,10 @@ const logout = () => {
 .search {
     background-color: rgba(255, 255, 255, .6);
     border: none;
+}
+
+.search-icon {
+    cursor: pointer;
 }
 
 .dropdown-menu {

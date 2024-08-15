@@ -89,7 +89,7 @@
         transform: translateY(0);
     }
     100% {
-        transform: translateY(-100%);
+        transform: translateY(-200%);
     }
 }
 </style>

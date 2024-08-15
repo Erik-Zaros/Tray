@@ -9,7 +9,6 @@
 <script setup>
 import { ref } from 'vue';
 
-// Define o emissor de eventos
 const emit = defineEmits(['next']);
 
 const email = ref('');

@@ -6,10 +6,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import LoginStep1 from '../components/LoginStep1.vue';
-import LoginStep2 from '../components/LoginStep2.vue';
+import LoginStep1 from '../components/login/LoginStep1.vue';
+import LoginStep2 from '../components/login/LoginStep2.vue';
 
 const step = ref(1);
 const router = useRouter();
@@ -23,4 +23,11 @@ const nextStep = () => {
     router.push('/');
   }
 };
+
+onMounted(() => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user) {
+    router.push('/dashboard'); 
+  }
+});
 </script>

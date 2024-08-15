@@ -1,5 +1,6 @@
 import './assets/global.css'
-import './assets/colors.css'
+import './assets/dark.css'
+import './assets/light.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'

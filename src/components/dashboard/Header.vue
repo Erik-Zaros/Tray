@@ -171,12 +171,17 @@ const logout = () => {
 }
 
 .vertical.expanded {
-    width: 150px;
+    width: 200px;
     transition: .3s;
     & .text-icon {
         display: block;
         transition: .5s;
     }
+}
+
+.fa-regular,
+.fa-solid {
+    text-decoration: none;
 }
 
 .icon-menu {

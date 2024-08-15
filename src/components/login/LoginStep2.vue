@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <label>Password:</label>
-    <input type="password" v-model="password" />
-    <button @click="login">Login</button>
+  <div class="input-group px-2 px-md-5 row">
+    <label class="text-start my-2">Senha*</label>
+    <input class="form-control rounded-5 p-3 mb-3" type="password" v-model="password" placeholder="Senha" />
+    <button class="btn btn-success col-12 rounded-5 fs-4 fw-bold" @click="login">Login</button>
   </div>
 </template>
+
+
+
 
 <script setup>
 import { ref } from 'vue';

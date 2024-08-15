@@ -1,15 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 
+const user = ref({});
 const menu = ref(false);
 
 function mudarMenu() {
   menu.value = !menu.value;
 }
-
-const user = ref({});
-const router = useRouter();
 
 onMounted(() => {
   const userData = JSON.parse(localStorage.getItem('user'));

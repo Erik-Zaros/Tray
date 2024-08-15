@@ -100,7 +100,7 @@ function mudarMenu() {
                 </label>
                 <label class="icon-wrapper my-1" @click="logout">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket fa-rotate-180"><span class="text-icon px-2">Logout</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket"><span class="text-icon px-2">Logout</span></i>
                 </label>
             </div>
 

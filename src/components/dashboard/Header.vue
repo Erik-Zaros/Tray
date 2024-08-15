@@ -98,9 +98,9 @@ function mudarMenu() {
                     <input type="radio" name="icon-selection" class="icon-radio">
                     <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-question"><span class="text-icon px-2">Teste</span></i>
                 </label>
-                <label class="icon-wrapper my-1">
+                <label class="icon-wrapper my-1" @click="logout">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 fa-right-from-bracket fa-rotate-180"><span class="text-icon px-2">Teste</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket fa-rotate-180"><span class="text-icon px-2">Logout</span></i>
                 </label>
             </div>
 

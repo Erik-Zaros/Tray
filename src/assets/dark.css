@@ -4,7 +4,7 @@
 
   }
 
-* {
+html {
     background-color: var(--background-primary)!important;
     color: var(--color-primary);
 }

@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+import Header from "../components/dashboard/Header.vue"
+
 const user = ref({});
 const router = useRouter();
 
@@ -22,13 +24,17 @@ const logout = () => {
 </script>
 
 <template>
-  <div>
-    <h1>Welcome to your Dashboard</h1>
-    <p>Your account details:</p>
+
+  <Header />
+
+
+
+
     <ul>
       <li><strong>Email:</strong> {{ user.email }}</li>
       <li><strong>Username:</strong> {{ user.username }}</li>
     </ul>
+
+
     <button @click="logout">Logout</button>
-  </div>
 </template>

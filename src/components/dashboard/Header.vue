@@ -160,7 +160,9 @@ const logout = () => {
     border: none;
 }
 
-
+.dropdown-menu {
+    background-color: #424242;
+}
 
 
 

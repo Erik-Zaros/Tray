@@ -187,6 +187,11 @@ const logout = () => {
     cursor: pointer;
 }
 
+.text-icon {
+    display: none; 
+    transition: .5s;
+}
+
 .icon-menu:hover {
     background-color: rgb(0, 110, 255);
 }
@@ -206,9 +211,6 @@ const logout = () => {
     background-color: rgb(0, 110, 255);
 }
 
-.text-icon {
-    display: none; /* reativar para versão expandida */
-}
 
 
 @media (max-width: 1024px) {

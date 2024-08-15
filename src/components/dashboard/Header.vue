@@ -1,11 +1,31 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const menu = ref(false);
 
 function mudarMenu() {
   menu.value = !menu.value;
 }
+
+const user = ref({});
+const router = useRouter();
+
+onMounted(() => {
+  const userData = JSON.parse(localStorage.getItem('user'));
+  if (userData) {
+    user.value = userData;
+  } else {
+    router.push('/login');
+  }
+});
+
+const logout = () => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('loginTime');
+  router.push('/login');
+};
+
 </script>
 
 
@@ -34,21 +54,21 @@ function mudarMenu() {
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        username
+                        {{ user.username }}
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">{{ user.first_name }}</a>
                         </li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="#">{{ user.email }}</a></li>
+                        <li><a class="dropdown-item" href="#"> Settings </a></li>
                     </ul>
                 </div>
             </div>
 
         </div>
 
-        
+
         <div :class="['vertical', 'd-flex', 'flex-column', 'align-items-between', 'justify-content-between', 'text-center', { expanded: menu }]">
 
             <div class="content-1">
@@ -106,11 +126,7 @@ function mudarMenu() {
 
         </div>
 
-
     </div>
-
-
-
 
 </template>
 

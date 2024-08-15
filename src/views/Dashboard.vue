@@ -16,11 +16,6 @@ onMounted(() => {
   }
 });
 
-const logout = () => {
-  localStorage.removeItem('user');
-  localStorage.removeItem('loginTime');
-  router.push('/login');
-};
 </script>
 
 <template>
@@ -36,5 +31,4 @@ const logout = () => {
     </ul>
 
 
-    <button @click="logout">Logout</button>
 </template>

@@ -182,6 +182,7 @@ const logout = () => {
 .icon-menu {
     cursor: pointer;
     text-decoration: none;
+    font-weight: normal;
 }
 
 .text-icon {

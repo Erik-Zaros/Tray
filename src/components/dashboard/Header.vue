@@ -156,7 +156,10 @@ function mudarMenu() {
 }
 
 .vertical.expanded {
-    width: 120px;
+    width: 150px;
+    & .text-icon {
+        display: block;
+    }
 }
 
 .icon-menu {

@@ -31,14 +31,14 @@ onMounted(() => {
     <div class="coluna-1 col-md-4 col-12 d-flex flex-column align-items-center justify-content-center text-center">
 
       <img class="logo pb-4" src="https://sitetray.s3.amazonaws.com/wp-content/uploads/2024/03/logo_tray_site-1.svg">
-      <p class="texto fw-bold col-12 col-md-8">Administre sua loja em um único lugar</p>
+      <p class="texto fw-bold col-10 col-lg-8">Administre sua loja em um único lugar</p>
       <component :is="currentStep" @next="nextStep" />
       <RouterLink class="forget py-3" to="/forget-password">Esqueci meus dados de acesso</RouterLink>
       <p class="signup">Ainda não tem uma loja? <RouterLink class="crie text-decoration-none" to="/signup">Crie uma agora</RouterLink></p>
 
     </div>
 
-    <div class="coluna-2 col-md-8 col-0">
+    <div class="coluna-2 col-lg-8 col-0">
       <img class="login-img" src="/public/image/login-img.png" alt="">
 
 

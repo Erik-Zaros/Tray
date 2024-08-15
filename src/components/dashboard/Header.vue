@@ -179,13 +179,9 @@ const logout = () => {
     }
 }
 
-.fa-regular,
-.fa-solid {
-    text-decoration: none;
-}
-
 .icon-menu {
     cursor: pointer;
+    text-decoration: none;
 }
 
 .text-icon {

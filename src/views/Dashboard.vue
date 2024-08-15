@@ -22,13 +22,4 @@ onMounted(() => {
 
   <Header />
 
-
-
-
-    <ul>
-      <li><strong>Email:</strong> {{ user.email }}</li>
-      <li><strong>Username:</strong> {{ user.username }}</li>
-    </ul>
-
-
 </template>

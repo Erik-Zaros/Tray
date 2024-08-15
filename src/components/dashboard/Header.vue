@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const user = ref({});
+const router = useRouter();
+
 const menu = ref(false);
 
 function mudarMenu() {

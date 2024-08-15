@@ -28,7 +28,7 @@
     </div>
 </template>
 
-<style setup>
+<style scoped>
 .container-fluid {
     height: 92vh;
     background: linear-gradient(300deg, #fdfdff, #dcf3ff, #b9e3f1);

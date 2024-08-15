@@ -66,7 +66,7 @@ import { RouterLink } from 'vue-router';
 </template>
 
 
-<style>
+<style scoped>
 
 .navbar {
     height: 8vh;

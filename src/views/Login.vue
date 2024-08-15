@@ -1,10 +1,3 @@
-<template>
-  <div>
-    <h1>Login</h1>
-    <component :is="currentStep" @next="nextStep" />
-  </div>
-</template>
-
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -27,7 +20,72 @@ const nextStep = () => {
 onMounted(() => {
   const user = JSON.parse(localStorage.getItem('user'));
   if (user) {
-    router.push('/dashboard'); 
+    router.push('/dashboard');
   }
 });
 </script>
+
+<template>
+  <div class="login d-flex">
+
+    <div class="coluna-1 col-md-4 col-12 d-flex flex-column align-items-center justify-content-center text-center">
+
+      <img class="logo pb-4" src="https://sitetray.s3.amazonaws.com/wp-content/uploads/2024/03/logo_tray_site-1.svg">
+      <p class="texto fw-bold col-12 col-md-8">Administre sua loja em um único lugar</p>
+      <component :is="currentStep" @next="nextStep" />
+      <RouterLink class="forget py-3" to="/forget-password">Esqueci meus dados de acesso</RouterLink>
+      <p class="signup">Ainda não tem uma loja? <RouterLink class="crie text-decoration-none" to="/signup">Crie uma agora</RouterLink></p>
+
+    </div>
+
+    <div class="coluna-2 col-md-8 col-0">
+      <img class="login-img" src="/public/image/login-img.png" alt="">
+
+
+    </div>
+  </div>
+
+
+
+
+</template>
+
+<style scoped>
+
+.login {
+  height: 100vh;
+  width: 100vw;
+}
+
+.coluna-1, .coluna-2 {
+  height: 100vh;
+}
+
+.coluna-1 {
+  background-color: var(--background-primary);
+}
+
+.coluna-2 {
+  overflow-x: hidden;
+}
+
+.logo {
+  width: 13rem;
+}
+
+.login-img {
+  height: 100%;
+}
+
+.texto {
+  font-size: 2em;
+  color: var(--color-title);
+}
+
+.forget,
+.crie {
+  color: var(--text-color-link);
+}
+
+
+</style>

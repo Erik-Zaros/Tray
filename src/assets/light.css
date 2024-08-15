@@ -4,10 +4,11 @@
     --background-navbar: #FFFFFF;
     --color-primary: #252525;
 
-    --title-color: #002C6A;
+    --color-title: #002C6A;
 
     --text-color-sub: #808080;
-
+    --text-color-link: #48A4D9;
+    
   }
 
 html {

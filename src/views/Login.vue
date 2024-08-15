@@ -29,12 +29,16 @@ onMounted(() => {
   <div class="login d-flex">
 
     <div class="coluna-1 col-md-4 col-12 d-flex flex-column align-items-center justify-content-center text-center">
+      <RouterLink class="text-decoration-none text-dark" to="/"><i
+          class="fa-solid fa-xmark position-absolute top-0 start-0 p-3 fs-3"></i></RouterLink>
 
       <img class="logo pb-4" src="https://sitetray.s3.amazonaws.com/wp-content/uploads/2024/03/logo_tray_site-1.svg">
       <p class="texto fw-bold col-10 col-lg-8">Administre sua loja em um único lugar</p>
       <component :is="currentStep" @next="nextStep" />
       <RouterLink class="forget py-3" to="/forget-password">Esqueci meus dados de acesso</RouterLink>
-      <p class="signup">Ainda não tem uma loja? <RouterLink class="crie text-decoration-none" to="/signup">Crie uma agora</RouterLink></p>
+      <p class="signup">Ainda não tem uma loja? <RouterLink class="crie text-decoration-none" to="/signup">Crie uma
+          agora</RouterLink>
+      </p>
 
     </div>
 
@@ -51,13 +55,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .login {
   height: 100vh;
   width: 100vw;
 }
 
-.coluna-1, .coluna-2 {
+.coluna-1,
+.coluna-2 {
   height: 100vh;
 }
 
@@ -87,5 +91,11 @@ onMounted(() => {
   color: var(--text-color-link);
 }
 
+@media (max-width: 1024px) {
 
+  .texto {
+    font-size: 1.6em;
+  }
+
+}
 </style>

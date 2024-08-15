@@ -34,7 +34,7 @@ const signup = async () => {
       <label class="text-start my-2">Seu melhor e-mail? <span class="text-danger">*</span></label>
       <input class="form-control rounded-5 p-2 px-3 mb-2" type="email" v-model="email" placeholder="E-mail" />
 
-      <label class="text-start my-2">Senha*</label>
+      <label class="text-start my-2">Crie uma senha <span class="text-danger">*</span></label>
       <input class="form-control rounded-5 p-2 px-3 mb-4" type="password" v-model="password" placeholder="Senha" />
 
       <div class="row">
@@ -46,8 +46,6 @@ const signup = async () => {
     </div>
   </div>
 </template>
-
-
 
 <style scoped>
 .termos {

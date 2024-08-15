@@ -1,16 +1,9 @@
 <script setup>
-import { useRouter } from 'vue-router';
 import Header from '../components/home/Header.vue'
-
-const router = useRouter();
-
-const navigateToLogin = () => {
-  router.push('/login');
-};
+import Screen1 from '../components/home/Screen.vue'
 </script>
 
 <template>
     <Header />
-    <h1>Welcome to the Platform</h1>
-    <button @click="navigateToLogin">Login</button>
+    <Screen1 />
 </template>

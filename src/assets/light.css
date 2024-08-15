@@ -1,7 +1,12 @@
 :root {
     --background-primary: #eeeeee;
     --background-secondary: #dddddd;
+    --background-navbar: #FFFFFF;
     --color-primary: #252525;
+
+    --title-color: #002C6A;
+
+    --text-color-sub: #808080;
 
   }
 

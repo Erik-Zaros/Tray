@@ -70,12 +70,13 @@ import { RouterLink } from 'vue-router';
 
 .navbar {
     height: 8vh;
-    background-color: var(--background-secondary) !important;
+    background-color: var(--background-navbar) !important;
+    border-bottom: 1px solid rgba(200, 200, 200, .7);
 }
 
 .container,
 .navbar-collapse {
-    background-color: var(--background-secondary) !important;
+    background-color: var(--background-navbar) !important;
 }
 
 a {

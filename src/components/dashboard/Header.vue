@@ -199,6 +199,7 @@ const logout = () => {
 .icon-wrapper {
     position: relative;
     display: inline-block;
+    transition: .5s;
 }
 
 .icon-radio {

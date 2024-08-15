@@ -26,7 +26,7 @@ const login = async () => {
   if (user) {
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('loginTime', new Date().getTime());
-    router.push('/dashboard'); // Redireciona para o Dashboard
+    router.push('/dashboard'); 
   } else {
     alert('Invalid login');
   }

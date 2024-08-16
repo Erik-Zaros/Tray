@@ -3,6 +3,9 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Signup from '../views/Signup.vue';
 import Dashboard from '../views/Dashboard.vue'; 
+import Inicio from '../components/dashboard/Inicio.vue'; 
+import Produtos from '../components/dashboard/Produtos.vue'; 
+import Configuracao from '../components/dashboard/Configuracao.vue'; 
 
 const routes = [
   {
@@ -23,7 +26,24 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    children: [
+      { 
+        path: 'inicio', 
+        name: 'Inicio',
+        component: Inicio 
+      },
+      { 
+        path: 'produtos', 
+        name: 'Produtos',
+        component: Produtos 
+      },
+      { 
+        path: 'configuracao', 
+        name: 'Configuracao',
+        component: Configuracao 
+      },
+    ]
   }
 ];
 

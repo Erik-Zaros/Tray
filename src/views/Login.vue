@@ -20,7 +20,7 @@ const nextStep = () => {
 onMounted(() => {
   const user = JSON.parse(localStorage.getItem('user'));
   if (user) {
-    router.push('/dashboard');
+    router.push('/dashboard/inicio');
   }
 });
 </script>

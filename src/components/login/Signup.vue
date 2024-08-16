@@ -21,7 +21,7 @@ const signup = async () => {
   };
 
   localStorage.setItem('user', JSON.stringify(newUser));
-  router.push('/dashboard');
+  router.push('/dashboard/inicio');
 };
 </script>
 

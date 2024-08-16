@@ -8,22 +8,22 @@ const router = useRouter();
 const menu = ref(false);
 
 function mudarMenu() {
-  menu.value = !menu.value;
+    menu.value = !menu.value;
 }
 
 onMounted(() => {
-  const userData = JSON.parse(localStorage.getItem('user'));
-  if (userData) {
-    user.value = userData;
-  } else {
-    router.push('/login');
-  }
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData) {
+        user.value = userData;
+    } else {
+        router.push('/login');
+    }
 });
 
 const logout = () => {
-  localStorage.removeItem('user');
-  localStorage.removeItem('loginTime');
-  router.push('/login');
+    localStorage.removeItem('user');
+    localStorage.removeItem('loginTime');
+    router.push('/login');
 };
 
 </script>
@@ -31,14 +31,13 @@ const logout = () => {
 
 <template>
 
-    <div class="container-fluid">
+    <div class="content">
 
         <div class="horizontal d-flex w-100 justify-content-between px-4">
             <div class="menu d-flex align-items-center">
-                <i 
-          class="menu-icon fa-solid rounded fa-bars fs-1"
-          @click="mudarMenu">
-        </i>            </div>
+                <i class="menu-icon fa-solid rounded fa-bars fs-1" @click="mudarMenu">
+                </i>
+            </div>
 
             <div class="d-flex align-items-center">
                 <form class="search-input me-2 mb-2 mb-lg-0 position-relative">
@@ -65,61 +64,69 @@ const logout = () => {
                     </ul>
                 </div>
             </div>
-
         </div>
 
-
-        <div :class="['vertical', 'd-flex', 'flex-column', 'align-items-between', 'justify-content-between', 'text-center', { expanded: menu }]">
+        <div
+            :class="['vertical', 'd-flex', 'flex-column', 'align-items-between', 'justify-content-between', 'text-center', { expanded: menu }]">
 
             <div class="content-1">
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio" checked>
-                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-flag"><span class="text-icon px-2">Início</span></i>
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/inicio">
+                        <input type="radio" name="icon-selection" class="icon-radio" checked></router-link>
+                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-flag"><span
+                            class="text-icon px-2">Início</span></i>
                 </label>
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-line"><span class="text-icon px-2">Performance</span></i>
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/inicio">
+                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-line"><span
+                            class="text-icon px-2">Performance</span></i>
                 </label>
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-simple"><span class="text-icon px-2">Relatórios</span></i>
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/inicio">
+                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-simple"><span
+                            class="text-icon px-2">Relatórios</span></i>
                 </label>
             </div>
 
             <div class="content-2">
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-cart-shopping"><span class="text-icon px-2">Vendas</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-cart-shopping"><span
+                            class="text-icon px-2">Vendas</span></i>
+                </label>
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/produtos">
+                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span
+                            class="text-icon px-2">Produtos</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span class="text-icon px-2">Produtos</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span
+                            class="text-icon px-2">Marketing</span></i>
                 </label>
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span class="text-icon px-2">Marketing</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-shop"><span
+                            class="text-icon px-2">Marketplaces</span></i>
                 </label>
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-shop"><span class="text-icon px-2">Marketplaces</span></i>
-                </label>
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-gear"><span class="text-icon px-2">Configurações</span></i>
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/configuracao">
+                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-gear"><span
+                            class="text-icon px-2">Configurações</span></i>
                 </label>
             </div>
 
             <div class="content-3">
                 <label class="icon-wrapper my-1">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span class="text-icon px-2">Ajuda</span></i>
+                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span
+                            class="text-icon px-2">Ajuda</span></i>
                 </label>
                 <label class="icon-wrapper my-1" @click="logout">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket"><span class="text-icon px-2">Logout</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket"><span
+                            class="text-icon px-2">Logout</span></i>
                 </label>
             </div>
-
         </div>
 
     </div>
@@ -131,7 +138,7 @@ const logout = () => {
     color: white;
 }
 
-.container-fluid {
+.content {
     margin: 0;
     padding: 0;
 }
@@ -164,32 +171,12 @@ const logout = () => {
     background-color: #424242;
 }
 
-
-
-
-.vertical {
-    background-color: #484848;
-    height: 92vh;
-    width: 80px;
-    transition: .3s;
-}
-
-.vertical.expanded {
-    width: 200px;
-    transition: .3s;
-    & .text-icon {
-        display: block;
-        transition: .5s;
-    }
-}
-
 .icon-menu {
     cursor: pointer;
 }
 
 .text-icon {
-    display: none; 
-    transition: .5s;
+    display: none;
     font-weight: normal;
 }
 
@@ -213,13 +200,27 @@ const logout = () => {
     background-color: rgb(0, 110, 255);
 }
 
+.vertical {
+  background-color: #484848;
+  height: 92vh;
+  width: 80px;
+  transition: width .3s;
+  position: absolute;
+  z-index: 10;
+}
 
+.vertical:hover,
+.vertical.expanded {
+  width: 200px;
+
+  & .text-icon {
+    display: block;
+  }
+}
 
 @media (max-width: 1024px) {
-
     .search-input {
         display: none;
     }
-
 }
 </style>

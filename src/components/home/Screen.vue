@@ -5,15 +5,15 @@ import Score from './Score.vue';
 const showScore = ref(window.innerWidth < 1000);
 
 const checkWindowSize = () => {
-  showScore.value = window.innerWidth < 1000;
+    showScore.value = window.innerWidth < 1000;
 };
 
 onMounted(() => {
-  window.addEventListener('resize', checkWindowSize);
+    window.addEventListener('resize', checkWindowSize);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', checkWindowSize);
+    window.removeEventListener('resize', checkWindowSize);
 });
 </script>
 
@@ -48,7 +48,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+
+
+
 .container-fluid {
+    overflow: hidden;
     height: 92vh;
     background: linear-gradient(300deg, #fdfdff, #dcf3ff, #b9e3f1);
     background-size: 180% 180%;
@@ -71,7 +75,7 @@ onUnmounted(() => {
 
 .titulo {
     font-size: 3.5em;
-    color: var(--title-color);
+    color: var(--color-title);
 }
 
 .texto {
@@ -151,9 +155,13 @@ onUnmounted(() => {
         width: 90%;
     }
 
+    .carousel-container {
+        animation: carousel 28s linear infinite;
+    }
+
     .carrossel {
-    height: 100vh;
-}
+        height: 100vh;
+    }
 
 }
 </style>

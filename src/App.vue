@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 
 </script>
 
@@ -15,5 +15,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style scoped>
 
-@media (max-width: 1024px) {}
+@media (max-width: 1024px) {
+
+  
+}
 </style>

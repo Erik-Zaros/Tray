@@ -58,7 +58,7 @@ import { RouterLink } from 'vue-router';
                     <div class="mx-3">|</div>
                     <i class="fa-regular fa-circle-user fs-5"></i>
                     <routerLink class="dropdown-item text-decoration-none mx-3" to="/login">Login</routerLink>
-                    <button class="btn btn-success col-6 rounded-5 mx-4"><routerLink class="text-decoration-none text-light" to="/signup">Criar loja agora</routerLink></button>
+                    <button class="btn btn-success col-6 rounded-5 mx-2"><routerLink class="text-decoration-none text-light" to="/signup">Criar loja agora</routerLink></button>
                 </span>
             </div>
         </div>
@@ -67,7 +67,6 @@ import { RouterLink } from 'vue-router';
 
 
 <style scoped>
-
 .navbar {
     height: 8vh;
     background-color: var(--background-navbar) !important;
@@ -79,8 +78,12 @@ import { RouterLink } from 'vue-router';
     background-color: var(--background-navbar) !important;
 }
 
+.btn-success {
+    font-size: .9rem;
+}
+
 a {
-    font-size: 1.1em!important;
+    font-size: 1em!important;
     padding: 0px 5px 0px 5px;
 }
 </style>

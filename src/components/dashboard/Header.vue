@@ -31,9 +31,9 @@ const logout = () => {
 
 <template>
 
-    <div class="content">
+    <div class="content-wrapper">
 
-        <div class="horizontal d-flex w-100 justify-content-between px-4">
+        <div class="horizontal d-flex vw-100 justify-content-between px-4">
             <div class="menu d-flex align-items-center">
                 <i class="menu-icon fa-solid rounded fa-bars fs-1" @click="mudarMenu">
                 </i>
@@ -53,14 +53,10 @@ const logout = () => {
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        {{ user.username }}
+                        {{ user.first_name }}
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a class="dropdown-item" href="#">{{ user.first_name }}</a>
-                        </li>
-                        <li><a class="dropdown-item" href="#">{{ user.email }}</a></li>
-                        <li><a class="dropdown-item" href="#"> Settings </a></li>
+                        <li><a class="dropdown-item" href="#">Seu Perfil</a></li>
                     </ul>
                 </div>
             </div>
@@ -75,38 +71,28 @@ const logout = () => {
                     <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-flag"><span
                             class="text-icon px-2">Início</span></i>
                 </label>
-                <label class="icon-wrapper my-1"><router-link to="/dashboard/inicio">
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/perfil">
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-line"><span
-                            class="text-icon px-2">Performance</span></i>
+                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-user"><span
+                            class="text-icon px-2">Perfil</span></i>
                 </label>
-                <label class="icon-wrapper my-1"><router-link to="/dashboard/inicio">
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/loja">
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-chart-simple"><span
-                            class="text-icon px-2">Relatórios</span></i>
+                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-store"><span
+                            class="text-icon px-2">Sua Loja</span></i>
                 </label>
             </div>
 
             <div class="content-2">
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-cart-shopping"><span
-                            class="text-icon px-2">Vendas</span></i>
-                </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/produtos">
                     <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span
                             class="text-icon px-2">Produtos</span></i>
                 </label>
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/templates">
+                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span
-                            class="text-icon px-2">Marketing</span></i>
-                </label>
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-shop"><span
-                            class="text-icon px-2">Marketplaces</span></i>
+                            class="text-icon px-2">Templates</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/configuracao">
                     <input type="radio" name="icon-selection" class="icon-radio"></router-link>
@@ -116,8 +102,8 @@ const logout = () => {
             </div>
 
             <div class="content-3">
-                <label class="icon-wrapper my-1">
-                    <input type="radio" name="icon-selection" class="icon-radio">
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/ajuda">
+                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span
                             class="text-icon px-2">Ajuda</span></i>
                 </label>
@@ -136,16 +122,59 @@ const logout = () => {
 <style scoped>
 * {
     color: white;
+    box-sizing: border-box; /* Adicione isso para melhor controle de layout */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Garantir que o body ocupe toda a altura */
 }
 
 .content {
-    margin: 0;
-    padding: 0;
+    display: flex;
+    height: 100vh; /* Altura total da viewport */
+    overflow: hidden; /* Evitar rolagem no body */
 }
+
 
 .horizontal {
     background-color: #424242;
     height: 8vh;
+    width: 100%;
+    position: fixed; /* Fixar o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Garantir que o cabeçalho esteja acima de outros elementos */
+}
+
+.vertical {
+    background-color: #484848;
+    height: 92vh; /* Altura do menu */
+    width: 80px;
+    position: fixed; /* Fixar o menu lateral à esquerda */
+    top: 8vh; /* Posicionar abaixo do cabeçalho */
+    left: 0;
+    z-index: 999; /* Um nível abaixo do cabeçalho */
+    transition: width 0.3s; /* Transição suave para expansão */
+}
+
+.vertical:hover,
+.vertical.expanded {
+  width: 200px;
+
+  & .text-icon {
+    display: block;
+  }
+}
+
+.content-wrapper {
+    margin-left: 80px; /* Espaço para o menu fixo */
+    margin-top: 8vh; /* Espaço para o cabeçalho fixo */
+    flex: 1;
+    overflow-y: auto; /* Permitir rolagem se o conteúdo exceder a altura */
+    padding: 16px; /* Adicionar algum padding para o conteúdo */
+    background-color: #f4f4f4; /* Cor de fundo do conteúdo */
 }
 
 .menu-icon {
@@ -200,23 +229,6 @@ const logout = () => {
     background-color: rgb(0, 110, 255);
 }
 
-.vertical {
-  background-color: #484848;
-  height: 92vh;
-  width: 80px;
-  transition: width .3s;
-  position: absolute;
-  z-index: 10;
-}
-
-.vertical:hover,
-.vertical.expanded {
-  width: 200px;
-
-  & .text-icon {
-    display: block;
-  }
-}
 
 @media (max-width: 1024px) {
     .search-input {

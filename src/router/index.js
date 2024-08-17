@@ -4,8 +4,12 @@ import Login from '../views/Login.vue';
 import Signup from '../views/Signup.vue';
 import Dashboard from '../views/Dashboard.vue'; 
 import Inicio from '../components/dashboard/Inicio.vue'; 
-import Produtos from '../components/dashboard/Produtos.vue'; 
+import Perfil from '../components/dashboard/Perfil.vue'; 
+import Loja from '../components/dashboard/Loja.vue'; 
+import Produtos from '../components/dashboard/Produtos.vue';
+import Templates from '../components/dashboard/Templates.vue'; 
 import Configuracao from '../components/dashboard/Configuracao.vue'; 
+import Ajuda from '../components/dashboard/Ajuda.vue'; 
 
 const routes = [
   {
@@ -34,14 +38,34 @@ const routes = [
         component: Inicio 
       },
       { 
+        path: 'perfil', 
+        name: 'Perfil',
+        component: Perfil 
+      },
+      { 
+        path: 'loja', 
+        name: 'Loja',
+        component: Loja 
+      },
+      { 
         path: 'produtos', 
         name: 'Produtos',
         component: Produtos 
       },
       { 
+        path: 'templates', 
+        name: 'Templates',
+        component: Templates 
+      },
+      { 
         path: 'configuracao', 
         name: 'Configuracao',
         component: Configuracao 
+      },
+      { 
+        path: 'ajuda', 
+        name: 'Ajuda',
+        component: Ajuda 
       },
     ]
   }

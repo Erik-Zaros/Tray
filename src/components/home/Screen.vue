@@ -49,8 +49,6 @@ onUnmounted(() => {
 
 <style scoped>
 
-
-
 .container-fluid {
     overflow: hidden;
     height: 92vh;

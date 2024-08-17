@@ -66,15 +66,15 @@ function formatDate(dateString) {
 
                 <div class="post-content p-4">
                     <h5>💡 <strong>Dica do Especialista: Personalize Sua Loja!</strong> 🎨</h5>
-                    <p>Quer <strong>aumentar suas vendas</strong>? Experimente a personalização!</p>
+                    <p class="text-post">Quer <strong>aumentar suas vendas</strong>? Experimente a personalização!</p>
                     <ul>
-                        <li>🔍 <strong>Analise o Comportamento</strong>: Veja o que seus clientes estão buscando.</li>
-                        <li>🛍️ <strong>Recomendações</strong>: Mostre produtos relacionados às suas compras anteriores.
-                        </li>
-                        <li>🎯 <strong>Ofertas Personalizadas</strong>: Crie promoções específicas para cada perfil de
-                            cliente.</li>
+                        <p class="text-post">🔍 <strong>Analise o Comportamento</strong>: Veja o que seus clientes estão buscando.</p>
+                        <p class="text-post">🛍️ <strong>Recomendações</strong>: Mostre produtos relacionados às suas compras anteriores.
+                        </p>
+                        <p class="text-post">🎯 <strong>Ofertas Personalizadas</strong>: Crie promoções específicas para cada perfil de
+                            cliente.</p>
                     </ul>
-                    <p>Transforme a experiência do seu usuário e veja os resultados! 🚀</p>
+                    <p class="text-post">Transforme a experiência do seu usuário e veja os resultados! 🚀</p>
                 </div>
 
 
@@ -146,7 +146,7 @@ function formatDate(dateString) {
 }
 
 .progress-circle {
-    transform: scale(2);
+    transform: scale(2.5);
 }
 
 .post {
@@ -160,6 +160,7 @@ function formatDate(dateString) {
 
 .post-content {
     height: 80%;
-
+    font-size: 2.2vh;
 }
+
 </style>

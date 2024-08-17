@@ -16,11 +16,10 @@
       </div>
   </template>
 
-
 <script setup>
 import { ref, computed } from 'vue';
 
-const progress = ref(35); 
+const progress = ref(45); 
 
 const rightBarStyle = computed(() => {
   const progressAngle = (progress.value > 50 ? 180 : (progress.value / 50) * 180);
@@ -118,7 +117,7 @@ const leftBarStyle = computed(() => {
   }
   
   .progress.blue .progress-bar {
-    border-color: #0d6efd; /* Primary color */
+    border-color: #0d6efd; 
   }
   
   @media only screen and (max-width: 990px) {

@@ -31,11 +31,11 @@ const logout = () => {
 
 <template>
 
-    <div class="content-wrapper">
+    <div>
 
         <div class="horizontal d-flex vw-100 justify-content-between px-4">
             <div class="menu d-flex align-items-center">
-                <i class="menu-icon fa-solid rounded fa-bars fs-1" @click="mudarMenu">
+                <i id="tour-1" class="menu-icon fa-solid rounded fa-bars fs-1" @click="mudarMenu">
                 </i>
             </div>
 
@@ -68,17 +68,17 @@ const logout = () => {
             <div class="content-1">
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/inicio">
                         <input type="radio" name="icon-selection" class="icon-radio" checked></router-link>
-                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-flag"><span
+                    <i id="tour-2" class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-flag"><span
                             class="text-icon px-2">Início</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/perfil">
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-user"><span
+                    <i id="tour-3" class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-user"><span
                             class="text-icon px-2">Perfil</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/loja">
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-store"><span
+                    <i id="tour-4" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-store"><span
                             class="text-icon px-2">Sua Loja</span></i>
                 </label>
             </div>
@@ -86,17 +86,17 @@ const logout = () => {
             <div class="content-2">
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/produtos">
                     <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span
+                    <i id="tour-5" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span
                             class="text-icon px-2">Produtos</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/templates">
                     <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span
+                    <i id="tour-6" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span
                             class="text-icon px-2">Templates</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/configuracao">
                     <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-gear"><span
+                    <i id="tour-7" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-gear"><span
                             class="text-icon px-2">Configurações</span></i>
                 </label>
             </div>
@@ -104,12 +104,12 @@ const logout = () => {
             <div class="content-3">
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/ajuda">
                     <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span
+                    <i id="tour-8" class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span
                             class="text-icon px-2">Ajuda</span></i>
                 </label>
                 <label class="icon-wrapper my-1" @click="logout">
                     <input type="radio" name="icon-selection" class="icon-radio">
-                    <i class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket"><span
+                    <i id="tour-9" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket"><span
                             class="text-icon px-2">Logout</span></i>
                 </label>
             </div>
@@ -122,19 +122,19 @@ const logout = () => {
 <style scoped>
 * {
     color: white;
-    box-sizing: border-box; /* Adicione isso para melhor controle de layout */
+    box-sizing: border-box; 
 }
 
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%; /* Garantir que o body ocupe toda a altura */
+    height: 100%; 
 }
 
 .content {
     display: flex;
-    height: 100vh; /* Altura total da viewport */
-    overflow: hidden; /* Evitar rolagem no body */
+    height: 100vh; 
+    overflow: hidden; 
 }
 
 
@@ -142,21 +142,21 @@ html, body {
     background-color: #424242;
     height: 8vh;
     width: 100%;
-    position: fixed; /* Fixar o cabeçalho no topo */
+    position: fixed; 
     top: 0;
     left: 0;
-    z-index: 1000; /* Garantir que o cabeçalho esteja acima de outros elementos */
+    z-index: 1000; 
 }
 
 .vertical {
     background-color: #484848;
-    height: 92vh; /* Altura do menu */
+    height: 92vh; 
     width: 80px;
-    position: fixed; /* Fixar o menu lateral à esquerda */
-    top: 8vh; /* Posicionar abaixo do cabeçalho */
+    position: fixed; 
+    top: 8vh; 
     left: 0;
-    z-index: 999; /* Um nível abaixo do cabeçalho */
-    transition: width 0.3s; /* Transição suave para expansão */
+    z-index: 999; 
+    transition: width 0.3s; 
 }
 
 .vertical:hover,
@@ -169,12 +169,12 @@ html, body {
 }
 
 .content-wrapper {
-    margin-left: 80px; /* Espaço para o menu fixo */
-    margin-top: 8vh; /* Espaço para o cabeçalho fixo */
+    margin-left: 80px; 
+    margin-top: 8vh; 
     flex: 1;
-    overflow-y: auto; /* Permitir rolagem se o conteúdo exceder a altura */
-    padding: 16px; /* Adicionar algum padding para o conteúdo */
-    background-color: #f4f4f4; /* Cor de fundo do conteúdo */
+    overflow-y: auto; 
+    padding: 16px; 
+    background-color: #f4f4f4; 
 }
 
 .menu-icon {

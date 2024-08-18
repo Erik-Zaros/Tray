@@ -21,6 +21,7 @@ const signup = async () => {
   };
 
   localStorage.setItem('user', JSON.stringify(newUser));
+  localStorage.setItem('tutorial', 'true'); // Define uma flag para exibir o tutorial
   router.push('/dashboard/inicio');
 };
 </script>
@@ -42,7 +43,6 @@ const signup = async () => {
       </div>
       <span class="termos pt-3">Clicando no botão, você concorda com nossos termos de <span class=termo>política</span> e
         <span class=termo>privacidade</span></span>
-
     </div>
   </div>
 </template>
@@ -55,5 +55,4 @@ const signup = async () => {
 .termo {
   color: var(--text-color-link);
 }
-
 </style>

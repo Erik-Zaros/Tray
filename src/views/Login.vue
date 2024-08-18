@@ -43,7 +43,7 @@ onMounted(() => {
     </div>
 
     <div class="coluna-2 col-lg-8 col-0">
-      <img class="login-img" src="/public/image/login-img.png" alt="">
+      <img class="login-img" src="/image/login-img.png" alt="">
 
 
     </div>

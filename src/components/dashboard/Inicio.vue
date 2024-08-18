@@ -28,12 +28,12 @@ function formatDate(dateString) {
 
         <div class="col-12 col-md-6">
 
-            <div class="content-1 shadow-sm m-3 p-3 rounded-4 d-flex align-items-center">
+            <div id="tour-10" class="content-1 shadow-sm m-3 p-3 rounded-4 d-flex align-items-center">
                 <div class="col-3">
-                    <img class="perfil shadow-sm rounded-circle" src="/public/image/logoroll.png" alt="">
+                    <img class="perfil shadow-sm rounded-circle" src="/image/logoroll.png" alt="">
                 </div>
                 <div class="col-5">
-                    <h4 class="nome">{{ user.username }}</h4>
+                    <h3 class="nome">{{ user.username }}</h3>
                     <span class="texto">Por aqui desde {{ formatDate(user.created_at) }}</span>
                 </div>
                 <div class="col-auto d-flex flex-column align-items-center justify-content-center">
@@ -46,14 +46,14 @@ function formatDate(dateString) {
                 </div>
             </div>
 
-            <div class="content-2 m-3 p-3 rounded-4">
-                <div class="post d-flex justify-content-between">
+            <div id="tour-11" class="content-2 m-3 p-3 rounded-4">
+                <div class="post px-4 d-flex justify-content-between">
 
                     <div class="profile d-flex align-items-center">
-                        <img class="perfil-post shadow-sm rounded-circle m-auto" src="/public/image/logoroll.png"
+                        <img class="perfil-post shadow-sm rounded-circle m-auto" src="/image/logoroll.png"
                             alt="">
                         <div class="textos ps-3">
-                            <h6 class="titulo mb-0 mt-3">Dicas do Especialista</h6>
+                            <h5 class="titulo mb-0 mt-3">Dicas do Especialista</h5>
                             <p class="texto">Thomas Turbando</p>
                         </div>
                     </div>
@@ -84,7 +84,7 @@ function formatDate(dateString) {
 
         <div class="col-12 col-md-6">
 
-            <div class="content-3 my-3 me-3 px-5 rounded-4">
+            <div id="tour-12" class="content-3 my-3 me-3 px-5 rounded-4">
                 <div class="plano d-flex justify-content-between align-items-center">
                     <h3 class="titulo fw-bold">Meu Plano</h3>
                     <a class="text-decoration-none" href="">Gerenciar Plano</a>
@@ -132,7 +132,7 @@ function formatDate(dateString) {
 
 .texto {
     color: var(--text-color-sub);
-    font-size: .9rem;
+    font-size: 1rem;
 }
 
 .plano {
@@ -160,7 +160,7 @@ function formatDate(dateString) {
 
 .post-content {
     height: 80%;
-    font-size: 2.2vh;
+    font-size: 1.9vh;
 }
 
 </style>

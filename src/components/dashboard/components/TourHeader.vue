@@ -8,65 +8,64 @@ const startTour = () => {
     steps: [
       {
         element: '#tour-1',
-        intro: 'Esta é a primeira seção do conteúdo.',
+        intro: '<strong class="text-center">Esse é o menu de acesso.</strong>',
         position: 'bottom'
       },
       {
         element: '#tour-2',
-        intro: 'Aqui você pode ver mais detalhes importantes.',
+        intro: '<strong class="text-center">Início</strong></br>Aqui onde ficam as metricas da sua loja.',
         position: 'bottom'
       },
       {
         element: '#tour-3',
-        intro: 'Esta é a última seção do conteúdo.',
+        intro: '<strong class="text-center">Perfil</strong></br>Aqui onde voce acessa e atualiza sua conta.',
         position: 'bottom'
       },
       {
         element: '#tour-4', 
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: '<strong class="text-center">Sua Loja</strong></br>Aqui onde voce acessa e atualiza sua loja online.',
         position: 'bottom',
       },
       {
         element: '#tour-5',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: '<strong class="text-center">Produtos</strong></br>Aqui onde voce acessa e administra seus produtos.',
         position: 'bottom',
       },
       {
         element: '#tour-6',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: '<strong class="text-center">Templates</strong></br>Aqui voce define o layout do seu site.',
         position: 'bottom',
       },
       {
         element: '#tour-7',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: '<strong class="text-center">Configuraçoes</strong></br>Aqui voce ajusta as definiçoes do seu site.',
         position: 'bottom',
       },
       {
         element: '#tour-8',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: '<strong class="text-center">Ajuda</strong></br>Aqui voce encontra topicos de suporte sobre o site.',
         position: 'bottom',
       },
       {
         element: '#tour-9',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: '<strong class="text-center">Logout</strong></br>Saia da sua sessao aqui.',
         position: 'bottom',
       },
       {
         element: '#tour-10',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: 'O acesso inicial, onde ativa e desativa sua loja.',
         position: 'bottom',
       },
       {
         element: '#tour-11',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: 'Dicas para ecommerce, vendas e muito mais.',
         position: 'bottom',
       },
       {
         element: '#tour-12',
-        intro: 'E aqui está o menu do cabeçalho.',
+        intro: 'Cadastro da loja, aqui mostra a porcentagem de conclusao do seu cadastro.',
         position: 'bottom',
       }
-      // Adicione outros passos conforme necessário
     ],
     showStepNumbers: true,
     showBullets: true,
@@ -83,7 +82,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Este componente pode estar vazio se apenas gerenciar o tour -->
 </template>
 
 <style scoped>

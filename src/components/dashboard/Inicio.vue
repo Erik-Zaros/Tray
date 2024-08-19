@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import Progress from './components/Progress.vue'
+import Progress from './components/Inicio/Progress.vue'
 
 const user = ref({});
 const router = useRouter();
@@ -119,7 +119,6 @@ const iniciado = ref(false);
 
 .container-fluid {
     height: 92vh;
-    background-color: var(--background-secondary);
 }
 
 .content-1 {

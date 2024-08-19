@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import Header from '../components/dashboard/components/Header.vue';
-import TourComponent from '../components/dashboard/components/TourHeader.vue'; // Atualizado o nome do componente para o correto
+import Header from '../components/dashboard/components/Inicio/Header.vue';
+import TourComponent from '../components/dashboard/components/Inicio/Tour.vue'; // Atualizado o nome do componente para o correto
 
 const user = ref({});
 const router = useRouter();
@@ -37,5 +37,6 @@ onMounted(() => {
   left: 80px;
   width: calc(100vw - 80px);
   transition: left 0.3s, width 0.3s;
+  background-color: var(--background-secondary);
 }
 </style>

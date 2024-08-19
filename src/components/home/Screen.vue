@@ -34,13 +34,13 @@ onUnmounted(() => {
 
         <div class="content-2 col-12 col-md-6 position-relative d-flex align-items-center justify-content-center">
             <div class="content me-4 me-md-0 col-10 d-flex z-1">
-                <img class="roll m-auto fa-spin" src="/public/image/roll.png" alt="">
-                <img class="logo position-absolute" src="/public/image/logoroll.png" alt="">
+                <img class="roll m-auto fa-spin" src="/image/roll.png" alt="">
+                <img class="logo position-absolute" src="/image/logoroll.png" alt="">
             </div>
             <div class="carrossel position-absolute z-0 col-10 overflow-hidden">
                 <div class="carousel-container">
-                    <img class="bussines" src="/public/image/bussines.png" alt="">
-                    <img class="bussines" src="/public/image/bussines.png" alt="">
+                    <img class="bussines" src="/image/bussines.png" alt="">
+                    <img class="bussines" src="/image/bussines.png" alt="">
                 </div>
             </div>
         </div>

@@ -32,46 +32,49 @@ function formatDate(dateString) {
                 <div class="col-3">
                     <img class="perfil shadow-sm rounded-circle" src="/image/logoroll.png" alt="">
                 </div>
-                <div class="col-5">
+                <div class="col-5 dados">
                     <h3 class="nome">{{ user.username }}</h3>
                     <span class="texto">Por aqui desde {{ formatDate(user.created_at) }}</span>
                 </div>
-                <div class="col-auto d-flex flex-column align-items-center justify-content-center">
+                <div class="implantacao col-auto d-flex flex-column align-items-center justify-content-center">
                     <div class="texto">Loja em Implantacao
                         <i class="fa-regular fa-circle-up"></i>
                     </div>
                     <div class="inaugurar">
-                        <button class="btn btn-primary mt-2 px-4">Inaugurar Loja</button>
+                        <button class="btn btn-primary mt-1 px-1 mt-sm-2 px-sm-4">iniciar</button>
                     </div>
                 </div>
             </div>
 
             <div id="tour-11" class="content-2 m-3 p-3 rounded-4">
-                <div class="post px-4 d-flex justify-content-between">
 
-                    <div class="profile d-flex align-items-center">
-                        <img class="perfil-post shadow-sm rounded-circle m-auto" src="/image/logoroll.png"
-                            alt="">
+                <div class="post m-0 px-4 d-flex justify-content-between">
+
+                    <div class="profile m-0 d-flex align-items-center">
+                        <img class="perfil-post shadow-sm rounded-circle m-auto" src="/image/logoroll.png" alt="">
                         <div class="textos ps-3">
-                            <h5 class="titulo mb-0 mt-3">Dicas do Especialista</h5>
+                            <h4 class="titulo mb-0 mt-2">Dicas do Especialista</h4>
                             <p class="texto">Thomas Turbando</p>
                         </div>
                     </div>
 
-                    <div class="d-flex align-items-center">
-                        <a class="text-decoration-none" href="">Ver Mais</a>
+                    <div class="ver d-flex m-0 ps-1 align-items-center">
+                        <a class="text-decoration-none text-center" href="">Ver Mais</a>
                     </div>
 
                 </div>
 
                 <div class="post-content p-4">
-                    <h5>💡 <strong>Dica do Especialista: Personalize Sua Loja!</strong> 🎨</h5>
+                    <h6>💡 <strong>Dica do Especialista: Personalize Sua Loja!</strong> 🎨</h6>
                     <p class="text-post">Quer <strong>aumentar suas vendas</strong>? Experimente a personalização!</p>
                     <ul>
-                        <p class="text-post">🔍 <strong>Analise o Comportamento</strong>: Veja o que seus clientes estão buscando.</p>
-                        <p class="text-post">🛍️ <strong>Recomendações</strong>: Mostre produtos relacionados às suas compras anteriores.
+                        <p class="text-post">🔍 <strong>Analise o Comportamento</strong>: Veja o que seus clientes estão
+                            buscando.</p>
+                        <p class="text-post">🛍️ <strong>Recomendações</strong>: Mostre produtos relacionados às suas
+                            compras anteriores.
                         </p>
-                        <p class="text-post">🎯 <strong>Ofertas Personalizadas</strong>: Crie promoções específicas para cada perfil de
+                        <p class="text-post">🎯 <strong>Ofertas Personalizadas</strong>: Crie promoções específicas para
+                            cada perfil de
                             cliente.</p>
                     </ul>
                     <p class="text-post">Transforme a experiência do seu usuário e veja os resultados! 🚀</p>
@@ -84,7 +87,7 @@ function formatDate(dateString) {
 
         <div class="col-12 col-md-6">
 
-            <div id="tour-12" class="content-3 my-3 me-3 px-5 rounded-4">
+            <div id="tour-12" class="content-3 mx-3 my-sm-3 me-sm-3 px-5 rounded-4">
                 <div class="plano d-flex justify-content-between align-items-center">
                     <h3 class="titulo fw-bold">Meu Plano</h3>
                     <a class="text-decoration-none" href="">Gerenciar Plano</a>
@@ -92,7 +95,7 @@ function formatDate(dateString) {
 
                 <div class="progress w-100">
                     <h5 class="conclusao position-absolute pt-4">Cadastro da Loja</h5>
-                    <Progress class="progress-circle m-auto pt-4" />
+                    <Progress class="progress-circle m-auto pt-5" />
                 </div>
 
             </div>
@@ -105,6 +108,10 @@ function formatDate(dateString) {
 </template>
 
 <style scoped>
+.html {
+    overflow-x: hidden;
+}
+
 .container-fluid {
     height: 92vh;
     background-color: var(--background-secondary);
@@ -126,13 +133,13 @@ function formatDate(dateString) {
 }
 
 .perfil {
-    height: 120px;
-    width: 120px;
+    height: 10%;
+    width: 80%;
 }
 
 .texto {
     color: var(--text-color-sub);
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .plano {
@@ -163,4 +170,75 @@ function formatDate(dateString) {
     font-size: 1.9vh;
 }
 
+@media (max-width: 724px) {
+
+    .container-fluid {
+        height: 150vh;
+        background-color: var(--background-secondary);
+    }
+
+    .container-fluid {
+        flex-direction: column;
+    }
+
+    .content-1 {
+        height: 20vh;
+        background-color: var(--background-primary);
+    }
+
+    .content-2 {
+        background-color: var(--background-primary);
+        height: 66vh;
+    }
+
+    .content-3 {
+        background-color: var(--background-primary);
+        height: 57vh;
+    }
+
+    .dados > .nome {
+        font-size: 1em;
+    }
+
+    .texto {
+        font-size: .5em;
+    }
+
+    .textos > .titulo {
+        font-size: 13px;
+    }
+
+    .ver > a {
+        font-size: .8rem;
+    }
+
+    .perfil-post {
+        height: 35px;
+    }
+
+    .post-content {
+        height: 0%;
+        font-size: 1.5vh;
+    }
+
+    .plano {
+        height: 20%;
+    }
+
+    .plano>.titulo {
+        font-size: 20px;
+    }
+
+    .plano>a {
+        font-size: 14px;
+    }
+
+    .progress {
+        background-color: var(--background-primary);
+    }
+
+    .progress-circle {
+        transform: scale(1.2);
+    }
+}
 </style>

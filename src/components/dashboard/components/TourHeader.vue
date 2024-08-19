@@ -75,7 +75,7 @@ const startTour = () => {
 
 onMounted(() => {
   const tutorial = localStorage.getItem('tutorial');
-  if (tutorial === 'true') {
+  if (tutorial =! 'true') {
     startTour();
   }
 });

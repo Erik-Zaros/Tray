@@ -20,6 +20,8 @@ function formatDate(dateString) {
     return new Date(dateString).toLocaleDateString('pt-BR', options);
 }
 
+const iniciado = ref(false);
+
 </script>
 
 <template>
@@ -28,20 +30,23 @@ function formatDate(dateString) {
 
         <div class="col-12 col-md-6">
 
-            <div id="tour-10" class="content-1 shadow-sm m-3 p-3 rounded-4 d-flex align-items-center">
-                <div class="col-3">
-                    <img class="perfil shadow-sm rounded-circle" src="/image/logoroll.png" alt="">
+            <div id="tour-10"
+                class="content-1 shadow-sm m-3 p-3 rounded-4 d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img class="perfil ms-2 ms-md-5 shadow-sm rounded-circle" src="/image/logoroll.png" alt="">
+                    <div class="dados ms-2 ms-md-4">
+                        <h3 class="nome">{{ user.username }}</h3>
+                        <span class="texto">Por aqui desde {{ formatDate(user.created_at) }}</span>
+                    </div>
                 </div>
-                <div class="col-5 dados">
-                    <h3 class="nome">{{ user.username }}</h3>
-                    <span class="texto">Por aqui desde {{ formatDate(user.created_at) }}</span>
-                </div>
-                <div class="implantacao col-auto d-flex flex-column align-items-center justify-content-center">
-                    <div class="texto">Loja em Implantacao
-                        <i class="fa-regular fa-circle-up"></i>
+                <div class="implantacao pe-2 pe-md-4 d-flex flex-column align-items-center justify-content-center">
+                    <div class="texto text-center"><span>Loja em Implantacao
+                            <i class="fa-regular fa-circle-up"></i></span>
                     </div>
                     <div class="inaugurar">
-                        <button class="btn btn-primary mt-1 px-1 mt-sm-2 px-sm-4">iniciar</button>
+                        <button class="mt-1 px-1 mt-sm-3 px-sm-4" :class="iniciado ? 'btn btn-danger' : 'btn btn-primary'" @click="iniciado = !iniciado">
+                            {{ iniciado ? 'Parar' : 'Iniciar' }}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -134,7 +139,7 @@ function formatDate(dateString) {
 
 .perfil {
     height: 10%;
-    width: 80%;
+    width: 30%;
 }
 
 .texto {
@@ -196,7 +201,7 @@ function formatDate(dateString) {
         height: 57vh;
     }
 
-    .dados > .nome {
+    .dados>.nome {
         font-size: 1em;
     }
 
@@ -204,11 +209,11 @@ function formatDate(dateString) {
         font-size: .5em;
     }
 
-    .textos > .titulo {
+    .textos>.titulo {
         font-size: 13px;
     }
 
-    .ver > a {
+    .ver>a {
         font-size: .8rem;
     }
 

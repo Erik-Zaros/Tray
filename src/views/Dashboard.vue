@@ -14,9 +14,8 @@ onMounted(() => {
 
     const tutorial = localStorage.getItem('tutorial');
     if (tutorial === 'true') {
-      localStorage.removeItem('tutorial'); // Remove a flag após o primeiro acesso
+      localStorage.removeItem('tutorial'); 
     } else {
-      // Não faz nada se o tutorial não deve ser exibido
       return;
     }
   } else {

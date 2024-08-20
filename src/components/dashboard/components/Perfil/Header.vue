@@ -1,7 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, defineEmits } from 'vue';
 import introJs from 'intro.js';
 import 'intro.js/introjs.css';
+
+const emit = defineEmits(['toggleEdit']);
+const isEditing = ref(false);
 
 const startTour = () => {
   introJs().setOptions({
@@ -25,35 +28,33 @@ const startTour = () => {
   }).start();
 };
 
-onMounted(() => {
-  startTour();
-});
-
-const editar = ref(false);
-
-const mudar = () => {
-  editar.value = !editar.value;
+const toggleEditing = () => {
+  isEditing.value = !isEditing.value;
+  emit('toggleEdit', isEditing.value);
 };
 
+startTour();
 </script>
 
 <template>
-  <div class="container-fluid p-0 position-absolute">
+  <div class="container-fluid p-0">
     <div class="save shadow w-100 px-5 d-flex align-items-center justify-content-between">
       <div class="edit fw-bold">Usuário</div>
-      <div class="usuario" :class="{ 'd-none': editar }">
-        <button @click="mudar" class="btn btn-primary py-2 px-3 ms-3 rounded-0">Editar</button>
+      <div class="usuario" :class="{ 'd-none': isEditing }">
+        <button @click="toggleEditing" class="btn btn-primary py-2 px-3 ms-3 rounded-0">Editar</button>
       </div>
-      <div class="editar" :class="{ 'd-block': editar, 'd-none': !editar }">
+      <div class="editar" :class="{ 'd-block': isEditing, 'd-none': !isEditing }">
         <a href="" class="options text-decoration-none">
           <i class="fa-solid fa-ellipsis-vertical me-2"></i> Mais Opções 
         </a>
-        <button @click="mudar" class="btn btn-outline-secondary py-2 px-3 ms-5 rounded-0">Cancelar</button>
-        <button @click="mudar" class="btn btn-outline-primary py-2 px-3 ms-3 rounded-0">Salvar</button>
+        <button @click="toggleEditing" class="btn btn-outline-secondary py-2 px-3 ms-5 rounded-0">Cancelar</button>
+        <button @click="toggleEditing" class="btn btn-outline-primary py-2 px-3 ms-3 rounded-0">Salvar</button>
       </div>
     </div>
   </div>
 </template>
+
+
 
 
 <style scoped>
@@ -71,11 +72,14 @@ const mudar = () => {
 
 .save {
   height: 8vh;
-  background-color: var(--background-primary);
+  background-color: var(--background-navbar);
 }
 
 .save > .edit {
   font-size: 1.6em;
   color: var(--color-primary);
 }
+
+
+
 </style>

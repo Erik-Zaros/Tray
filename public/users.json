@@ -5,7 +5,7 @@
     "email": "gustavo@tray.com",
     "password": "123",
     "first_name": "Gustavo",
-    "last_name": "Diniz",
+    "full_name": "Gustavo Henrique Matias Diniz",
     "created_at": "2023-01-15T10:30:00Z",
     "status": "active"
   },
@@ -15,7 +15,7 @@
     "email": "erik@tray.com",
     "password": "123",
     "first_name": "Erik",
-    "last_name": "Zaros",
+    "full_name": "Gustavo Henrique Matias Diniz",
     "created_at": "2023-01-15T10:30:00Z",
     "status": "active"
   },
@@ -24,8 +24,8 @@
     "username": "EdmarApelao",
     "email": "edmar@tray.com",
     "password": "123",
-    "first_name": "edmar",
-    "last_name": "sobrenome",
+    "first_name": "Edmar",
+    "full_name": "Gustavo Henrique Matias Diniz",
     "created_at": "2023-01-15T10:30:00Z",
     "status": "active"
   }

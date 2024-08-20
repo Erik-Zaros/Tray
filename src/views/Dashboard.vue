@@ -25,7 +25,7 @@ onMounted(() => {
 });
 </script>
 
-<template class="vh-100 vw-100">
+<template>
   <Header />
   <router-view class="conteudo position-absolute bottom-0 end-0" />
   <TourComponent /> <!-- Exibe o tutorial se a flag estiver definida -->

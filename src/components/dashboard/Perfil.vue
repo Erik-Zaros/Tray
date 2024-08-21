@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import Header from '../dashboard/components/Perfil/Header.vue';
 import Dados from '../dashboard/components/Perfil/Dados.vue';
+import Tour from '../dashboard/components/Perfil/Tour.vue';
 
 const isEditing = ref(false);
 
@@ -14,6 +15,7 @@ const handleToggleEdit = (value) => {
   <div>
     <Header @toggleEdit="handleToggleEdit" />
     <Dados :isEditing="isEditing" />
+    <Tour />
   </div>
 </template>
 

@@ -1,39 +1,14 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
-import introJs from 'intro.js';
-import 'intro.js/introjs.css';
 
 const emit = defineEmits(['toggleEdit']);
 const isEditing = ref(false);
-
-const startTour = () => {
-  introJs().setOptions({
-    steps: [
-      {
-        element: '.save',
-        intro: 'Esta é a primeira seção.',
-        position: 'bottom'
-      },
-      {
-        element: '.save',
-        intro: 'Aqui é onde você pode encontrar mais informações.',
-        position: 'top'
-      },
-      {
-        element: '.editar',
-        intro: 'Esta é a última parte do tour.',
-        position: 'left'
-      }
-    ]
-  }).start();
-};
 
 const toggleEditing = () => {
   isEditing.value = !isEditing.value;
   emit('toggleEdit', isEditing.value);
 };
 
-startTour();
 </script>
 
 <template>

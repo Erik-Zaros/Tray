@@ -7,7 +7,63 @@
     "first_name": "Gustavo",
     "full_name": "Gustavo Henrique Matias Diniz",
     "created_at": "2023-01-15T10:30:00Z",
-    "status": "active"
+    "status": "active",
+    "produtos": [
+      {
+        "id": 1,
+        "codigo": "PRD001",
+        "nome": "Smartphone XYZ",
+        "status": "ativo",
+        "categoria": "eletronicos",
+        "preco": 1299.99,
+        "estoque": 25
+      },
+      {
+        "id": 2,
+        "codigo": "PRD002",
+        "nome": "Cadeira de Escritório",
+        "status": "ativo",
+        "categoria": "utensilios",
+        "preco": 499.90,
+        "estoque": 10
+      },
+      {
+        "id": 3,
+        "codigo": "PRD003",
+        "nome": "Notebook ABC",
+        "status": "inativo",
+        "categoria": "eletronicos",
+        "preco": 3499.00,
+        "estoque": 0
+      },
+      {
+        "id": 4,
+        "codigo": "PRD004",
+        "nome": "Ferro de Passar Roupas",
+        "status": "ativo",
+        "categoria": "utensilios",
+        "preco": 159.90,
+        "estoque": 50
+      },
+      {
+        "id": 5,
+        "codigo": "PRD005",
+        "nome": "Câmera Digital 4K",
+        "status": "ativo",
+        "categoria": "eletronicos",
+        "preco": 2499.95,
+        "estoque": 5
+      },
+      {
+        "id": 6,
+        "codigo": "PRD006",
+        "nome": "Mesa de Jantar",
+        "status": "inativo",
+        "categoria": "utensilios",
+        "preco": 899.99,
+        "estoque": -2
+      }
+    ]
   },
   {
     "id": 24,

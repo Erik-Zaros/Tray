@@ -1,23 +1,27 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { loginUsuario } from '../../services/api';
 
 const password = ref('');
 const router = useRouter();
 
 const login = async () => {
   const email = sessionStorage.getItem('email');
-  const response = await fetch(`${import.meta.env.BASE_URL}users.json`);
-  const users = await response.json();
-  
-  const user = users.find(user => user.email === email && user.password === password.value);
 
-  if (user) {
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('loginTime', new Date().getTime());
-    router.push('/dashboard/inicio'); 
-  } else {
-    alert('Invalid login');
+  if (!email || !password.value) {
+    alert('Por favor, preencha todos os campos.');
+    return;
+  }
+
+  try {
+    const resposta = await loginUsuario({ email, senha: password.value });
+
+    // Armazena o usuário no localStorage e redireciona para o dashboard
+    localStorage.setItem('user', JSON.stringify(resposta));
+    router.push('/dashboard/inicio');
+  } catch (erro) {
+    alert(`Erro ao fazer login: ${erro.message}`);
   }
 };
 </script>
@@ -29,7 +33,3 @@ const login = async () => {
     <button class="btn btn-success col-12 rounded-5 fs-4 fw-bold" @click="login">Login</button>
   </div>
 </template>
-
-
-
-

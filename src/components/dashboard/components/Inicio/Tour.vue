@@ -3,6 +3,8 @@ import { onMounted } from 'vue';
 import introJs from 'intro.js';
 import 'intro.js/introjs.css';
 
+// AJUSTAR PROBLEMA TOUR
+
 const startTour = () => {
   introJs().setOptions({
     steps: [
@@ -79,14 +81,8 @@ onMounted(() => {
     startTour();
   }
 });
+
 </script>
 
 <template>
 </template>
-
-<style scoped>
-.highlighted {
-  border: 3px solid red;
-  background-color: rgba(255, 0, 0, 0.1);
-}
-</style>

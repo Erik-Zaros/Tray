@@ -21,7 +21,7 @@ const signup = async () => {
   };
 
   localStorage.setItem('user', JSON.stringify(newUser));
-  localStorage.setItem('tutorial', 'true'); // Define uma flag para exibir o tutorial
+  localStorage.setItem('tutorial', 'true'); 
   router.push('/dashboard/inicio');
 };
 </script>

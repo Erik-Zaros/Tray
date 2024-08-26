@@ -1,32 +1,26 @@
 <script setup>
+import { obterDadosUsuario } from '../../services/api';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Progress from './components/Inicio/Progress.vue'
 
-const user = ref({});
+const usuario = ref(null);
 const router = useRouter();
-
-onMounted(() => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-    if (userData) {
-        user.value = userData;
-    } else {
-        router.push('/login');
-    }
-});
-
-function formatDate(dateString) {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('pt-BR', options);
-}
-
 const iniciado = ref(false);
 
+onMounted(async () => {
+  try {
+    const dados = await obterDadosUsuario();
+    usuario.value = dados;
+  } catch (erro) {
+    router.push('/login');
+  }
+});
 </script>
 
 <template>
 
-    <div class="container-fluid d-flex p-0">
+    <div class="container-fluid d-flex p-0" v-if="usuario">
 
         <div class="col-12 col-md-6">
 
@@ -35,8 +29,8 @@ const iniciado = ref(false);
                 <div class="d-flex align-items-center">
                     <img class="perfil ms-2 ms-md-5 shadow-sm rounded-circle" src="/image/logoroll.png" alt="">
                     <div class="dados ms-2 ms-md-4">
-                        <h3 class="nome">{{ user.username }}</h3>
-                        <span class="texto">Por aqui desde {{ formatDate(user.created_at) }}</span>
+                        <h3 class="nome">{{ usuario.nome }}</h3>
+                        <span class="texto">{{ usuario.email }}</span> <!-- alterar para data de criacao conta -->
                     </div>
                 </div>
                 <div class="implantacao pe-2 pe-md-4 d-flex flex-column align-items-center justify-content-center">

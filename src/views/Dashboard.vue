@@ -1,33 +1,34 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { obterDadosUsuario } from '../services/api';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import Header from '../components/dashboard/components/Inicio/Header.vue';
-import TourComponent from '../components/dashboard/components/Inicio/Tour.vue'; // Atualizado o nome do componente para o correto
+import TourComponent from '../components/dashboard/components/Inicio/Tour.vue';
 
-const user = ref({});
+const usuario = ref(null);
 const router = useRouter();
 
-onMounted(() => {
-  const userData = JSON.parse(localStorage.getItem('user'));
-  if (userData) {
-    user.value = userData;
+onMounted(async () => {
+  try {
+    const dados = await obterDadosUsuario();
+    usuario.value = dados;
 
-    const tutorial = localStorage.getItem('tutorial');
-    if (tutorial === 'true') {
-      localStorage.removeItem('tutorial'); 
-    } else {
-      return;
+    if (mostraTutorial.value) {
+      localStorage.removeItem('tutorial');
     }
-  } else {
+  } catch (erro) {
     router.push('/login');
   }
 });
+
+const mostraTutorial = computed(() => localStorage.getItem('tutorial') === 'true');
+
 </script>
 
 <template>
   <Header />
   <router-view class="conteudo position-absolute bottom-0 end-0" />
-  <TourComponent /> <!-- Exibe o tutorial se a flag estiver definida -->
+  <TourComponent v-if="mostraTutorial" />
 </template>
 
 <style>

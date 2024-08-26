@@ -1,4 +1,5 @@
 <script setup>
+import { obterDadosUsuario } from '../../../../services/api';
 import { ref, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { defineProps } from 'vue';
@@ -10,33 +11,31 @@ const props = defineProps({
     }
 });
 
-const user = ref({});
-const router = useRouter();
-const showPassword = ref(false);
-
-onMounted(() => {
-  const userData = JSON.parse(localStorage.getItem('user'));
-  if (userData) {
-    user.value = userData;
-
-    const tutorial = localStorage.getItem('tutorial');
-    if (tutorial === 'true') {
-      localStorage.removeItem('tutorial'); 
-    } else {
-      return;
-    }
-  } else {
-    router.push('/login');
-  }
-});
+const estado = ref({});
+const usuario = ref();
 
 watch(() => props.isEditing, (newVal) => {
 });
 
-const toggleStatus = () => {
-    user.value.status = user.value.status === 'active' ? 'inactive' : 'active';
+const mudarEstado = () => {
+    estado.value.status = estado.value.status === 'active' ? 'inactive' : 'active';
 };
 
+
+
+onMounted(async () => {
+  try {
+    const dados = await obterDadosUsuario();
+    usuario.value = dados;
+
+  } catch (erro) {
+    router.push('/login');
+  }
+});
+
+
+const router = useRouter();
+const showPassword = ref(false);
 
 
 
@@ -110,28 +109,28 @@ const editPhoto = () => {
 
             <div class="infos col-12 col-md-8 p-3">
                 <div class="mb-4">
-                    <label for="username" class="form-label fs-5">Username</label>
-                    <input type="text" class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="username"
-                        :value="user.username" :readonly="!isEditing">
+                    <label for="nome" class="form-label fs-5">Nome</label>
+                    <input type="text" class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="nome"
+                        :value="usuario.nome" :readonly="!isEditing">
                 </div>
 
                 <div class="mb-4">
-                    <label for="name" class="form-label fs-5">Full Name</label>
-                    <input type="text" class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="name"
-                        :value="user.full_name" :readonly="!isEditing">
+                    <label for="sobrenome" class="form-label fs-5">Sobrenome</label>
+                    <input type="text" class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="sobrenome"
+                        :value="usuario.sobrenome" :readonly="!isEditing">
                 </div>
 
                 <div class="mb-4">
                     <label for="email" class="form-label fs-5">Email</label>
                     <input type="email" class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="email"
-                        :value="user.email" :readonly="!isEditing">
+                        :value="usuario.email" :readonly="!isEditing">
                 </div>
 
                 <div class="mb-4">
-                    <label for="password" class="form-label fs-5">Password</label>
+                    <label for="senha" class="form-label fs-5">Senha</label>
                     <div class="input-group position-relative">
                         <input :type="showPassword ? 'text' : 'password'"
-                            class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="password" :value="user.password"
+                            class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="senha" :value="usuario.senha"
                             :readonly="!isEditing">
 
                         <i :class="showPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash m-auto'"
@@ -144,7 +143,7 @@ const editPhoto = () => {
                     <label for="status" class="form-label fs-5 pe-3 fs-4">Status: </label>
                     <button type="button" class="btn fs-3 px-5"
                         :class="[user.status === 'active' ? 'btn-primary' : 'btn-danger']" :disabled="!isEditing"
-                        @click="toggleStatus">
+                        @click="mudarEstado">
                         {{ user.status === 'active' ? 'Active' : 'Inactive' }}
                     </button>
                 </div>

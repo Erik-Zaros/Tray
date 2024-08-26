@@ -25,7 +25,7 @@ onUnmounted(() => {
                 <p class="texto col-11 my-4">Tudo o que você precisa para vender na internet, integrado em um único
                     painel: recursos para vender, gerenciar e escalar a sua loja virtual</p>
                 <button class="btn btn-primary rounded-5 px-4">
-                    <RouterLink class="text-decoration-none text-light fs-4" to="/signup">Começar agora</RouterLink>
+                    <RouterLink class="text-decoration-none text-light fs-4" to="/registrar">Começar agora</RouterLink>
                 </button>
             </div>
         </div>

@@ -9,7 +9,7 @@ const router = useRouter();
 
 const currentStep = computed(() => (step.value === 1 ? LoginStep1 : LoginStep2));
 
-const nextStep = () => {
+const proximo = () => {
   if (step.value === 1) {
     step.value = 2;
   } else {
@@ -17,12 +17,6 @@ const nextStep = () => {
   }
 };
 
-onMounted(() => {
-  const user = JSON.parse(localStorage.getItem('user'));
-  if (user) {
-    router.push('/dashboard/inicio');
-  }
-});
 </script>
 
 <template>
@@ -34,9 +28,9 @@ onMounted(() => {
 
       <img class="logo pb-4" src="https://sitetray.s3.amazonaws.com/wp-content/uploads/2024/03/logo_tray_site-1.svg">
       <p class="texto fw-bold col-10 col-lg-8">Administre sua loja em um único lugar</p>
-      <component :is="currentStep" @next="nextStep" />
-      <RouterLink class="forget py-3" to="/forget-password">Esqueci meus dados de acesso</RouterLink>
-      <p class="signup">Ainda não tem uma loja? <RouterLink class="crie text-decoration-none" to="/signup">Crie uma
+      <component :is="currentStep" @next="proximo" />
+      <span class="forget py-3">Esqueci minha senha</span>
+      <p>Ainda não tem uma loja? <RouterLink class="crie text-decoration-none" to="/registrar">Crie uma
           agora</RouterLink>
       </p>
 
@@ -44,9 +38,8 @@ onMounted(() => {
 
     <div class="coluna-2 col-lg-8 col-0">
       <img class="login-img" src="/image/login-img.png" alt="">
-
-
     </div>
+
   </div>
 
 

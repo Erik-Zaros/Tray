@@ -1,5 +1,5 @@
 <script setup>
-import Signup from '../components/login/Signup.vue';
+import Registrar from '../components/login/Registrar.vue';
 </script>
 
 <template>
@@ -8,13 +8,13 @@ import Signup from '../components/login/Signup.vue';
     <RouterLink class="text-decoration-none text-dark" to="/"><i
         class="fa-solid fa-xmark position-absolute top-0 start-0 p-3 fs-3"></i></RouterLink>
 
-    <div class="signup text-center">
+    <div class="text-center">
       <img class="logo" src="https://sitetray.s3.amazonaws.com/wp-content/uploads/2024/03/logo_tray_site-1.svg"
         width="150px">
       <h1 class="titulo fw-bold pt-3">Vamos Começar!</h1>
       <p class="texto fw-bold">Informe os dados abaixo para prosseguir</p>
       <div class="criar d-flex">
-        <Signup />
+        <Registrar />
       </div>
     </div>
 

@@ -1,29 +1,23 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
-const user = ref({});
+import { logout } from '../../../../services/api';
+ 
 const router = useRouter();
-
 const menu = ref(false);
 
 function mudarMenu() {
     menu.value = !menu.value;
 }
 
-onMounted(() => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-    if (userData) {
-        user.value = userData;
-    } else {
+const deslogar = async () => {
+    try {
+        await logout(); // Chama a função de logout da api.js
         router.push('/login');
+    } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        alert('Erro ao fazer logout. Tente novamente.');
     }
-});
-
-const logout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('loginTime');
-    router.push('/login');
 };
 
 </script>
@@ -53,7 +47,7 @@ const logout = () => {
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        {{ user.first_name }}
+                        NOME
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a class="dropdown-item" href="#">Seu Perfil</a></li>
@@ -107,7 +101,7 @@ const logout = () => {
                     <i id="tour-8" class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span
                             class="text-icon px-2">Ajuda</span></i>
                 </label>
-                <label class="icon-wrapper my-1" @click="logout">
+                <label class="icon-wrapper my-1" @click="deslogar">
                     <input type="radio" name="icon-selection" class="icon-radio">
                     <i id="tour-9" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-right-from-bracket"><span
                             class="text-icon px-2">Logout</span></i>
@@ -136,7 +130,6 @@ html, body {
     height: 100vh; 
     overflow: hidden; 
 }
-
 
 .horizontal {
     background-color: #424242;

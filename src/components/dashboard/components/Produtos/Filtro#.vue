@@ -92,21 +92,4 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.container {
-    max-width: 95% !important;
-}
-
-.filtro-texto {
-    color: var(--text-color-link);
-}
-
-.preco {
-    color: var(--text-color-sub);
-}
-
-@media (max-width: 768px) {
-    .container {
-        max-width: 100% !important;
-    }
-}
 </style>

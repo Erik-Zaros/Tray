@@ -1,33 +1,40 @@
-const API_URL = 'https://megev-affefxfrajedbqbw.brazilsouth-01.azurewebsites.net/usuarios';
+// src/services/apiService.js
 
-export function obterToken() {
+const API_URL_USUARIOS = 'https://megev-affefxfrajedbqbw.brazilsouth-01.azurewebsites.net/usuarios';
+const API_URL_PRODUTOS = 'https://megev-affefxfrajedbqbw.brazilsouth-01.azurewebsites.net/produtos';
+
+function obterToken() {
     return localStorage.getItem('token');
 }
 
-export function definirToken(token) {
+function definirToken(token) {
     localStorage.setItem('token', token);
 }
 
-export function removerToken() {
+function removerToken() {
     localStorage.removeItem('token');
 }
 
+async function tratarResposta(resposta) {
+    if (!resposta.ok) {
+        const mensagem = await resposta.text();
+        throw new Error(`Erro ${resposta.status}: ${mensagem}`);
+    }
+    return resposta.json();
+}
+
+// Funções de Usuário
+
 export async function registrarUsuario({ nome, sobrenome, email, senha, saldo }) {
     try {
-        const resposta = await fetch(`${API_URL}/registrar`, {
+        const resposta = await fetch(`${API_URL_USUARIOS}/registrar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ nome, sobrenome, email, senha, saldoConta: saldo }),
         });
-
-        if (!resposta.ok) {
-            const mensagem = await resposta.text();
-            throw new Error(mensagem);
-        }
-
-        return await resposta.json();
+        return await tratarResposta(resposta);
     } catch (erro) {
         console.error('Erro ao registrar usuário:', erro.message);
         throw erro;
@@ -36,21 +43,15 @@ export async function registrarUsuario({ nome, sobrenome, email, senha, saldo })
 
 export async function loginUsuario({ email, senha }) {
     try {
-        const resposta = await fetch(`${API_URL}/login`, {
+        const resposta = await fetch(`${API_URL_USUARIOS}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email, senha }),
         });
-
-        if (!resposta.ok) {
-            const mensagem = await resposta.text();
-            throw new Error(mensagem);
-        }
-
-        const dados = await resposta.json();
-        definirToken(dados.token); // Armazena o token usando a função definida
+        const dados = await tratarResposta(resposta);
+        definirToken(dados.token);
         return dados;
     } catch (erro) {
         console.error('Erro ao fazer login:', erro.message);
@@ -60,26 +61,17 @@ export async function loginUsuario({ email, senha }) {
 
 export async function obterDadosUsuario() {
     const token = obterToken();
-
-    if (!token) {
-        throw new Error('Usuário não autenticado.');
-    }
+    if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(`${API_URL}/me`, {
+        const resposta = await fetch(`${API_URL_USUARIOS}/me`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
         });
-
-        if (!resposta.ok) {
-            const erroTexto = await resposta.text();
-            throw new Error(erroTexto);
-        }
-
-        return await resposta.json();
+        return await tratarResposta(resposta);
     } catch (erro) {
         console.error('Erro ao obter dados do usuário:', erro.message);
         throw erro;
@@ -88,13 +80,10 @@ export async function obterDadosUsuario() {
 
 export async function atualizarUsuario({ id, nome, sobrenome, email, saldo }) {
     const token = obterToken();
-
-    if (!token) {
-        throw new Error('Usuário não autenticado.');
-    }
+    if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(`${API_URL}/${id}`, {
+        const resposta = await fetch(`${API_URL_USUARIOS}/${id}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -102,13 +91,7 @@ export async function atualizarUsuario({ id, nome, sobrenome, email, saldo }) {
             },
             body: JSON.stringify({ nome, sobrenome, email, saldoConta: saldo }),
         });
-
-        if (!resposta.ok) {
-            const mensagem = await resposta.text();
-            throw new Error(mensagem);
-        }
-
-        return await resposta.json();
+        return await tratarResposta(resposta);
     } catch (erro) {
         console.error('Erro ao atualizar usuário:', erro.message);
         throw erro;
@@ -117,26 +100,20 @@ export async function atualizarUsuario({ id, nome, sobrenome, email, saldo }) {
 
 export async function excluirUsuario(id) {
     const token = obterToken();
-
-    if (!token) {
-        throw new Error('Usuário não autenticado.');
-    }
+    if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(`${API_URL}/${id}`, {
+        const resposta = await fetch(`${API_URL_USUARIOS}/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
         });
-
-        if (!resposta.ok) {
-            const mensagem = await resposta.text();
-            throw new Error(mensagem);
+        if (resposta.ok) {
+            removerToken();
+            return true;
         }
-
-        removerToken();
-        return true;
+        return await tratarResposta(resposta);
     } catch (erro) {
         console.error('Erro ao excluir usuário:', erro.message);
         throw erro;
@@ -145,4 +122,82 @@ export async function excluirUsuario(id) {
 
 export function logout() {
     removerToken();
+}
+
+// Funções de Produtos
+
+export async function listarProdutos() {
+    const token = obterToken();
+    if (!token) throw new Error('Usuário não autenticado.');
+
+    try {
+        const resposta = await fetch(API_URL_PRODUTOS, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return await tratarResposta(resposta);
+    } catch (erro) {
+        console.error('Erro ao listar produtos:', erro.message);
+        throw erro;
+    }
+}
+
+export async function adicionarProduto({ referencia, descricao, categoria, preco, status, image }) {
+    const token = obterToken();
+    if (!token) throw new Error('Usuário não autenticado.');
+
+    try {
+        const resposta = await fetch(API_URL_PRODUTOS, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ referencia, descricao, categoria, preco, status, image })
+        });
+        return await tratarResposta(resposta);
+    } catch (erro) {
+        console.error('Erro ao adicionar produto:', erro.message);
+        throw erro;
+    }
+}
+
+export async function atualizarProduto({ produtoId, referencia, descricao, categoria, preco, status, image }) {
+    const token = obterToken();
+    if (!token) throw new Error('Usuário não autenticado.');
+
+    try {
+        const resposta = await fetch(`${API_URL_PRODUTOS}/${produtoId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ referencia, descricao, categoria, preco, status, image })
+        });
+        return await tratarResposta(resposta);
+    } catch (erro) {
+        console.error('Erro ao atualizar produto:', erro.message);
+        throw erro;
+    }
+}
+
+export async function excluirProduto(produtoId) {
+    const token = obterToken();
+    if (!token) throw new Error('Usuário não autenticado.');
+
+    try {
+        const resposta = await fetch(`${API_URL_PRODUTOS}/${produtoId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return await tratarResposta(resposta);
+    } catch (erro) {
+        console.error('Erro ao excluir produto:', erro.message);
+        throw erro;
+    }
 }

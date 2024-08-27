@@ -2,14 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Registrar from '../views/Registrar.vue';
-import Dashboard from '../views/Dashboard.vue'; 
-import Inicio from '../components/dashboard/Inicio.vue'; 
-import Perfil from '../components/dashboard/Perfil.vue'; 
-import Loja from '../components/dashboard/Loja.vue'; 
+import Dashboard from '../views/Dashboard.vue';
+import Inicio from '../components/dashboard/Inicio.vue';
+import Perfil from '../components/dashboard/Perfil.vue';
+import Loja from '../components/dashboard/Loja.vue';
 import Produtos from '../components/dashboard/Produtos.vue';
-import Templates from '../components/dashboard/Templates.vue'; 
-import Configuracao from '../components/dashboard/Configuracao.vue'; 
-import Ajuda from '../components/dashboard/Ajuda.vue'; 
+import Templates from '../components/dashboard/Templates.vue';
+import Configuracao from '../components/dashboard/Configuracao.vue';
+import Ajuda from '../components/dashboard/Ajuda.vue';
 
 const routes = [
   {
@@ -32,40 +32,40 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard,
     children: [
-      { 
-        path: 'inicio', 
+      {
+        path: 'inicio',
         name: 'Inicio',
-        component: Inicio 
+        component: Inicio
       },
-      { 
-        path: 'perfil', 
+      {
+        path: 'perfil',
         name: 'Perfil',
-        component: Perfil 
+        component: Perfil
       },
-      { 
-        path: 'loja', 
+      {
+        path: 'loja',
         name: 'Loja',
-        component: Loja 
+        component: Loja
       },
-      { 
-        path: 'produtos', 
+      {
+        path: 'produtos',
         name: 'Produtos',
-        component: Produtos 
+        component: Produtos
       },
-      { 
-        path: 'templates', 
+      {
+        path: 'templates',
         name: 'Templates',
-        component: Templates 
+        component: Templates
       },
-      { 
-        path: 'configuracao', 
+      {
+        path: 'configuracao',
         name: 'Configuracao',
-        component: Configuracao 
+        component: Configuracao
       },
-      { 
-        path: 'ajuda', 
+      {
+        path: 'ajuda',
         name: 'Ajuda',
-        component: Ajuda 
+        component: Ajuda
       },
     ]
   }

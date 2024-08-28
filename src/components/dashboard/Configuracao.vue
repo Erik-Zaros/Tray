@@ -26,10 +26,10 @@
                     <h5 class="titulo">Correios</h5>
                     <p class="texto">Com a plataforma dos correios tem varios bagui daora e etc.</p>
                 </div>
-                <div class="item">
-                    <h5 class="titulo">Correios</h5>
-                    <p class="texto">Com a plataforma dos correios tem varios bagui daora e etc.</p>
-                </div>
+            </div>
+
+            <div class="card p-4 mt-3 frete">
+                <h4 class="titulo-card mb-3"><i class="fa-solid fa-truck"></i> Frete e envio</h4>
                 <div class="item">
                     <h5 class="titulo">Correios</h5>
                     <p class="texto">Com a plataforma dos correios tem varios bagui daora e etc.</p>

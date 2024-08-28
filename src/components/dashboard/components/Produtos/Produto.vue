@@ -1,48 +1,116 @@
 <template>
-  <div class="produto-card shadow-sm rounded-2 p-3 mb-3">
-    <div class="row">
-      <div class="col-md-4">
-        <img :src="produto.image" alt="Imagem do produto" class="img-fluid rounded">
+  <div class="produto-card px-5 mx-4 p-3">
+    <div class="row align-items-center">
+      <!-- Ajustando o layout dos produtos -->
+      <div class="col-auto me-4">
+        <input class="form-check-input" type="checkbox">
       </div>
-      <div class="col-md-8">
-        <h5 class="produto-nome">{{ produto.descricao }}</h5>
-        <p class="produto-categoria">Categoria: {{ produto.categoria }}</p>
-        <p class="produto-preco">Preço: R$ {{ produto.preco.toFixed(2) }}</p>
-        <p class="produto-status">Status: {{ produto.status ? 'Ativo' : 'Inativo' }}</p>
+      <div class="col-auto me-4">
+        <p class="produto-referencia">{{ referencia }}</p>
+      </div>
+      <div class="col-auto me-4">
+        <img class="produto-imagem" :src="image || '/noimg.jpeg'" alt="Imagem do Produto">
+      </div>
+      <div class="col me-auto">
+        <p class="produto-descricao">{{ descricao }}</p>
+      </div>
+      <div class="col">
+        <p class="produto-categoria">{{ categoria }}</p>
+      </div>
+      <div class="col">
+        <p class="produto-preco">R$ {{ preco.toFixed(2) }}</p>
+      </div>
+      <div class="col">
+        <button :class="['produto-status btn', status ? 'btn-success' : 'btn-danger']">
+          {{ status ? 'Ativo' : 'Inativo' }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 
+
 <script setup>
 import { defineProps } from 'vue';
 
+// Definindo as props que o componente vai receber
 const props = defineProps({
-  produto: {
-    type: Object,
-    required: true
-  }
+  image: String,
+  referencia: String,
+  descricao: String,
+  categoria: String,
+  preco: Number,
+  status: Boolean
 });
 </script>
 
 <style scoped>
 .produto-card {
-  background-color: var(--background-primary);
+  color: #333;
+  border-top: 2px solid rgba(140, 140, 140, .3);
 }
 
-.produto-nome {
-  font-size: 1.25rem;
-  font-weight: bold;
+
+.produto-imagem {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
+
+.col-auto {
+  flex: 0 0 auto;
+}
+
+.ordenar-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.produto-referencia,
+.produto-descricao,
 .produto-categoria,
 .produto-preco,
 .produto-status {
-  font-size: 1rem;
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+
+.produto-referencia {
+  width: 100px;
+}
+
+.produto-descricao {
+  width: 200px;
+}
+
+.produto-categoria {
+  width: 120px;
+}
+
+.produto-preco {
+  width: 80px;
+}
+
+.produto-status {
+  width: 100px;
+}
+
+@media (max-width: 768px) {
+  .produto-card .row {
+    flex-direction: column;
+  }
+
+  .produto-imagem {
+    max-width: 75px;
+  }
 }
 </style>

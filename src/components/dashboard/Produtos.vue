@@ -6,6 +6,8 @@ import Produto from './components/Produtos/Produto.vue'; // Importar o modal de 
 import { listarProdutos } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
 
 const produtos = ref([]);
+const router = useRouter();
+//inacabado
 const filtro = ref({
   codigoReferencia: '',
   nomeProduto: '',
@@ -15,7 +17,6 @@ const filtro = ref({
   precoAte: '',
   estoque: ''
 });
-const router = useRouter();
 
 const carregarProdutos = async () => {
   try {
@@ -87,13 +88,15 @@ onMounted(() => {
             <!-- Código ou Referência -->
             <div class="col-md-4">
               <label for="codigoReferencia" class="form-label">Código ou Referência</label>
-              <input v-model="filtro.codigoReferencia" type="text" class="form-control" id="codigoReferencia" placeholder="Digite o código ou referência">
+              <input v-model="filtro.codigoReferencia" type="text" class="form-control" id="codigoReferencia"
+                placeholder="Digite o código ou referência">
             </div>
 
             <!-- Nome do Produto -->
             <div class="col-md-4">
               <label for="nomeProduto" class="form-label">Nome do Produto</label>
-              <input v-model="filtro.nomeProduto" type="text" class="form-control" id="nomeProduto" placeholder="Digite o nome do produto">
+              <input v-model="filtro.nomeProduto" type="text" class="form-control" id="nomeProduto"
+                placeholder="Digite o nome do produto">
             </div>
 
             <!-- Status -->
@@ -122,9 +125,11 @@ onMounted(() => {
               <label for="precoDe" class="form-label">Faixa de Preço</label>
               <div class="input-group">
                 <span class="preco m-auto p-2 fw-bold">De R$</span>
-                <input v-model="filtro.precoDe" type="number" class="form-control rounded" id="precoDe" placeholder="0.00">
+                <input v-model="filtro.precoDe" type="number" class="form-control rounded" id="precoDe"
+                  placeholder="0.00">
                 <span class="preco m-auto p-2 fw-bold">Até R$</span>
-                <input v-model="filtro.precoAte" type="number" class="form-control rounded" id="precoAte" placeholder="0.00">
+                <input v-model="filtro.precoAte" type="number" class="form-control rounded" id="precoAte"
+                  placeholder="0.00">
               </div>
             </div>
 
@@ -142,22 +147,66 @@ onMounted(() => {
           </div>
           <!-- Botão de Filtro -->
           <div class="col-12 d-flex justify-content-end pt-3">
-            <button type="button" class="btn btn-outline-dark rounded-0" @click="limparFiltro"><i class="fa-solid text-secondary fa-circle-info"></i> Limpar Filtros</button>
+            <button type="button" class="btn btn-outline-dark rounded-0" @click="limparFiltro"><i
+                class="fa-solid text-secondary fa-circle-info"></i> Limpar Filtros</button>
             <button type="submit" class="btn btn-primary rounded-0 ms-3">Filtrar</button>
           </div>
         </form>
       </div>
 
-      <div class="produtos-lista pt-4">
-        <div>
-          <ul>
-            <li v-for="produto in produtos" :key="produto.id">
-              ID: {{ produto.id }}, Referência: {{ produto.referencia }}, Descrição: {{ produto.descricao }}, Categoria:
-              {{ produto.categoria }}, Preço: {{ produto.preco }}, Status: {{ produto.status }}
-            </li>
-          </ul>
+      <div class="pt-4">
+        <div class="ordem row align-items-center mx-5 p-3 px-3">
+          <!-- Ajuste o layout do cabeçalho para corresponder ao layout dos produtos -->
+          <div class="col-auto me-4 mb-3 ordenar-item">
+            <input class="form-check-input" type="checkbox">
+          </div>
+          <div class="col-auto me-5 ordenar-item produto-referencia">
+            <p class="ordenar-texto">
+              Referencia
+              <i class="fa-solid fa-sort ms-2"></i>
+            </p>
+          </div>
+          <div class="col-auto ordenar-item produto-imagem">
+            <p class="ordenar-texto">
+              Imagem
+              <i class="fa-solid fa-sort ms-2"></i>
+            </p>
+          </div>
+          <div class="col ordenar-item produto-descricao">
+            <p class="ordenar-texto">
+              Descriçao
+              <i class="fa-solid fa-sort ms-2"></i>
+            </p>
+          </div>
+          <div class="col ordenar-item produto-categoria">
+            <p class="ordenar-texto">
+              Categoria
+              <i class="fa-solid fa-sort ms-2"></i>
+            </p>
+          </div>
+          <div class="col ordenar-item produto-preco">
+            <p class="ordenar-texto">
+              Preço
+              <i class="fa-solid fa-sort ms-2"></i>
+            </p>
+          </div>
+          <div class="col ordenar-item produto-status">
+            <p class="ordenar-texto">
+              Status
+              <i class="fa-solid fa-sort ms-2"></i>
+            </p>
+          </div>
+        </div>
+
+        <!-- Renderização dos produtos -->
+        <div class="produto-lista">
+          <div class="lista-produtos" v-for="produto in produtos" :key="produto.id">
+            <Produto :referencia="produto.referencia" :image="produto.image" :descricao="produto.descricao"
+              :categoria="produto.categoria" :preco="produto.preco" :status="produto.status" />
+          </div>
         </div>
       </div>
+
     </div>
 
     <!-- Modal de Cadastro de Produto -->
@@ -166,8 +215,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Suas estilizações existentes */
-
 .mais {
   height: 50px;
   background-color: rgb(180, 180, 180);
@@ -184,7 +231,7 @@ onMounted(() => {
   width: 91vw;
 }
 
-/* Filtro */
+
 .container {
   max-width: 95% !important;
 }
@@ -197,9 +244,77 @@ onMounted(() => {
   color: var(--text-color-sub);
 }
 
+.produto-lista {
+  height: 35vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.lista-produtos {
+  max-height: 300px;
+}
+
+.col-auto {
+  flex: 0 0 auto;
+}
+
+.ordenar-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.produto-referencia,
+.produto-descricao,
+.produto-categoria,
+.produto-preco,
+.produto-status {
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.produto-referencia {
+  width: 120px;
+}
+
+.produto-descricao {
+  width: 200px;
+}
+
+.produto-categoria {
+  width: 120px;
+}
+
+.produto-preco {
+  width: 80px;
+}
+
+.produto-status {
+  width: 100px;
+}
+
+
 @media (max-width: 768px) {
+
   .container {
     max-width: 100% !important;
+  }
+
+  .produto-card .row,
+  .ordem.row {
+    flex-direction: column;
+
+  }
+
+  .produto-imagem {
+    max-width: 75px;
+
   }
 }
 </style>

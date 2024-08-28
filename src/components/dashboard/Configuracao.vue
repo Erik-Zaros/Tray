@@ -13,7 +13,7 @@
  
         <div class="col-md-4 col-12 p-2">
             <div class="card p-4 frete">
-                <h4 class="titulo-card mb-3"><i class="bi bi-shop"></i>LOJA</h4>
+                <h4 class="titulo-card mb-3"><i class="bi bi-shop me-2"></i>LOJA</h4>
                 <div class="item">
                     <h5 class="titulo">Geral</h5>
                     <p class="texto">Funcionamento geral, cadastro de clientes</p>
@@ -29,7 +29,7 @@
             </div>
 
             <div class="card p-4 mt-3 frete">
-                <h4 class="titulo-card mb-3"><i class="bi bi-cash"></i>Vendas</h4>
+                <h4 class="titulo-card mb-3"><i class="bi bi-cash me-2"></i>Vendas</h4>
                 <div class="item">
                     <h5 class="titulo">Objetivo</h5>
                     <p class="texto">Motivos pelo qual esta focado suas vendas</p>
@@ -44,7 +44,7 @@
 
         <div class="col-md-4 col-12 p-2">
             <div class="card p-4 frete">
-                <h4 class="titulo-card mb-3"><i class="fa-solid fa-truck"></i>Pedidos</h4>
+                <h4 class="titulo-card mb-3"><i class="fa-solid fa-truck me-2"></i>Pedidos</h4>
                 <div class="item">
                     <h5 class="titulo">Metodos de entrega</h5>
                     <p class="texto">Metodos de entrega o qual sua loja trabalha</p>

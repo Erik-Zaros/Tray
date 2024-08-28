@@ -57,30 +57,30 @@ const deslogar = async () => {
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-3" class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-user"><span
                             class="text-icon px-2">Perfil</span></i>
-                </label>
+                </label><!--
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/loja">
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-4" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-store"><span
                             class="text-icon px-2">Sua Loja</span></i>
-                </label>
-            </div>
-
-            <div class="content-2">
+                </label>-->
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/produtos">
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-5" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span
                             class="text-icon px-2">Produtos</span></i>
-                </label>
-                <label class="icon-wrapper my-1"><router-link to="/dashboard/templates">
-                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
-                    <i id="tour-6" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span
-                            class="text-icon px-2">Templates</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/configuracao">
                         <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-7" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-gear"><span
                             class="text-icon px-2">Configurações</span></i>
                 </label>
+            </div>
+
+            <div class="content-2"><!--
+                <label class="icon-wrapper my-1"><router-link to="/dashboard/templates">
+                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                    <i id="tour-6" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span
+                            class="text-icon px-2">Templates</span></i>
+                </label>-->
             </div>
 
             <div class="content-3">
@@ -214,5 +214,4 @@ body {
         display: none;
     }
 }
-
 </style>

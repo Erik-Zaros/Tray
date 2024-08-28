@@ -8,13 +8,13 @@ const props = defineProps({
   categoria: String,
   preco: Number,
   status: Boolean,
-  id: Number
+  id: Number,
+  usuario: Object  // Certifique-se de incluir o objeto usuário
 });
 
 const emit = defineEmits(['editarProduto', 'excluirProduto']);
 
 const emitirEditar = () => {
-  console.log('Emitindo evento de edição', props.id);
   emit('editarProduto', {
     id: props.id,
     referencia: props.referencia,
@@ -22,10 +22,10 @@ const emitirEditar = () => {
     categoria: props.categoria,
     preco: props.preco,
     status: props.status,
-    image: props.image
+    image: props.image,
+    usuario: props.usuario  // Inclui o usuário para edição completa
   });
 };
-
 
 const emitirExcluir = () => {
   emit('excluirProduto', props.id);
@@ -40,7 +40,7 @@ const emitirExcluir = () => {
         <input class="form-check-input" type="checkbox">
       </div>
       <div class="col-auto me-4">
-        <p class="produto-referencia">{{ referencia }} {{ id }}</p>
+        <p class="produto-referencia">{{ referencia }}</p>
       </div>
       <div class="col-auto me-4">
         <img class="produto-imagem" :src="image || '/noimg.jpeg'" alt="Imagem do Produto">

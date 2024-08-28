@@ -16,14 +16,14 @@ const props = defineProps({
 
 const produto = ref({ 
     ...props.produto,
-    usuario: props.produto.usuario || {} // Garante que usuario sempre tem um valor
+    usuario: props.produto.usuario || {} 
 });
 const emit = defineEmits(['closeModal', 'produtoEditado']);
 
 watch(() => props.produto, (novaProduto) => {
     produto.value = { 
         ...novaProduto,
-        usuario: novaProduto.usuario || {} // Garante que usuario sempre tem um valor
+        usuario: novaProduto.usuario || {} 
     };
 }, { immediate: true });
 
@@ -62,18 +62,17 @@ const atualizaProduto = async () => {
             preco: produto.value.preco,
             status: produto.value.status,
             image: produto.value.image,
-            usuarioId: produto.value.usuario.id, // Inclua o ID do usuário
-            usuario: produto.value.usuario // Inclua o objeto usuário aqui
+            usuarioId: produto.value.usuario.id, 
+            usuario: produto.value.usuario 
         }, token);
 
         emit('produtoEditado', produtoAtualizado);
 
+        
         const modalElement = document.getElementById('editProductModal');
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        if (modal) {
-            modal.hide();
-        } else {
-            new bootstrap.Modal(modalElement).hide();
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+            modalInstance.hide();
         }
 
         emit('closeModal');
@@ -124,37 +123,16 @@ const atualizaProduto = async () => {
                             <input type="text" id="imagemProduto" class="form-control" v-model="produto.image" />
                         </div>
                         <div class="mb-3">
-                            <label for="statusProduto" class="form-label">Status</label>
-                            <select id="statusProduto" class="form-select" v-model="produto.status">
+                            <label class="form-check-label" for="statusProduto">Status</label>
+                            <select id="statusProduto" class="form-select" v-model="produto.status" required>
                                 <option :value="true">Ativo</option>
                                 <option :value="false">Inativo</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="usuarioId" class="form-label">ID do Usuário</label>
-                            <input type="number" id="usuarioId" class="form-control" v-model.number="produto.usuario.id" />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="emit('closeModal')">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
-                        <div class="mb-3">
-                            <label for="usuarioNome" class="form-label">Nome do Usuário</label>
-                            <input type="text" id="usuarioNome" class="form-control" v-model="produto.usuario.nome" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="usuarioSobrenome" class="form-label">Sobrenome do Usuário</label>
-                            <input type="text" id="usuarioSobrenome" class="form-control" v-model="produto.usuario.sobrenome" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="usuarioEmail" class="form-label">Email do Usuário</label>
-                            <input type="email" id="usuarioEmail" class="form-control" v-model="produto.usuario.email" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="usuarioSaldo" class="form-label">Saldo da Conta do Usuário</label>
-                            <input type="number" id="usuarioSaldo" class="form-control" v-model.number="produto.usuario.saldoConta" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="usuarioImagem" class="form-label">Imagem do Usuário</label>
-                            <input type="text" id="usuarioImagem" class="form-control" v-model="produto.usuario.userImage" />
-                        </div>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
                 </div>
             </div>
@@ -164,6 +142,6 @@ const atualizaProduto = async () => {
 
 <style scoped>
 .modal {
-    margin-top: 15vh;
+  margin-top: 10vh;
 }
 </style>

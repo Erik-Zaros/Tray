@@ -200,7 +200,7 @@ export async function atualizarProduto({ produtoId, referencia, descricao, categ
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ referencia, descricao, categoria, preco, status, image })
+            body: JSON.stringify({ produtoId, referencia, descricao, categoria, preco, status, image })
         });
         return await tratarResposta(resposta);
     } catch (erro) {

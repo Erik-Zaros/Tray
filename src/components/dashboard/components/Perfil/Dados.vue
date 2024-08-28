@@ -13,6 +13,8 @@ const props = defineProps({
 
 const estado = ref({});
 const usuario = ref();
+const imageUrl = ref('/default-image.jpg'); // Imagem padrão da pasta public
+
 
 watch(() => props.isEditing, (newVal) => {
 });
@@ -20,7 +22,6 @@ watch(() => props.isEditing, (newVal) => {
 const mudarEstado = () => {
     estado.value.status = estado.value.status === 'active' ? 'inactive' : 'active';
 };
-
 
 
 onMounted(async () => {

@@ -105,7 +105,7 @@
 .item {
     background-color: var(--background-secondary);
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px 15px 8px 15px;
     margin: 10px 0 10px 0;
 }
 

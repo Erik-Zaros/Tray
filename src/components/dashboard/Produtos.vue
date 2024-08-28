@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue'; // Importar o modal de cadastro
 import ImportarProdutos from './components/Produtos/ImportarProdutos.vue'; // Importar o modal de cadastro
@@ -8,21 +8,23 @@ import { listarProdutos, excluirProduto as apiExcluirProduto } from '../../servi
 
 const produtos = ref([]);
 const router = useRouter();
-//inacabado
 const filtro = ref({
   codigoReferencia: '',
   nomeProduto: '',
-  status: '',
   categorias: '',
   precoDe: '',
-  precoAte: '',
-  estoque: ''
+  precoAte: ''
 });
+const ordenacao = ref({ campo: '', direcao: '' });
+const categoriasUnicas = ref([]); // Constante para armazenar categorias únicas
 
 const carregarProdutos = async () => {
   try {
     const resposta = await listarProdutos();
     produtos.value = resposta.produtos || []; // Acessa o array 'produtos' do JSON retornado
+    // Extrai as categorias únicas
+    const categorias = produtos.value.map(produto => produto.categoria);
+    categoriasUnicas.value = [...new Set(categorias)];
   } catch (erro) {
     console.error('Erro ao carregar produtos:', erro.message);
     alert('Erro ao carregar produtos.');
@@ -40,14 +42,45 @@ const excluirProduto = async (produtoId) => {
   }
 };
 
-const aplicarFiltro = async () => {
-  try {
-    // Implementar a lógica para filtrar produtos com base no estado `filtro`
-    // Atualize a função `listarProdutos` para aceitar parâmetros de filtro se necessário
-    await carregarProdutos();
-  } catch (erro) {
-    console.error('Erro ao aplicar filtros:', erro.message);
-    alert('Erro ao aplicar filtros.');
+const aplicarFiltro = () => {
+  // Recarregar os produtos para garantir que os filtros sejam aplicados na lista atualizada
+  carregarProdutos();
+};
+
+const produtosFiltrados = computed(() => {
+  return produtos.value
+    .filter(produto => {
+      // Verificar se as propriedades do produto estão definidas e garantir que a operação de conversão para minúsculas não falhe
+      const referencia = produto.referencia ? produto.referencia.toLowerCase() : '';
+      const nome = produto.descricao ? produto.descricao.toLowerCase() : '';
+      const categoria = produto.categoria || '';
+      const preco = produto.preco || 0;
+
+      const codigoOuReferenciaMatch = referencia.includes(filtro.value.codigoReferencia.toLowerCase());
+      const nomeProdutoMatch = nome.includes(filtro.value.nomeProduto.toLowerCase());
+      const categoriaMatch = filtro.value.categorias ? categoria === filtro.value.categorias : true;
+      const precoMatch = (!filtro.value.precoDe || preco >= filtro.value.precoDe) &&
+        (!filtro.value.precoAte || preco <= filtro.value.precoAte);
+
+      return codigoOuReferenciaMatch && nomeProdutoMatch && categoriaMatch && precoMatch ;
+    })
+    .sort((a, b) => {
+      const campo = ordenacao.value.campo;
+      if (!campo) return 0;
+      const valorA = a[campo] || '';
+      const valorB = b[campo] || '';
+      if (valorA < valorB) return ordenacao.value.direcao === 'asc' ? -1 : 1;
+      if (valorA > valorB) return ordenacao.value.direcao === 'asc' ? 1 : -1;
+      return 0;
+    });
+});
+
+const ordenar = (campo) => {
+  if (ordenacao.value.campo === campo) {
+    ordenacao.value.direcao = ordenacao.value.direcao === 'asc' ? 'desc' : 'asc';
+  } else {
+    ordenacao.value.campo = campo;
+    ordenacao.value.direcao = 'asc';
   }
 };
 
@@ -55,13 +88,10 @@ const limparFiltro = () => {
   filtro.value = {
     codigoReferencia: '',
     nomeProduto: '',
-    status: '',
     categorias: '',
     precoDe: '',
     precoAte: '',
-    estoque: ''
   };
-  aplicarFiltro();
 };
 
 // Carregar produtos ao montar o componente
@@ -69,6 +99,7 @@ onMounted(() => {
   carregarProdutos();
 });
 </script>
+
 
 <template>
   <div class="container-fluid p-0">
@@ -82,7 +113,8 @@ onMounted(() => {
     <div class="produtos px-5 py-3 d-flex align-items-center justify-content-between">
       <h4 class="edit fw-bold">Produtos</h4>
       <div class="editar d-flex">
-        <a href="" class="options text-decoration-none dropdown-toggle my-auto" data-bs-toggle="dropdown" aria-expanded="false">
+        <a href="" class="options text-decoration-none dropdown-toggle my-auto" data-bs-toggle="dropdown"
+          aria-expanded="false">
           <i class="fa-solid fa-ellipsis-vertical me-2"></i> Mais Opções
         </a>
         <ul class="dropdown-menu border-0" role="menu">
@@ -102,42 +134,33 @@ onMounted(() => {
           <h4 class="filtro-texto pb-3">Filtrar Produtos</h4>
           <div class="row g-3 border-bottom border-top pb-4">
             <!-- Código ou Referência -->
-            <div class="col-md-4">
+            <div class="col-md-6">
               <label for="codigoReferencia" class="form-label">Código ou Referência</label>
               <input v-model="filtro.codigoReferencia" type="text" class="form-control" id="codigoReferencia"
                 placeholder="Digite o código ou referência">
             </div>
 
             <!-- Nome do Produto -->
-            <div class="col-md-4">
+            <div class="col-md-6">
               <label for="nomeProduto" class="form-label">Nome do Produto</label>
               <input v-model="filtro.nomeProduto" type="text" class="form-control" id="nomeProduto"
                 placeholder="Digite o nome do produto">
             </div>
 
-            <!-- Status -->
-            <div class="col-md-4">
-              <label for="status" class="form-label">Status</label>
-              <select v-model="filtro.status" id="status" class="form-select">
-                <option value="">Selecione...</option>
-                <option value="ativo">Ativo</option>
-                <option value="inativo">Inativo</option>
-              </select>
-            </div>
-
             <!-- Categorias -->
-            <div class="col-md-4">
+            <div class="col-md-6">
               <label for="categorias" class="form-label">Categorias</label>
               <select v-model="filtro.categorias" id="categorias" class="form-select">
                 <option value="">Selecione...</option>
-                <option value="eletronicos">Eletrônicos</option>
-                <option value="utensilios">Utensílios</option>
-                <!-- Adicione mais categorias conforme necessário -->
+                <option v-for="categoria in categoriasUnicas" :key="categoria" :value="categoria">
+                  {{ categoria }}
+                </option>
               </select>
             </div>
 
+
             <!-- Faixa de Preço -->
-            <div class="col-md-4">
+            <div class="col-md-6">
               <label for="precoDe" class="form-label">Faixa de Preço</label>
               <div class="input-group">
                 <span class="preco m-auto p-2 fw-bold">De R$</span>
@@ -149,17 +172,6 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- Estoque -->
-            <div class="col-md-4">
-              <label for="estoque" class="form-label">Estoque</label>
-              <select v-model="filtro.estoque" id="estoque" class="form-select">
-                <option value="">Selecione...</option>
-                <option value="todos">Todos</option>
-                <option value="maiorQueZero">Maior que 0</option>
-                <option value="igualAZero">Igual a 0</option>
-                <option value="menorQueZero">Menor que 0</option>
-              </select>
-            </div>
           </div>
           <!-- Botão de Filtro -->
           <div class="col-12 d-flex justify-content-end pt-3">
@@ -176,10 +188,15 @@ onMounted(() => {
           <div class="col-auto me-4 mb-3 ordenar-item">
             <input class="form-check-input" type="checkbox">
           </div>
-          <div class="col-auto me-5 ordenar-item produto-referencia">
+          <div class="col-auto me-5 ordenar-item produto-referencia" @click="ordenar('referencia')">
             <p class="ordenar-texto">
-              Referencia
-              <i class="fa-solid fa-sort ms-2"></i>
+              Referência
+            <div class="ordenar bg-warning d-flex">
+              <i
+                :class="{ 'fa-solid fa-caret-up': ordenacao.campo === 'referencia' && ordenacao.direcao === 'asc', 'fa-solid fa-caret-up text-dark': ordenacao.campo === 'referencia' && ordenacao.direcao === 'desc' }"></i>
+              <i
+                :class="{ 'fa-solid fa-caret-down': ordenacao.campo === 'referencia' && ordenacao.direcao === 'desc', 'fa-solid fa-caret-down text-dark': ordenacao.campo === 'referencia' && ordenacao.direcao === 'asc' }"></i>
+            </div>
             </p>
           </div>
           <div class="col-auto ordenar-item produto-imagem">
@@ -220,7 +237,7 @@ onMounted(() => {
 
         <!-- Renderização dos produtos -->
         <div class="produto-lista">
-          <div class="lista-produtos" v-for="produto in produtos" :key="produto.id">
+          <div class="lista-produtos" v-for="produto in produtosFiltrados" :key="produto.id">
             <Produto :referencia="produto.referencia" :image="produto.image" :descricao="produto.descricao"
               :categoria="produto.categoria" :preco="produto.preco" :status="produto.status"
               @excluirProduto="excluirProduto(produto.id)" />

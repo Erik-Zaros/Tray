@@ -25,14 +25,14 @@ async function tratarResposta(resposta) {
 
 // Funções de Usuário
 
-export async function registrarUsuario({ nome, sobrenome, email, senha, saldo }) {
+export async function registrarUsuario({ nome, sobrenome, email, senha, saldo, image }) {
     try {
         const resposta = await fetch(`${API_URL_USUARIOS}/registrar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ nome, sobrenome, email, senha, saldoConta: saldo }),
+            body: JSON.stringify({ nome, sobrenome, email, senha, saldoConta: saldo, userImage: image }),
         });
         return await tratarResposta(resposta);
     } catch (erro) {
@@ -125,7 +125,6 @@ export function logout() {
 }
 
 // Funções de Produtos
-
 export async function listarProdutos() {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
@@ -134,10 +133,17 @@ export async function listarProdutos() {
         const resposta = await fetch(API_URL_PRODUTOS, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' // Adicione o Content-Type se necessário
             }
         });
-        return await tratarResposta(resposta);
+
+        if (!resposta.ok) {
+            throw new Error(`Erro ${resposta.status}: ${resposta.statusText}`);
+        }
+
+        const dados = await resposta.json();
+        return dados; // Certifique-se de que o formato de dados retornado está correto
     } catch (erro) {
         console.error('Erro ao listar produtos:', erro.message);
         throw erro;

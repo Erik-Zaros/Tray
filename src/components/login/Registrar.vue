@@ -10,6 +10,7 @@ const sobrenome = ref('');
 const email = ref('');
 const senha = ref('');
 const saldo = ref(0);
+const image = ref('');
 
 async function registrar() {
     try {
@@ -19,6 +20,7 @@ async function registrar() {
             email: email.value,
             senha: senha.value,
             saldo: saldo.value,
+            image: image.value,
         };
 
         await registrarUsuario(dados);
@@ -42,6 +44,7 @@ async function registrar() {
         email.value = '';
         senha.value = '';
         saldo.value = 0;
+        image.value = '';
     } catch (erro) {
         alert(`Erro ao registrar ou fazer login: ${erro.message}`);
     }
@@ -65,6 +68,9 @@ async function registrar() {
 
         <label class="text-start my-2 d-none">Saldo <span class="text-danger">*</span></label>
         <input class="form-control rounded-5 p-2 px-3 mb-4" v-model.number="saldo" placeholder="Saldo" hidden/>
+  
+        <label class="text-start my-2 d-none">Imagem <span class="text-danger">*</span></label>
+        <input class="form-control rounded-5 p-2 px-3 mb-4" type="image" v-model="image" placeholder="Imagem" hidden/>
   
         <div class="row">
           <button class="btn btn-success m-auto col-10 col-md-6 rounded-5 fs-4 fw-bold" type="submit">Continuar</button>

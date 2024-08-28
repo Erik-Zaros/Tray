@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { obterDadosUsuario, atualizarUsuario } from '../../services/api';
+import { obterDadosUsuario, atualizarUsuario, excluirUsuario } from '../../services/api';
 import Tour from '../dashboard/components/Perfil/Tour.vue';
 
 const editando = ref(false);
@@ -81,6 +81,10 @@ const mudarEstado = () => {
   usuario.value.status = usuario.value.status === 'active' ? 'inactive' : 'active';
 };
 
+const excluirConta = () => {
+  excluirUsuario()
+}
+
 onMounted(async () => {
   try {
     const dados = await obterDadosUsuario();
@@ -99,6 +103,7 @@ onMounted(async () => {
       <div class="salvar shadow w-100 px-5 d-flex align-items-center justify-content-between">
         <div class="editar-titulo fw-bold">{{ usuario.nome ? `Usuário: ${usuario.nome}` : 'Usuário' }}</div>
         <div class="usuario" :class="{ 'd-none': editando }">
+          <button @click="excluirConta" class="btn btn-danger py-2 px-3 ms-3 rounded-0">Exluir</button>
           <button @click="alternarEdicao" class="btn btn-primary py-2 px-3 ms-3 rounded-0">Editar</button>
         </div>
         <div class="opcoes-editar" :class="{ 'd-block': editando, 'd-none': !editando }">

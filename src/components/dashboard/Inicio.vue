@@ -58,7 +58,7 @@ onMounted(async () => {
                     </div>
 
                     <div class="ver d-flex m-0 ps-1 align-items-center">
-                        <a class="text-decoration-none text-center" href="https://br.linkedin.com/in/thiagosarraf">Ver Mais</a>
+                        <a class="text-decoration-none text-center" href="https://br.linkedin.com/in/thiagosarraf" target="_blank">Ver Mais</a>
                     </div>
 
                 </div>
@@ -86,7 +86,7 @@ onMounted(async () => {
 
         <div class="col-12 col-md-6">
 
-            <div id="tour-12" class="content-3 mx-3 my-sm-3 me-sm-3 px-5 rounded-4">
+            <div id="tour-12" class="content-3 ms-1 my-sm-3 me-3 px-5 rounded-4">
                 <div class="plano d-flex justify-content-between align-items-center">
                     <h3 class="titulo fw-bold">Meu Plano</h3>
                     <a class="text-decoration-none" href="https://tray.com.br/planos-precos/">Gerenciar Plano</a>

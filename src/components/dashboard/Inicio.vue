@@ -34,7 +34,7 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="implantacao pe-2 pe-md-4 d-flex flex-column align-items-center justify-content-center">
-                    <div class="texto text-center"><span>Loja em Implantacao
+                    <div class="texto text-center"><span>Loja em Implantação
                             <i class="fa-regular fa-circle-up"></i></span>
                     </div>
                     <div class="inaugurar">
@@ -53,12 +53,12 @@ onMounted(async () => {
                         <img class="perfil-post shadow-sm rounded-circle m-auto" src="/image/logoroll.png" alt="">
                         <div class="textos ps-3">
                             <h4 class="titulo mb-0 mt-2">Dicas do Especialista</h4>
-                            <p class="texto">Thomas Turbando</p>
+                            <p class="texto">Thiago Sarraf</p>
                         </div>
                     </div>
 
                     <div class="ver d-flex m-0 ps-1 align-items-center">
-                        <a class="text-decoration-none text-center" href="">Ver Mais</a>
+                        <a class="text-decoration-none text-center" href="https://br.linkedin.com/in/thiagosarraf">Ver Mais</a>
                     </div>
 
                 </div>
@@ -89,7 +89,7 @@ onMounted(async () => {
             <div id="tour-12" class="content-3 mx-3 my-sm-3 me-sm-3 px-5 rounded-4">
                 <div class="plano d-flex justify-content-between align-items-center">
                     <h3 class="titulo fw-bold">Meu Plano</h3>
-                    <a class="text-decoration-none" href="">Gerenciar Plano</a>
+                    <a class="text-decoration-none" href="https://tray.com.br/planos-precos/">Gerenciar Plano</a>
                 </div>
 
                 <div class="progress w-100">

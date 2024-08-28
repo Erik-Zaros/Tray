@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { logout } from '../../../../services/api';
- 
+
 const router = useRouter();
 const menu = ref(false);
 
@@ -22,7 +22,6 @@ const deslogar = async () => {
 
 </script>
 
-
 <template>
 
     <div>
@@ -34,25 +33,14 @@ const deslogar = async () => {
             </div>
 
             <div class="d-flex align-items-center">
-                <form class="search-input me-2 mb-2 mb-lg-0 position-relative">
-                    <input type="text" class="search form-control form-control-sm rounded-5 px-3 py-2 pe-5"
-                        placeholder="Pedidos, Clientes e Recursos" />
-                    <i class="search-icon fas fa-search position-absolute"
-                        style="top: 50%; right: 15px; transform: translateY(-50%);"></i>
-                </form>
 
-                <i class="fa-regular fa-bell fs-3 px-2 px-md-3"></i>
-                <i class="fa-regular fa-circle-question fs-3 px-2 px-md-3"></i>
+                <router-link to="/dashboard/ajuda">
+                    <i class="fa-regular fa-circle-question fs-3 px-2 px-md-3"></i>
+                </router-link>
 
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        NOME
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a class="dropdown-item" href="#">Seu Perfil</a></li>
-                    </ul>
-                </div>
+                <router-link to="/dashboard/perfil">
+                    <i class="bi bi-person-fill fs-2 px-2 px-md-3"></i>
+                </router-link>
             </div>
         </div>
 
@@ -79,17 +67,17 @@ const deslogar = async () => {
 
             <div class="content-2">
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/produtos">
-                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-5" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tag"><span
                             class="text-icon px-2">Produtos</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/templates">
-                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-6" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-tv"><span
                             class="text-icon px-2">Templates</span></i>
                 </label>
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/configuracao">
-                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-7" class="fa-solid icon-menu d-flex py-3 px-4 rounded fa-gear"><span
                             class="text-icon px-2">Configurações</span></i>
                 </label>
@@ -97,7 +85,7 @@ const deslogar = async () => {
 
             <div class="content-3">
                 <label class="icon-wrapper my-1"><router-link to="/dashboard/ajuda">
-                    <input type="radio" name="icon-selection" class="icon-radio"></router-link>
+                        <input type="radio" name="icon-selection" class="icon-radio"></router-link>
                     <i id="tour-8" class="fa-regular icon-menu d-flex py-3 px-4 rounded fa-circle-question"><span
                             class="text-icon px-2">Ajuda</span></i>
                 </label>
@@ -108,66 +96,65 @@ const deslogar = async () => {
                 </label>
             </div>
         </div>
-
     </div>
-
 </template>
 
 <style scoped>
 * {
     color: white;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
-    height: 100%; 
+    height: 100%;
 }
 
 .content {
     display: flex;
-    height: 100vh; 
-    overflow: hidden; 
+    height: 100vh;
+    overflow: hidden;
 }
 
 .horizontal {
     background-color: #424242;
     height: 8vh;
     width: 100%;
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
 .vertical {
     background-color: #484848;
-    height: 92vh; 
+    height: 92vh;
     width: 80px;
-    position: fixed; 
-    top: 8vh; 
+    position: fixed;
+    top: 8vh;
     left: 0;
-    z-index: 999; 
-    transition: width 0.3s; 
+    z-index: 999;
+    transition: width 0.3s;
 }
 
 .vertical:hover,
 .vertical.expanded {
-  width: 200px;
+    width: 200px;
 
-  & .text-icon {
-    display: block;
-  }
+    & .text-icon {
+        display: block;
+    }
 }
 
 .content-wrapper {
-    margin-left: 80px; 
-    margin-top: 8vh; 
+    margin-left: 80px;
+    margin-top: 8vh;
     flex: 1;
-    overflow-y: auto; 
-    padding: 16px; 
-    background-color: #f4f4f4; 
+    overflow-y: auto;
+    padding: 16px;
+    background-color: #f4f4f4;
 }
 
 .menu-icon {
@@ -222,10 +209,10 @@ html, body {
     background-color: rgb(0, 110, 255);
 }
 
-
 @media (max-width: 1024px) {
     .search-input {
         display: none;
     }
 }
+
 </style>

@@ -35,11 +35,11 @@ const deslogar = async () => {
             <div class="d-flex align-items-center">
 
                 <router-link to="/dashboard/ajuda">
-                    <i class="fa-regular fa-circle-question fs-3 px-2 px-md-2"></i>
+                    <i class="fa-regular fa-circle-question fs-3 px-2 px-md-3"></i>
                 </router-link>
 
                 <router-link to="/dashboard/perfil">
-                    <i class="bi bi-person-fill fs-2 px-2 px-md-2"></i>
+                    <i class="bi bi-person-fill fs-2 px-2 px-md-3"></i>
                 </router-link>
             </div>
         </div>

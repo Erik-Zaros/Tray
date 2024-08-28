@@ -14,19 +14,24 @@ const props = defineProps({
     }
 });
 
-const produto = ref({ ...props.produto });
+const produto = ref({ 
+    ...props.produto,
+    usuario: props.produto.usuario || {} // Garante que usuario sempre tem um valor
+});
 const emit = defineEmits(['closeModal', 'produtoEditado']);
 
 watch(() => props.produto, (novaProduto) => {
-    produto.value = { ...novaProduto };
-    console.log('Produto após atualização:', produto.value); // Verifique o valor do ID aqui
+    produto.value = { 
+        ...novaProduto,
+        usuario: novaProduto.usuario || {} // Garante que usuario sempre tem um valor
+    };
 }, { immediate: true });
 
 onMounted(() => {
-    const modalElement = document.getElementById('editProductModal');
-    if (modalElement) {
-        const modalInstance = new bootstrap.Modal(modalElement);
-        if (props.showModal) {
+    if (props.showModal) {
+        const modalElement = document.getElementById('editProductModal');
+        if (modalElement) {
+            const modalInstance = new bootstrap.Modal(modalElement);
             modalInstance.show();
         }
     }
@@ -49,20 +54,17 @@ const atualizaProduto = async () => {
         const token = localStorage.getItem('token');
         if (!token) throw new Error('Usuário não autenticado.');
 
-        // Adicione console.log para verificar o conteúdo de produto.value
-        console.log('Produto a ser atualizado:', produto.value);
-
         const produtoAtualizado = await atualizarProdutoAPI({
-            produtoId: produto.value.id, // Certifique-se de que isso não é undefined
+            id: produto.value.id,
             referencia: produto.value.referencia,
             descricao: produto.value.descricao,
             categoria: produto.value.categoria,
             preco: produto.value.preco,
             status: produto.value.status,
-            image: produto.value.image
+            image: produto.value.image,
+            usuarioId: produto.value.usuario.id, // Inclua o ID do usuário
+            usuario: produto.value.usuario // Inclua o objeto usuário aqui
         }, token);
-
-        console.log('Produto atualizado com sucesso:', produtoAtualizado);
 
         emit('produtoEditado', produtoAtualizado);
 
@@ -127,6 +129,30 @@ const atualizaProduto = async () => {
                                 <option :value="true">Ativo</option>
                                 <option :value="false">Inativo</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuarioId" class="form-label">ID do Usuário</label>
+                            <input type="number" id="usuarioId" class="form-control" v-model.number="produto.usuario.id" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuarioNome" class="form-label">Nome do Usuário</label>
+                            <input type="text" id="usuarioNome" class="form-control" v-model="produto.usuario.nome" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuarioSobrenome" class="form-label">Sobrenome do Usuário</label>
+                            <input type="text" id="usuarioSobrenome" class="form-control" v-model="produto.usuario.sobrenome" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuarioEmail" class="form-label">Email do Usuário</label>
+                            <input type="email" id="usuarioEmail" class="form-control" v-model="produto.usuario.email" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuarioSaldo" class="form-label">Saldo da Conta do Usuário</label>
+                            <input type="number" id="usuarioSaldo" class="form-control" v-model.number="produto.usuario.saldoConta" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuarioImagem" class="form-label">Imagem do Usuário</label>
+                            <input type="text" id="usuarioImagem" class="form-control" v-model="produto.usuario.userImage" />
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>

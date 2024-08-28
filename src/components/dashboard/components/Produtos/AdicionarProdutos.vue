@@ -17,8 +17,9 @@ async function adicionaProduto() {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('Usuário não autenticado.');
 
-    // Adiciona o ID do usuário ao produto
-    produto.value.usuarioId = parseInt(localStorage.getItem('usuarioId'), 10); // Atualiza com o ID do usuário autenticado
+    const usuarioId = localStorage.getItem('usuarioId');
+    if (!usuarioId) throw new Error('Usuário não autenticado.');
+    produto.value.usuarioId = parseInt(usuarioId, 10);
     
     // Adiciona o produto via API
     const novoProduto = await adicionarProdutoAPI(produto.value, token);

@@ -15,7 +15,7 @@ function abreModal() {
 function fechaModal() {
     mostrarTabelaCSV.value = false;
     modalAberto.value = false;
-    dadosCSV.value = ''
+    dadosCSV.value = [];
 }
 
 function arquivoSelecionados(event) {
@@ -92,16 +92,15 @@ async function salvaProdutosImportados() {
     }
 
     for (let produto of dadosCSV.value) {
-
         if (!produto.referencia || !produto.descricao || !produto.categoria) {
             mensagemAlerta.value = 'Dados incompletos em um ou mais produtos. Verifique e tente novamente.';
             return;
         }
 
-        produto.usuarioId = usuarioId; 
+        produto.usuarioId = parseInt(usuarioId, 10); // Atualiza com o ID do usuário autenticado
 
         try {
-            // Chama a função que adiciona o produto à API
+            // Adiciona o produto via API
             const token = localStorage.getItem('token');
             if (!token) throw new Error('Usuário não autenticado.');
             await adicionarProduto(produto, token);

@@ -40,7 +40,7 @@ const emitirExcluir = () => {
         <input class="form-check-input" type="checkbox">
       </div>
       <div class="col-auto me-4">
-        <p class="produto-referencia">{{ referencia }}</p>
+        <p class="produto-referencia">{{ referencia }} {{ id }}</p>
       </div>
       <div class="col-auto me-4">
         <img class="produto-imagem" :src="image || '/noimg.jpeg'" alt="Imagem do Produto">

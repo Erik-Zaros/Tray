@@ -124,13 +124,22 @@ const getSortIconClass = (campo) => {
 
 const ordenacao = ref({ campo: '', direcao: 'asc' }); // Inicializa com ordem crescente
 
+
 onMounted(async () => {
   try {
-    const dados = await obterDadosUsuario();
-    carregarProdutos();
-    usuario.value = dados;
-    console.log(usuario.value.id)
+    // Certifique-se de que o usuário esteja autenticado
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
+    const respostaUsuario = await obterDadosUsuario(token);
+    usuario.value = respostaUsuario.usuario; // Assuma que a resposta contém um objeto usuário
+    await carregarProdutos();
+    console.log(respostaUsuario)
   } catch (erro) {
+    console.error('Erro ao obter dados do usuário:', erro.message);
     router.push('/login');
   }
 });
@@ -275,12 +284,18 @@ onMounted(async () => {
       </div>
 
     </div>
-
-    <!-- Modal de Cadastro de Produto -->
+    
     <AdicionarProdutos />
 
-    <EditarProdutos v-if="showModalEditar" :produto="produtoAtual" :showModal="showModalEditar"
-      :categoriasUnicas="categoriasUnicas" @closeModal="closeModal" @produtoEditado="produtoEditado" />
+      <EditarProdutos
+      v-if="showModalEditar" 
+      :produto="produtoAtual"
+      :showModal="showModalEditar"
+      :categoriasUnicas="categoriasUnicas"
+      @closeModal="closeModal"
+      @produtoEditado="produtoEditado"
+    />
+
   </div>
 </template>
 

@@ -167,7 +167,7 @@ export async function listarProdutos() {
     }
 }
 
-export async function adicionarProduto({ referencia, descricao, categoria, preco, status, image }) {
+export async function adicionarProduto({ referencia, descricao, categoria, preco, status, image, usuarioId }) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
@@ -178,7 +178,7 @@ export async function adicionarProduto({ referencia, descricao, categoria, preco
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ referencia, descricao, categoria, preco, status, image })
+            body: JSON.stringify({ referencia, descricao, categoria, preco, status, image, usuarioId })
         });
         return await tratarResposta(resposta);
     } catch (erro) {
@@ -187,11 +187,13 @@ export async function adicionarProduto({ referencia, descricao, categoria, preco
     }
 }
 
+
 export async function atualizarProduto({ produtoId, referencia, descricao, categoria, preco, status, image }) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
+        console.log('Atualizando produto com ID:', produtoId);
         const resposta = await fetch(`${API_URL_PRODUTOS}/${produtoId}`, {
             method: 'PUT',
             headers: {
@@ -206,6 +208,9 @@ export async function atualizarProduto({ produtoId, referencia, descricao, categ
         throw erro;
     }
 }
+
+
+
 
 export async function excluirProduto(produtoId) {
     const token = obterToken();

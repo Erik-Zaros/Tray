@@ -12,6 +12,7 @@ onMounted(async () => {
   try {
     const dados = await obterDadosUsuario();
     usuario.value = dados;
+    localStorage.setItem('usuarioId', dados.id);
   } catch (erro) {
     router.push('/login');
   }

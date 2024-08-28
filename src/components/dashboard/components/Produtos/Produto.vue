@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineEmits, defineProps } from 'vue';
 
 const props = defineProps({
   image: String,
@@ -7,14 +7,29 @@ const props = defineProps({
   descricao: String,
   categoria: String,
   preco: Number,
-  status: Boolean
+  status: Boolean,
+  id: Number
 });
 
-const emit = defineEmits(['excluirProduto']);
+const emit = defineEmits(['editarProduto', 'excluirProduto']);
 
-function emitirExcluir() {
-  emit('excluirProduto');
-}
+const emitirEditar = () => {
+  console.log('Emitindo evento de edição', props.id);
+  emit('editarProduto', {
+    id: props.id,
+    referencia: props.referencia,
+    descricao: props.descricao,
+    categoria: props.categoria,
+    preco: props.preco,
+    status: props.status,
+    image: props.image
+  });
+};
+
+
+const emitirExcluir = () => {
+  emit('excluirProduto', props.id);
+};
 </script>
 
 <template>
@@ -25,7 +40,7 @@ function emitirExcluir() {
         <input class="form-check-input" type="checkbox">
       </div>
       <div class="col-auto me-4">
-        <p class="produto-referencia">{{ referencia }}</p>
+        <p class="produto-referencia">{{ referencia }} {{ id }}</p>
       </div>
       <div class="col-auto me-4">
         <img class="produto-imagem" :src="image || '/noimg.jpeg'" alt="Imagem do Produto">
@@ -45,8 +60,12 @@ function emitirExcluir() {
         </button>
       </div>
       <div class="col-1 alterar d-flex justify-content-between">
-        <div class="editar"><i class="fa-solid fa-pen-to-square fs-3"></i></div>
-        <div class="excluir"><i class="fa-solid fa-trash-can fs-3" @click="emitirExcluir"></i></div>
+        <div class="editar">
+          <i class="fa-solid fa-pen-to-square fs-3" @click="emitirEditar"></i>
+        </div>
+        <div class="excluir">
+          <i class="fa-solid fa-trash-can fs-3" @click="emitirExcluir"></i>
+        </div>
       </div>
     </div>
   </div>
@@ -57,7 +76,6 @@ function emitirExcluir() {
   color: #333;
   border-top: 2px solid rgba(140, 140, 140, .3);
 }
-
 
 .produto-imagem {
   width: 100px;
@@ -93,7 +111,6 @@ function emitirExcluir() {
   text-overflow: ellipsis;
 }
 
-
 .produto-referencia {
   width: 100px;
 }
@@ -107,7 +124,7 @@ function emitirExcluir() {
 }
 
 .produto-preco {
-  width:120px;
+  width: 120px;
 }
 
 .produto-status {

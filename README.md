@@ -10,7 +10,7 @@
 >-**Arquivo**: Inicio.vue
 > 
 >-**Nesta tela, que é a página inicial, o usuário pode fazer login em sua conta ou criar uma nova conta.
->-**Print da tela:
+>-**Print da tela**:
 >
 >![image](https://github.com/user-attachments/assets/0cf87a65-b82f-4447-ab50-852dab0763c2)
 

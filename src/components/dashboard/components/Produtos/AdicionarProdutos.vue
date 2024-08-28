@@ -12,7 +12,7 @@ const produto = ref({
   usuarioId: 0 // Adicionei o usuárioId
 });
 
-async function onSubmit() {
+async function adicionaProduto() {
   try {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('Usuário não autenticado.');
@@ -37,6 +37,7 @@ async function onSubmit() {
     modal.hide();
 
     alert('Produto cadastrado com sucesso!');
+    window.location.reload();
   } catch (erro) {
     console.error('Erro ao cadastrar produto:', erro.message);
     alert('Erro ao cadastrar produto.');
@@ -53,7 +54,7 @@ async function onSubmit() {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="onSubmit">
+          <form @submit.prevent="adicionaProduto">
             <div class="mb-3">
               <label for="referencia" class="form-label">Referência:</label>
               <input type="text" class="form-control" id="referencia" v-model="produto.referencia" required>

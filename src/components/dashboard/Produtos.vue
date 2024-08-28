@@ -2,7 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue'; // Importar o modal de cadastro
-import Produto from './components/Produtos/Produto.vue'; // Importar o modal de cadastro
+import ImportarProdutos from './components/Produtos/ImportarProdutos.vue'; // Importar o modal de cadastro
+import Produto from './components/Produtos/Produto.vue'; // Importar o modal de cadastros
 import { listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
 
 const produtos = ref([]);
@@ -80,15 +81,15 @@ onMounted(() => {
 
     <div class="produtos px-5 py-3 d-flex align-items-center justify-content-between">
       <h4 class="edit fw-bold">Produtos</h4>
-      <div class="editar">
-        <a href="" class="options text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="editar d-flex">
+        <a href="" class="options text-decoration-none dropdown-toggle my-auto" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-ellipsis-vertical me-2"></i> Mais Opções
         </a>
-          <ul class="dropdown-menu border-0" role="menu">
-            <li><a class="dropdown-item text-primary" href="#">Importar Produtos</a></li>
-            <li><a class="dropdown-item text-primary" href="#">Adicionar Categorias</a></li>
-          </ul>
+        <ul class="dropdown-menu border-0" role="menu">
+          <li><a class="dropdown-item text-primary" href="#">Adicionar Categorias</a></li>
+        </ul>
 
+        <ImportarProdutos />
         <button class="btn btn-primary py-2 px-3 ms-3 rounded-0" data-bs-toggle="modal" data-bs-target="#productModal">
           Adicionar Produto <!-- Ao clicar, deve abrir o modal de produtos -->
         </button>
@@ -235,7 +236,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 .mais {
   height: 50px;
   background-color: rgb(180, 180, 180);
@@ -253,11 +253,12 @@ onMounted(() => {
 }
 
 .dropdown-menu {
-  background-color: rgba(255, 255, 255, 0.2)!important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .dropdown-toggle::after {
-  display: none; /* Oculta o ícone de seta */
+  display: none;
+  /* Oculta o ícone de seta */
 }
 
 .container {

@@ -78,25 +78,42 @@ export async function obterDadosUsuario() {
     }
 }
 
-export async function atualizarUsuario({ id, nome, sobrenome, email, saldo }) {
-    const token = obterToken();
+export async function atualizarUsuario({ id, nome, sobrenome, email, saldo, senha, userImage }) {
+    const token = obterToken();  // Certifique-se de que obterToken() está correto
     if (!token) throw new Error('Usuário não autenticado.');
-
+  
     try {
-        const resposta = await fetch(`${API_URL_USUARIOS}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ nome, sobrenome, email, saldoConta: saldo }),
-        });
-        return await tratarResposta(resposta);
+      const resposta = await fetch(`${API_URL_USUARIOS}/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nome,
+          sobrenome,
+          email,
+          saldoConta: saldo,  // Certifique-se de que o nome do campo está correto
+          senha: senha || '',  // Envie senha somente se for fornecida
+          userImage: userImage || '' // Envie userImage somente se for fornecida
+        })
+      });
+  
+      if (!resposta.ok) {
+        const erro = await resposta.text();
+        throw new Error(`Erro ao atualizar usuário: ${erro}`);
+      }
+  
+      return await resposta.json();
     } catch (erro) {
-        console.error('Erro ao atualizar usuário:', erro.message);
-        throw erro;
+      console.error('Erro ao atualizar usuário:', erro);
+      throw erro;
     }
-}
+  }
+  
+  
+  
+  
 
 export async function excluirUsuario(id) {
     const token = obterToken();

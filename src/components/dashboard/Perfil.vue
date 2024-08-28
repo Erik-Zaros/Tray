@@ -22,17 +22,24 @@ const alternarEdicao = () => {
 
 const salvarEdicao = async () => {
   try {
-    // Salvar alterações
-    await atualizarUsuario({
+    const dadosAtualizados = {
       id: usuario.value.id,
       nome: usuario.value.nome,
       sobrenome: usuario.value.sobrenome,
       email: usuario.value.email,
-      saldo: usuario.value.saldo
-    });
+      saldo: usuario.value.saldo,
+      userImage: usuario.value.userImage // Inclua a URL da imagem aqui
+    };
+
+    // Verifica os dados antes de enviar
+    console.log('Dados para atualização:', dadosAtualizados);
+    
+    // Salvar alterações
+    await atualizarUsuario(dadosAtualizados);
     alert('Dados atualizados com sucesso!');
     editando.value = false;
   } catch (erro) {
+    console.error('Erro ao atualizar dados:', erro);
     alert(`Erro ao atualizar dados: ${erro.message}`);
   }
 };
@@ -65,12 +72,14 @@ const preview = (file) => {
   const reader = new FileReader();
   reader.onload = () => {
     imageSrc.value = reader.result;
+    usuario.value.userImage = reader.result; // Atualize o campo do usuário
   };
   reader.readAsDataURL(file);
 };
 
 const removerFoto = () => {
   imageSrc.value = null;
+  usuario.value.userImage = ''; // Limpar a URL da imagem
 };
 
 const editarFoto = () => {
@@ -81,8 +90,15 @@ const mudarEstado = () => {
   usuario.value.status = usuario.value.status === 'active' ? 'inactive' : 'active';
 };
 
-const excluirConta = () => {
-  excluirUsuario()
+const excluirConta = async () => {
+  try {
+    await excluirUsuario(usuario.value.id);
+    alert('Conta excluída com sucesso!');
+    router.push('/login');
+  } catch (erro) {
+    console.error('Erro ao excluir conta:', erro); // Log mais detalhado
+    alert(`Erro ao excluir conta: ${erro.message}`);
+  }
 }
 
 onMounted(async () => {
@@ -90,12 +106,13 @@ onMounted(async () => {
     const dados = await obterDadosUsuario();
     usuario.value = dados;
     usuarioOriginal.value = { ...dados }; // Guarda o estado original ao montar
+    imageSrc.value = dados.userImage; // Preenche o preview com a imagem do usuário
   } catch (erro) {
+    console.error('Erro ao obter dados do usuário:', erro); // Log mais detalhado
     router.push('/login');
   }
 });
 </script>
-
 
 <template>
   <div>
@@ -103,15 +120,10 @@ onMounted(async () => {
       <div class="salvar shadow w-100 px-5 d-flex align-items-center justify-content-between">
         <div class="editar-titulo fw-bold">{{ usuario.nome ? `Usuário: ${usuario.nome}` : 'Usuário' }}</div>
         <div class="usuario" :class="{ 'd-none': editando }">
-          <button @click="excluirConta" class="btn btn-danger py-2 px-3 ms-3 rounded-0">Exluir</button>
+          <button @click="excluirConta" class="btn btn-danger py-2 px-3 ms-3 rounded-0">Excluir</button>
           <button @click="alternarEdicao" class="btn btn-primary py-2 px-3 ms-3 rounded-0">Editar</button>
         </div>
         <div class="opcoes-editar" :class="{ 'd-block': editando, 'd-none': !editando }">
-          <!-- 
-          <a href="#" class="options text-decoration-none">
-            <i class="fa-solid fa-ellipsis-vertical me-2"></i> Mais Opções 
-          </a>
-          -->
           <button @click="cancelarEdicao" class="btn btn-outline-secondary py-2 px-3 ms-5 rounded-0">Cancelar</button>
           <button @click="salvarEdicao" class="btn btn-outline-primary py-2 px-3 ms-3 rounded-0">Salvar</button>
         </div>
@@ -152,15 +164,17 @@ onMounted(async () => {
             <label for="email" class="form-label fs-5">Email</label>
             <input type="email" class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="email" v-model="usuario.email" :readonly="!editando">
           </div>
-          <!-- 
           <div class="mb-4">
-            <label for="senha" class="form-label fs-5">Senha</label>
-            <div class="input-group position-relative">
-              <input :type="mostraSenha ? 'text' : 'password'" class="form-control borde-2 rounded-0 py-3 px-4 fs-5" id="senha" v-model="usuario.senha" :readonly="!editando">
-              <i :class="mostraSenha ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash m-auto'" @click="mostraSenha = !mostraSenha" class="olho cursor-pointer position-absolute"></i>
-            </div>
+            <label for="userImage" class="form-label fs-5">URL da Imagem</label>
+            <input 
+              type="text" 
+              class="form-control borde-2 rounded-0 py-3 px-4 fs-5" 
+              id="userImage" 
+              v-model="usuario.userImage" 
+              :readonly="!editando"
+              placeholder="Cole a URL da imagem aqui"
+            />
           </div>
-          -->
           <div class="mb-4 m-auto">
             <label for="status" class="form-label fs-5 pe-3 fs-4">Status: </label>
             <button type="button" class="btn fs-3 px-5" :class="[usuario.status === 'active' ? 'btn-primary' : 'btn-danger']" :disabled="!editando" @click="mudarEstado">
@@ -175,7 +189,6 @@ onMounted(async () => {
     <Tour />
   </div>
 </template>
-
 
 <style scoped>
 /* Estilos copiados de Header.vue e Dados.vue */

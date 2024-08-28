@@ -175,6 +175,7 @@ export async function atualizarProduto({ produtoId, referencia, descricao, categ
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
+        console.log('Atualizando produto com ID:', produtoId); 
         const resposta = await fetch(`${API_URL_PRODUTOS}/${produtoId}`, {
             method: 'PUT',
             headers: {
@@ -189,6 +190,9 @@ export async function atualizarProduto({ produtoId, referencia, descricao, categ
         throw erro;
     }
 }
+
+
+
 
 export async function excluirProduto(produtoId) {
     const token = obterToken();

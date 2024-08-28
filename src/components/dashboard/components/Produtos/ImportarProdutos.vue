@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { adicionarProduto } from '../../../../services/api'; // Importando a função de adicionar produtos à API
+import { adicionarProduto } from '../../../../services/api'; 
 
 const modalAberto = ref(false);
 const dadosCSV = ref([]);
@@ -85,12 +85,20 @@ function mostraTabela() {
 async function salvaProdutosImportados() {
     mensagemAlerta.value = null;
 
+    const usuarioId = localStorage.getItem('usuarioId'); // Obtendo o ID do usuário autenticado
+    if (!usuarioId) {
+        mensagemAlerta.value = 'Usuário não autenticado.';
+        return;
+    }
+
     for (let produto of dadosCSV.value) {
 
         if (!produto.referencia || !produto.descricao || !produto.categoria) {
             mensagemAlerta.value = 'Dados incompletos em um ou mais produtos. Verifique e tente novamente.';
             return;
         }
+
+        produto.usuarioId = usuarioId; 
 
         try {
             // Chama a função que adiciona o produto à API
@@ -140,7 +148,6 @@ const classeAlerta = computed(() => {
                                 <button class="btn btn-primary m-2" @click="salvaProdutosImportados"
                                     v-if="dadosCSV && dadosCSV.length">Salvar Produtos</button>
                             </div>
-
                         </div>
 
                         <!-- Alertas -->

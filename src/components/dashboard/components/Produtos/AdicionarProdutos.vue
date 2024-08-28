@@ -9,20 +9,22 @@ const produto = ref({
   preco: 0,
   status: false,
   image: '',
-  usuarioId: 0 // Adicionei o usuárioId
+  usuarioId: 0 // Inicialmente 0, será atualizado
 });
 
 async function adicionaProduto() {
   try {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('Usuário não autenticado.');
-    
+
     // Adiciona o ID do usuário ao produto
-    produto.value.usuarioId = 1; // Ajuste isso para o ID do usuário autenticado
+    produto.value.usuarioId = parseInt(localStorage.getItem('usuarioId'), 10); // Atualiza com o ID do usuário autenticado
     
+    // Adiciona o produto via API
     const novoProduto = await adicionarProdutoAPI(produto.value, token);
     console.log('Produto cadastrado com sucesso:', novoProduto);
-    
+
+    // Limpa o formulário
     produto.value = {
       referencia: '',
       descricao: '',
@@ -32,10 +34,10 @@ async function adicionaProduto() {
       image: '',
       usuarioId: 0
     };
-    
+
+    // Fecha o modal e atualiza a lista de produtos
     const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
     modal.hide();
-
     alert('Produto cadastrado com sucesso!');
     window.location.reload();
   } catch (erro) {

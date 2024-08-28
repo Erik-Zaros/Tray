@@ -2,11 +2,13 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue'; // Importar o modal de cadastro
+import EditarProdutos from './components/Produtos/EditarProdutos.vue'; // Importar o modal de cadastro
 import ImportarProdutos from './components/Produtos/ImportarProdutos.vue'; // Importar o modal de cadastro
 import Produto from './components/Produtos/Produto.vue'; // Importar o modal de cadastros
-import { listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
+import { obterDadosUsuario, listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
 
 const produtos = ref([]);
+const usuario = ref({});
 const router = useRouter();
 const filtro = ref({
   codigoReferencia: '',
@@ -15,8 +17,27 @@ const filtro = ref({
   precoDe: '',
   precoAte: ''
 });
-const ordenacao = ref({ campo: '', direcao: '' });
 const categoriasUnicas = ref([]); // Constante para armazenar categorias únicas
+
+
+
+const showModalEditar = ref(false);
+const produtoAtual = ref({ id: null, nome: '', preco: 0 });
+
+const atualizarProduto = (produto) => {
+  console.log('Produto a ser editado:', produto);
+  produtoAtual.value = produto;
+  showModalEditar.value = true;
+};
+
+const closeModal = () => {
+  showModalEditar.value = false;
+};
+
+const produtoEditado = (produtoAtualizado) => {
+  carregarProdutos();
+};
+
 
 const carregarProdutos = async () => {
   try {
@@ -42,11 +63,6 @@ const excluirProduto = async (produtoId) => {
   }
 };
 
-const aplicarFiltro = () => {
-  // Recarregar os produtos para garantir que os filtros sejam aplicados na lista atualizada
-  carregarProdutos();
-};
-
 const produtosFiltrados = computed(() => {
   return produtos.value
     .filter(produto => {
@@ -62,7 +78,7 @@ const produtosFiltrados = computed(() => {
       const precoMatch = (!filtro.value.precoDe || preco >= filtro.value.precoDe) &&
         (!filtro.value.precoAte || preco <= filtro.value.precoAte);
 
-      return codigoOuReferenciaMatch && nomeProdutoMatch && categoriaMatch && precoMatch ;
+      return codigoOuReferenciaMatch && nomeProdutoMatch && categoriaMatch && precoMatch;
     })
     .sort((a, b) => {
       const campo = ordenacao.value.campo;
@@ -75,15 +91,6 @@ const produtosFiltrados = computed(() => {
     });
 });
 
-const ordenar = (campo) => {
-  if (ordenacao.value.campo === campo) {
-    ordenacao.value.direcao = ordenacao.value.direcao === 'asc' ? 'desc' : 'asc';
-  } else {
-    ordenacao.value.campo = campo;
-    ordenacao.value.direcao = 'asc';
-  }
-};
-
 const limparFiltro = () => {
   filtro.value = {
     codigoReferencia: '',
@@ -94,9 +101,38 @@ const limparFiltro = () => {
   };
 };
 
-// Carregar produtos ao montar o componente
-onMounted(() => {
-  carregarProdutos();
+const ordenar = (campo) => {
+  if (ordenacao.value.campo === campo) {
+    // Alternar a direção da ordenação
+    ordenacao.value.direcao = ordenacao.value.direcao === 'asc' ? 'desc' : 'asc';
+  } else {
+    // Mudar o campo de ordenação e definir a direção como crescente
+    ordenacao.value.campo = campo;
+    ordenacao.value.direcao = 'asc';
+  }
+};
+
+const getSortIconClass = (campo) => {
+  if (ordenacao.value.campo === campo) {
+    return ordenacao.value.direcao === 'asc'
+      ? 'fa-solid fa-caret-up text-dark'
+      : 'fa-solid fa-caret-down text-dark';
+  } else {
+    return 'fa-solid fa-sort'; // Ícone padrão quando não está sendo ordenado
+  }
+};
+
+const ordenacao = ref({ campo: '', direcao: 'asc' }); // Inicializa com ordem crescente
+
+onMounted(async () => {
+  try {
+    const dados = await obterDadosUsuario();
+    carregarProdutos();
+    usuario.value = dados;
+    console.log(usuario.value.id)
+  } catch (erro) {
+    router.push('/login');
+  }
 });
 </script>
 
@@ -175,9 +211,6 @@ onMounted(() => {
           </div>
           <!-- Botão de Filtro -->
           <div class="col-12 d-flex justify-content-end pt-3">
-            <button type="button" class="btn btn-outline-dark rounded-0" @click="limparFiltro"><i
-                class="fa-solid text-secondary fa-circle-info"></i> Limpar Filtros</button>
-            <button type="submit" class="btn btn-primary rounded-0 ms-3">Filtrar</button>
           </div>
         </form>
       </div>
@@ -191,68 +224,72 @@ onMounted(() => {
           <div class="col-auto me-5 ordenar-item produto-referencia" @click="ordenar('referencia')">
             <p class="ordenar-texto">
               Referência
-            <div class="ordenar bg-warning d-flex">
-              <i
-                :class="{ 'fa-solid fa-caret-up': ordenacao.campo === 'referencia' && ordenacao.direcao === 'asc', 'fa-solid fa-caret-up text-dark': ordenacao.campo === 'referencia' && ordenacao.direcao === 'desc' }"></i>
-              <i
-                :class="{ 'fa-solid fa-caret-down': ordenacao.campo === 'referencia' && ordenacao.direcao === 'desc', 'fa-solid fa-caret-down text-dark': ordenacao.campo === 'referencia' && ordenacao.direcao === 'asc' }"></i>
-            </div>
+              <i :class="getSortIconClass('referencia')"></i>
             </p>
           </div>
-          <div class="col-auto ordenar-item produto-imagem">
+          <!-- Repetir para outros campos -->
+          <div class="col-auto ordenar-item produto-imagem" @click="ordenar('imagem')">
             <p class="ordenar-texto">
               Imagem
-              <i class="fa-solid fa-sort ms-2"></i>
             </p>
           </div>
-          <div class="col ordenar-item produto-descricao">
+          <div class="col ordenar-item produto-descricao" @click="ordenar('descricao')">
             <p class="ordenar-texto">
-              Descriçao
-              <i class="fa-solid fa-sort ms-2"></i>
+              Descrição
+              <i :class="getSortIconClass('descricao')"></i>
             </p>
           </div>
-          <div class="col ordenar-item produto-categoria">
+          <div class="col ordenar-item produto-categoria" @click="ordenar('categoria')">
             <p class="ordenar-texto">
               Categoria
-              <i class="fa-solid fa-sort ms-2"></i>
+              <i :class="getSortIconClass('categoria')"></i>
             </p>
           </div>
-          <div class="col ordenar-item produto-preco">
+          <div class="col ordenar-item produto-preco" @click="ordenar('preco')">
             <p class="ordenar-texto">
               Preço
-              <i class="fa-solid fa-sort ms-2"></i>
+              <i :class="getSortIconClass('preco')"></i>
             </p>
           </div>
-          <div class="col ordenar-item produto-status">
+          <div class="col ordenar-item produto-status" @click="ordenar('status')">
             <p class="ordenar-texto">
               Status
-              <i class="fa-solid fa-sort ms-2"></i>
             </p>
           </div>
-          <div class="ordenar-item produto-alterar">
-            <p class="ordenar-texto">
-            </p>
+          <div class="ordenar-item limpar_filtro">
+            <button type="button" class="btn btn-outline-dark rounded-0" @click="limparFiltro"><i
+                class="fa-solid text-secondary fa-circle-info"></i> Limpar Filtros</button>
           </div>
+
         </div>
 
         <!-- Renderização dos produtos -->
         <div class="produto-lista">
           <div class="lista-produtos" v-for="produto in produtosFiltrados" :key="produto.id">
             <Produto :referencia="produto.referencia" :image="produto.image" :descricao="produto.descricao"
-              :categoria="produto.categoria" :preco="produto.preco" :status="produto.status"
-              @excluirProduto="excluirProduto(produto.id)" />
+              :categoria="produto.categoria" :preco="produto.preco" :status="produto.status" :id="produto.id"
+              @excluirProduto="excluirProduto" @editarProduto="atualizarProduto" />
           </div>
         </div>
+
       </div>
 
     </div>
 
     <!-- Modal de Cadastro de Produto -->
     <AdicionarProdutos />
+
+    <EditarProdutos v-if="showModalEditar" :produto="produtoAtual" :showModal="showModalEditar"
+      :categoriasUnicas="categoriasUnicas" @closeModal="closeModal" @produtoEditado="produtoEditado" />
   </div>
 </template>
 
 <style scoped>
+.ordenar {
+  height: 30px;
+  width: 30px;
+}
+
 .mais {
   height: 50px;
   background-color: rgb(180, 180, 180);
@@ -335,18 +372,21 @@ onMounted(() => {
 
 .produto-categoria {
   width: 120px;
+  margin-left: 1%;
 }
 
 .produto-preco {
   width: 80px;
+  margin-left: .2%;
 }
 
 .produto-status {
   width: 100px;
+  margin-right: -40px;
 }
 
-.produto-alterar {
-  width: 0px;
+.limpar_filtro {
+  width: 130px;
 }
 
 

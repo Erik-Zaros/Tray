@@ -95,19 +95,17 @@
 >![image](https://github.com/user-attachments/assets/a9ca5447-c58f-4059-bc8d-19b2653e7960)
 
 ---
----
 ## Universidade de Marília - Unimar
 ---
 ## Nome e RA dos colaboradores do projeto:
 
->-**Edmar Augusto Martins - 1959465 - Líder**
+>-**Edmar Augusto Martins - 1959465 - Dev**
 > 
->-**Erik Delanda Zaros - 1959937**
+>-**Erik Delanda Zaros - 1959937 - Scrum**
 > 
->-**Gustavo Henrique Matias Diniz - 1977490**
+>-**Gustavo Henrique Matias Diniz - 1977490 - Front-End**
 > 
->-**Mário Henrique Rabelo Dias - 1971824**
+>-**Mário Henrique Rabelo Dias - 1971824 - Dev**
 > 
->-**Victor Gabriel de Lima Peres - 1969980**
+>-**Victor Gabriel de Lima Peres - 1969980 - Front-End**
 ---
-

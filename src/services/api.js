@@ -195,7 +195,24 @@ export async function excluirProduto(produtoId) {
                 'Authorization': `Bearer ${token}`
             }
         });
-        return await tratarResposta(resposta);
+
+        if (resposta.ok) {
+            // Resposta bem-sucedida, pode não ter conteúdo
+            return true;
+        } else {
+            const mensagem = await resposta.text();
+            // Verifique se a resposta possui um corpo
+            if (mensagem) {
+                // Se a resposta contém uma mensagem de erro, trate-a como JSON se necessário
+                try {
+                    return JSON.parse(mensagem);
+                } catch (e) {
+                    throw new Error(`Erro ${resposta.status}: ${mensagem}`);
+                }
+            } else {
+                throw new Error(`Erro ${resposta.status}: Resposta vazia`);
+            }
+        }
     } catch (erro) {
         console.error('Erro ao excluir produto:', erro.message);
         throw erro;

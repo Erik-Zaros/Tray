@@ -1,3 +1,22 @@
+<script setup>
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps({
+  image: String,
+  referencia: String,
+  descricao: String,
+  categoria: String,
+  preco: Number,
+  status: Boolean
+});
+
+const emit = defineEmits(['excluirProduto']);
+
+function emitirExcluir() {
+  emit('excluirProduto');
+}
+</script>
+
 <template>
   <div class="produto-card px-5 mx-4 p-3">
     <div class="row align-items-center">
@@ -25,24 +44,13 @@
           {{ status ? 'Ativo' : 'Inativo' }}
         </button>
       </div>
+      <div class="col-1 alterar d-flex justify-content-between">
+        <div class="editar"><i class="fa-solid fa-pen-to-square fs-3"></i></div>
+        <div class="excluir"><i class="fa-solid fa-trash-can fs-3" @click="emitirExcluir"></i></div>
+      </div>
     </div>
   </div>
 </template>
-
-
-<script setup>
-import { defineProps } from 'vue';
-
-// Definindo as props que o componente vai receber
-const props = defineProps({
-  image: String,
-  referencia: String,
-  descricao: String,
-  categoria: String,
-  preco: Number,
-  status: Boolean
-});
-</script>
 
 <style scoped>
 .produto-card {
@@ -52,13 +60,15 @@ const props = defineProps({
 
 
 .produto-imagem {
-  width: 100%;
-  max-width: 100px;
-  height: auto;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 8px;
 }
 
+.fa-solid:hover {
+  cursor: pointer;
+}
 
 .col-auto {
   flex: 0 0 auto;
@@ -93,14 +103,18 @@ const props = defineProps({
 }
 
 .produto-categoria {
-  width: 120px;
-}
-
-.produto-preco {
   width: 80px;
 }
 
+.produto-preco {
+  width:120px;
+}
+
 .produto-status {
+  width: 100px;
+}
+
+.alterar {
   width: 100px;
 }
 

@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue'; // Importar o modal de cadastro
 import Produto from './components/Produtos/Produto.vue'; // Importar o modal de cadastro
-import { listarProdutos } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
+import { listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
 
 const produtos = ref([]);
 const router = useRouter();
@@ -22,10 +22,20 @@ const carregarProdutos = async () => {
   try {
     const resposta = await listarProdutos();
     produtos.value = resposta.produtos || []; // Acessa o array 'produtos' do JSON retornado
-    console.log(produtos.value);
   } catch (erro) {
     console.error('Erro ao carregar produtos:', erro.message);
     alert('Erro ao carregar produtos.');
+  }
+};
+
+const excluirProduto = async (produtoId) => {
+  try {
+    await apiExcluirProduto(produtoId);
+    produtos.value = produtos.value.filter(produto => produto.id !== produtoId);
+    alert('Produto excluído com sucesso.');
+  } catch (erro) {
+    console.error('Erro ao excluir produto:', erro.message);
+    alert('Erro ao excluir produto.');
   }
 };
 
@@ -71,9 +81,14 @@ onMounted(() => {
     <div class="produtos px-5 py-3 d-flex align-items-center justify-content-between">
       <h4 class="edit fw-bold">Produtos</h4>
       <div class="editar">
-        <a href="" class="options text-decoration-none">
+        <a href="" class="options text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-ellipsis-vertical me-2"></i> Mais Opções
         </a>
+          <ul class="dropdown-menu border-0" role="menu">
+            <li><a class="dropdown-item text-primary" href="#">Importar Produtos</a></li>
+            <li><a class="dropdown-item text-primary" href="#">Adicionar Categorias</a></li>
+          </ul>
+
         <button class="btn btn-primary py-2 px-3 ms-3 rounded-0" data-bs-toggle="modal" data-bs-target="#productModal">
           Adicionar Produto <!-- Ao clicar, deve abrir o modal de produtos -->
         </button>
@@ -196,13 +211,18 @@ onMounted(() => {
               <i class="fa-solid fa-sort ms-2"></i>
             </p>
           </div>
+          <div class="ordenar-item produto-alterar">
+            <p class="ordenar-texto">
+            </p>
+          </div>
         </div>
 
         <!-- Renderização dos produtos -->
         <div class="produto-lista">
           <div class="lista-produtos" v-for="produto in produtos" :key="produto.id">
             <Produto :referencia="produto.referencia" :image="produto.image" :descricao="produto.descricao"
-              :categoria="produto.categoria" :preco="produto.preco" :status="produto.status" />
+              :categoria="produto.categoria" :preco="produto.preco" :status="produto.status"
+              @excluirProduto="excluirProduto(produto.id)" />
           </div>
         </div>
       </div>
@@ -215,6 +235,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
 .mais {
   height: 50px;
   background-color: rgb(180, 180, 180);
@@ -231,6 +252,13 @@ onMounted(() => {
   width: 91vw;
 }
 
+.dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.2)!important;
+}
+
+.dropdown-toggle::after {
+  display: none; /* Oculta o ícone de seta */
+}
 
 .container {
   max-width: 95% !important;
@@ -297,6 +325,10 @@ onMounted(() => {
 
 .produto-status {
   width: 100px;
+}
+
+.produto-alterar {
+  width: 0px;
 }
 
 

@@ -1,7 +1,11 @@
 # Projeto Tray - MEGEV
 
 ## Objetivo do projeto
+<<<<<<< HEAD
 >** Este projeto tem como objetivo facilitar o acesso do usuário no sistema. Após o acesso, será disponibilizado um tour que auxiliará o usuário em cada parte do sistema, além de uma tela que facilita o cadastro em massa de produtos através de um arquivo CSV.
+=======
+>**Este projeto tem como objetivo facilitar o acesso do usuário no sistema. Após o acesso, será disponibilizado um tour que auxiliará o usuário em cada parte do sistema, além de uma tela que facilita o cadastro em massa de produtos através de um arquivo CSV.**
+>>>>>>> b3bcc2a9f58be33a9673fddb65f7add4eecccb8b
 
 ---
 

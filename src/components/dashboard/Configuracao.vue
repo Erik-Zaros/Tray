@@ -15,8 +15,10 @@
             <div class="card p-4 frete">
                 <h4 class="titulo-card mb-3"><i class="fas fa-store me-2"></i>Loja</h4>
                 <div class="item">
-                    <h5 class="titulo">Geral</h5>
-                    <p class="texto">Funcionamento geral, cadastro de clientes</p>
+                    <router-link to="/dashboard/perfil">
+                        <h5 class="titulo">Geral</h5>
+                        <p class="texto">Funcionamento geral, cadastro de clientes</p>
+                    </router-link>
                 </div>
                 <div class="item">
                     <h5 class="titulo">Informações</h5>
@@ -46,8 +48,10 @@
             <div class="card p-4 frete">
                 <h4 class="titulo-card mb-3"><i class="fa-solid fa-tag me-2"></i>Produtos</h4>
                 <div class="item">
-                    <h5 class="titulo">Lista de Produtos</h5>
-                    <p class="texto">Listagem e exibição de produtos na</p>
+                    <router-link to="/dashboard/produtos">
+                        <h5 class="titulo">Lista de Produtos</h5>
+                        <p class="texto">Listagem e exibição de produtos na</p>
+                    </router-link>
                 </div>
                 <div class="item">
                     <h5 class="titulo">Categoria dos produtos</h5>
@@ -134,5 +138,9 @@
         flex-direction: column;
     }
 
+}
+a{
+    text-decoration: none;
+    color:black;
 }
 </style>

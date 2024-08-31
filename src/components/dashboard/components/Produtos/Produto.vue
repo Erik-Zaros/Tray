@@ -1,7 +1,8 @@
 <script setup>
-import { defineEmits, defineProps } from 'vue';
+import Excluir from './Excluir.vue';
+import { defineEmits } from 'vue';
 
-const props = defineProps({
+const produto = defineProps({
   image: String,
   referencia: String,
   descricao: String,
@@ -9,26 +10,40 @@ const props = defineProps({
   preco: Number,
   status: Boolean,
   id: Number,
-  usuario: Object  // Certifique-se de incluir o objeto usuário
+  usuario: Object,
+  selecionado: Boolean
 });
 
-const emit = defineEmits(['editarProduto', 'excluirProduto']);
+const emit = defineEmits(['editarProduto', 'excluirProduto', 'selecionarProduto']);
 
 const emitirEditar = () => {
   emit('editarProduto', {
-    id: props.id,
-    referencia: props.referencia,
-    descricao: props.descricao,
-    categoria: props.categoria,
-    preco: props.preco,
-    status: props.status,
-    image: props.image,
-    usuario: props.usuario  // Inclui o usuário para edição completa
+    id: produto.id,
+    referencia: produto.referencia,
+    descricao: produto.descricao,
+    categoria: produto.categoria,
+    preco: produto.preco,
+    status: produto.status,
+    image: produto.image,
+    usuario: produto.usuario
   });
 };
 
+const mostrarConfirmacaoExclusao = (id) => {
+  const modal = new bootstrap.Modal(document.getElementById('modalConfirmacaoExclusao'));
+  modal.show();
+};
+
 const emitirExcluir = () => {
-  emit('excluirProduto', props.id);
+  emit('excluirProduto', produto.id);
+};
+
+// Emitir evento de seleção ao clicar no checkbox
+const alterarSelecao = (event) => {
+  emit('selecionarProduto', {
+    id: produto.id,
+    selecionado: event.target.checked
+  });
 };
 </script>
 
@@ -37,7 +52,7 @@ const emitirExcluir = () => {
     <div class="row align-items-center">
       <!-- Ajustando o layout dos produtos -->
       <div class="col-auto me-4">
-        <input class="form-check-input" type="checkbox">
+        <input class="form-check-input" type="checkbox" :checked="selecionado" @change="alterarSelecao">
       </div>
       <div class="col-auto me-4">
         <p class="produto-referencia">{{ referencia }}</p>
@@ -64,8 +79,11 @@ const emitirExcluir = () => {
           <i class="fa-solid fa-pen-to-square fs-3" @click="emitirEditar"></i>
         </div>
         <div class="excluir">
-          <i class="fa-solid fa-trash-can fs-3" @click="emitirExcluir"></i>
+          <!-- Corrigido: adicionada a aspa de fechamento no lugar certo -->
+          <i class="fa-solid fa-trash-can fs-3" @click="mostrarConfirmacaoExclusao(produto.id)"></i>
         </div>
+        <!-- Modal de exclusão -->
+        <Excluir @confirmarExclusao="emitirExcluir" />
       </div>
     </div>
   </div>

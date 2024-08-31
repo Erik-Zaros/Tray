@@ -6,6 +6,65 @@ import EditarProdutos from './components/Produtos/EditarProdutos.vue'; // Import
 import ImportarProdutos from './components/Produtos/ImportarProdutos.vue'; // Importar o modal de cadastro
 import Produto from './components/Produtos/Produto.vue'; // Importar o modal de cadastros
 import { obterDadosUsuario, listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
+// Notificacoes maneiras
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
+const produtosSelecionados = ref([]);
+
+const obterProdutos = async () => {
+  try {
+    const dados = await listarProdutos();
+    produtos.value = dados.produtos;
+  } catch (erro) {
+    toast.info('Sem produtos adicionados:', erro.message);
+  }
+};
+
+const selecionarTodos = (event) => {
+  if (event.target.checked) {
+    produtosSelecionados.value = produtos.value.map(produto => produto.id);
+  } else {
+    produtosSelecionados.value = [];
+  }
+};
+
+const marcarProduto = ({ id, selecionado }) => {
+  if (selecionado) {
+    if (!produtosSelecionados.value.includes(id)) {
+      produtosSelecionados.value.push(id);
+    }
+  } else {
+    produtosSelecionados.value = produtosSelecionados.value.filter(produtoId => produtoId !== id);
+  }
+};
+
+const excluirSelecionados = async () => {
+  try {
+    for (const id of produtosSelecionados.value) {
+      await excluirProduto(id);
+    }
+    produtosSelecionados.value = [];
+    await obterProdutos(); // Recarregar a lista de produtos após exclusão
+  } catch (erro) {
+    toast.error('Erro ao excluir produtos:', erro.message);
+  }
+};
+
+const todosSelecionados = computed(() => {
+  return produtos.value.length > 0 && produtos.value.every(produto => produtosSelecionados.value.includes(produto.id));
+});
+
+
+
+
+
+
+
+
+
+
+
 
 const produtos = ref([]);
 const usuario = ref({});
@@ -18,8 +77,6 @@ const filtro = ref({
   precoAte: ''
 });
 const categoriasUnicas = ref([]); // Constante para armazenar categorias únicas
-
-
 
 const showModalEditar = ref(false);
 const produtoAtual = ref({ id: null, nome: '', preco: 0 });
@@ -34,32 +91,25 @@ const closeModal = () => {
   showModalEditar.value = false;
 };
 
-const produtoEditado = (produtoAtualizado) => {
-  carregarProdutos();
-};
-
-
 const carregarProdutos = async () => {
   try {
     const resposta = await listarProdutos();
-    produtos.value = resposta.produtos || []; // Acessa o array 'produtos' do JSON retornado
+    produtos.value = resposta.produtos || [];
     // Extrai as categorias únicas
     const categorias = produtos.value.map(produto => produto.categoria);
     categoriasUnicas.value = [...new Set(categorias)];
   } catch (erro) {
-    console.error('Erro ao carregar produtos:', erro.message);
-    alert('Erro ao carregar produtos.');
+    toast.info('Sem produtos adicionados:', erro.message);
   }
 };
+
 
 const excluirProduto = async (produtoId) => {
   try {
     await apiExcluirProduto(produtoId);
     produtos.value = produtos.value.filter(produto => produto.id !== produtoId);
-    alert('Produto excluído com sucesso.');
   } catch (erro) {
-    console.error('Erro ao excluir produto:', erro.message);
-    alert('Erro ao excluir produto.');
+    toast.error('Erro ao excluir produto.');
   }
 };
 
@@ -135,9 +185,9 @@ onMounted(async () => {
     }
 
     const respostaUsuario = await obterDadosUsuario(token);
-    usuario.value = respostaUsuario.usuario; // Assuma que a resposta contém um objeto usuário
+    usuario.value = respostaUsuario.usuario; 
     await carregarProdutos();
-    console.log(respostaUsuario)
+    //console.log(respostaUsuario) mostra dados do usuario logado
   } catch (erro) {
     console.error('Erro ao obter dados do usuário:', erro.message);
     router.push('/login');
@@ -166,9 +216,9 @@ onMounted(async () => {
           <li><a class="dropdown-item text-primary" href="#">Adicionar Categorias</a></li>
         </ul>
 
-        <ImportarProdutos />
+        <ImportarProdutos @produtoAdicionado="carregarProdutos" />
         <button class="btn btn-primary py-2 px-3 ms-3 rounded-0" data-bs-toggle="modal" data-bs-target="#productModal">
-          Adicionar Produto <!-- Ao clicar, deve abrir o modal de produtos -->
+          Adicionar Produto
         </button>
       </div>
     </div>
@@ -178,21 +228,21 @@ onMounted(async () => {
         <form @submit.prevent="aplicarFiltro">
           <h4 class="filtro-texto pb-3">Filtrar Produtos</h4>
           <div class="row g-3 border-bottom border-top pb-4">
-            <!-- Código ou Referência -->
+            
             <div class="col-md-6">
               <label for="codigoReferencia" class="form-label">Código ou Referência</label>
               <input v-model="filtro.codigoReferencia" type="text" class="form-control" id="codigoReferencia"
                 placeholder="Digite o código ou referência">
             </div>
 
-            <!-- Nome do Produto -->
+    
             <div class="col-md-6">
               <label for="nomeProduto" class="form-label">Nome do Produto</label>
               <input v-model="filtro.nomeProduto" type="text" class="form-control" id="nomeProduto"
                 placeholder="Digite o nome do produto">
             </div>
 
-            <!-- Categorias -->
+    
             <div class="col-md-6">
               <label for="categorias" class="form-label">Categorias</label>
               <select v-model="filtro.categorias" id="categorias" class="form-select">
@@ -204,7 +254,7 @@ onMounted(async () => {
             </div>
 
 
-            <!-- Faixa de Preço -->
+    
             <div class="col-md-6">
               <label for="precoDe" class="form-label">Faixa de Preço</label>
               <div class="input-group">
@@ -218,7 +268,7 @@ onMounted(async () => {
             </div>
 
           </div>
-          <!-- Botão de Filtro -->
+  
           <div class="col-12 d-flex justify-content-end pt-3">
           </div>
         </form>
@@ -226,9 +276,9 @@ onMounted(async () => {
 
       <div class="pt-4">
         <div class="ordem row align-items-center mx-5 p-3 px-3">
-          <!-- Ajuste o layout do cabeçalho para corresponder ao layout dos produtos -->
+  
           <div class="col-auto me-4 mb-3 ordenar-item">
-            <input class="form-check-input" type="checkbox">
+            <input class="form-check-input" type="checkbox" @change="selecionarTodos" :checked="todosSelecionados">
           </div>
           <div class="col-auto me-5 ordenar-item produto-referencia" @click="ordenar('referencia')">
             <p class="ordenar-texto">
@@ -236,7 +286,7 @@ onMounted(async () => {
               <i :class="getSortIconClass('referencia')"></i>
             </p>
           </div>
-          <!-- Repetir para outros campos -->
+  
           <div class="col-auto ordenar-item produto-imagem" @click="ordenar('imagem')">
             <p class="ordenar-texto">
               Imagem
@@ -268,33 +318,31 @@ onMounted(async () => {
           <div class="ordenar-item limpar_filtro">
             <button type="button" class="btn btn-outline-dark rounded-0" @click="limparFiltro"><i
                 class="fa-solid text-secondary fa-circle-info"></i> Limpar Filtros</button>
+
+            <button type="button" class="btn btn-outline-danger rounded-0 ms-2" @click="excluirSelecionados">Excluir
+              Todos</button>
           </div>
 
         </div>
 
-        <!-- Renderização dos produtos -->
+
         <div class="produto-lista">
           <div class="lista-produtos" v-for="produto in produtosFiltrados" :key="produto.id">
             <Produto :referencia="produto.referencia" :image="produto.image" :descricao="produto.descricao"
               :categoria="produto.categoria" :preco="produto.preco" :status="produto.status" :id="produto.id"
-              @excluirProduto="excluirProduto" @editarProduto="atualizarProduto" />
+              :selecionado="produtosSelecionados.includes(produto.id)" @excluirProduto="excluirProduto"
+              @editarProduto="atualizarProduto" @selecionarProduto="marcarProduto" />
           </div>
         </div>
 
       </div>
 
     </div>
-    
-    <AdicionarProdutos />
 
-      <EditarProdutos
-      v-if="showModalEditar" 
-      :produto="produtoAtual"
-      :showModal="showModalEditar"
-      :categoriasUnicas="categoriasUnicas"
-      @closeModal="closeModal"
-      @produtoEditado="produtoEditado"
-    />
+    <AdicionarProdutos @produtoAdicionado="carregarProdutos" />
+
+    <EditarProdutos v-if="showModalEditar" :produto="produtoAtual" :showModal="showModalEditar"
+      :categoriasUnicas="categoriasUnicas" @closeModal="closeModal" @produtoEditado="produtoEditado" />
 
   </div>
 </template>
@@ -391,19 +439,20 @@ onMounted(async () => {
 }
 
 .produto-preco {
-  width: 80px;
+  width: 60px;
   margin-left: .2%;
 }
 
 .produto-status {
-  width: 100px;
-  margin-right: -40px;
+  margin-right: -180px;
 }
 
 .limpar_filtro {
-  width: 130px;
+  width: 280px;
 }
 
+.ordem {
+}
 
 @media (max-width: 768px) {
 

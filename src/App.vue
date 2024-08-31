@@ -1,12 +1,13 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import Load from './components/Load.vue'
 
 </script>
 
 <template>
 
 
-
+  <Load />
   <RouterView />
 
 

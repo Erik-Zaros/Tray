@@ -1,12 +1,18 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { adicionarProduto } from '../../../../services/api'; 
+import { adicionarProduto } from '../../../../services/api';
+// Notificacoes maneiras
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
+const emit = defineEmits(['produtoAdicionado']);
+
+
 
 const modalAberto = ref(false);
 const dadosCSV = ref([]);
 const dadosHeaderCSV = ref(["referência", "descrição", "categoria", "preço", "status", "imagem"]);
 const mostrarTabelaCSV = ref(false);
-const mensagemAlerta = ref(null);
 
 function abreModal() {
     modalAberto.value = true;
@@ -83,17 +89,13 @@ function mostraTabela() {
 }
 
 async function salvaProdutosImportados() {
-    mensagemAlerta.value = null;
-
     const usuarioId = localStorage.getItem('usuarioId'); // Obtendo o ID do usuário autenticado
     if (!usuarioId) {
-        mensagemAlerta.value = 'Usuário não autenticado.';
         return;
     }
 
     for (let produto of dadosCSV.value) {
         if (!produto.referencia || !produto.descricao || !produto.categoria) {
-            mensagemAlerta.value = 'Dados incompletos em um ou mais produtos. Verifique e tente novamente.';
             return;
         }
 
@@ -103,23 +105,19 @@ async function salvaProdutosImportados() {
             // Adiciona o produto via API
             const token = localStorage.getItem('token');
             if (!token) throw new Error('Usuário não autenticado.');
+            mostrarTabelaCSV.value = false;
+            fechaModal();
             await adicionarProduto(produto, token);
         } catch (error) {
             console.error('Erro ao salvar produto:', produto, error);
-            mensagemAlerta.value = `Erro ao salvar alguns produtos. Verifique os dados e tente novamente.`;
             return;
         }
     }
 
-    mensagemAlerta.value = "Produtos importados salvos com sucesso!";
-    mostrarTabelaCSV.value = false;
-    fechaModal();
-    window.location.reload();
+    emit('produtoAdicionado');
+    toast.success('Produtos importados com sucesso!');
 }
 
-const classeAlerta = computed(() => {
-    return mensagemAlerta.value && mensagemAlerta.value.includes('sucesso') ? 'alert success' : 'alert error';
-});
 </script>
 
 <template>
@@ -147,11 +145,6 @@ const classeAlerta = computed(() => {
                                 <button class="btn btn-primary m-2" @click="salvaProdutosImportados"
                                     v-if="dadosCSV && dadosCSV.length">Salvar Produtos</button>
                             </div>
-                        </div>
-
-                        <!-- Alertas -->
-                        <div v-if="mensagemAlerta" class="alert" :class="classeAlerta">
-                            {{ mensagemAlerta }}
                         </div>
 
                         <!-- Tabela de produtos -->

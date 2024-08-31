@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { adicionarProduto as adicionarProdutoAPI } from '../../../../services/api';
+// Notificacoes maneiras
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
+const emit = defineEmits(['produtoAdicionado']);
 
 const produto = ref({
   referencia: '',
@@ -20,12 +25,9 @@ async function adicionaProduto() {
     const usuarioId = localStorage.getItem('usuarioId');
     if (!usuarioId) throw new Error('Usuário não autenticado.');
     produto.value.usuarioId = parseInt(usuarioId, 10);
-    
-    // Adiciona o produto via API
-    const novoProduto = await adicionarProdutoAPI(produto.value, token);
-    console.log('Produto cadastrado com sucesso:', novoProduto);
 
-    // Limpa o formulário
+    const novoProduto = await adicionarProdutoAPI(produto.value, token);
+
     produto.value = {
       referencia: '',
       descricao: '',
@@ -39,11 +41,10 @@ async function adicionaProduto() {
     // Fecha o modal e atualiza a lista de produtos
     const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
     modal.hide();
-    alert('Produto cadastrado com sucesso!');
-    window.location.reload();
+    emit('produtoAdicionado');
+    toast.success('Produto cadastrado com sucesso!');
   } catch (erro) {
-    console.error('Erro ao cadastrar produto:', erro.message);
-    alert('Erro ao cadastrar produto.');
+    toast.error('Erro ao cadastrar produto.');
   }
 }
 </script>

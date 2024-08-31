@@ -13,7 +13,7 @@ const props = defineProps({
 
 const estado = ref({});
 const usuario = ref();
-const imageUrl = ref('/default-image.jpg'); // Imagem padrão da pasta public
+const imageUrl = ref('/user.jpg'); // Imagem padrão da pasta public
 
 
 watch(() => props.isEditing, (newVal) => {
@@ -101,8 +101,12 @@ const editPhoto = () => {
                 <div v-else class="image-preview d-flex flex-column align-items-center">
                     <img :src="imageSrc" class="img-thumbnail shadow-sm" alt="Pré-visualização" />
                     <div class="d-flex align-items-center p-3">
-                        <button class="btn btn-primary m-1 shadow-sm" @click="editPhoto">Editar Foto</button>
-                        <button class="btn btn-danger m-1 shadow-sm" @click="removePhoto">Remover Foto</button>
+                        <button class="btn btn-primary m-1 shadow-sm"
+                                @click="editPhoto"
+                                :class="{ 'd-none': !isEditing }">Editar Foto</button>
+                        <button class="btn btn-danger m-1 shadow-sm"
+                                @click="removePhoto"
+                                :class="{ 'd-none': !isEditing }">Remover Foto</button>
                     </div>
                 </div>
             </div>

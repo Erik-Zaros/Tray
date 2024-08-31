@@ -1,7 +1,4 @@
-// src/services/apiService.js
-
-const API_URL_USUARIOS = 'https://megev-affefxfrajedbqbw.brazilsouth-01.azurewebsites.net/usuarios';
-const API_URL_PRODUTOS = 'https://megev-affefxfrajedbqbw.brazilsouth-01.azurewebsites.net/produtos';
+import axios from './axios';
 
 function obterToken() {
     return localStorage.getItem('token');
@@ -23,18 +20,11 @@ async function tratarResposta(resposta) {
     return resposta.json();
 }
 
-// Funções de Usuário
 
 export async function registrarUsuario({ nome, sobrenome, email, senha, saldo, image }) {
     try {
-        const resposta = await fetch(`${API_URL_USUARIOS}/registrar`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ nome, sobrenome, email, senha, saldoConta: saldo, userImage: image }),
-        });
-        return await tratarResposta(resposta);
+        const resposta = await axios.post('/usuarios/registrar', { nome, sobrenome, email, senha, saldoConta: saldo, userImage: image });
+        return resposta.data;
     } catch (erro) {
         console.error('Erro ao registrar usuário:', erro.message);
         throw erro;
@@ -43,14 +33,8 @@ export async function registrarUsuario({ nome, sobrenome, email, senha, saldo, i
 
 export async function loginUsuario({ email, senha }) {
     try {
-        const resposta = await fetch(`${API_URL_USUARIOS}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, senha }),
-        });
-        const dados = await tratarResposta(resposta);
+        const resposta = await axios.post('/usuarios/login', { email, senha });
+        const dados = resposta.data;
         definirToken(dados.token);
         return dados;
     } catch (erro) {
@@ -59,19 +43,16 @@ export async function loginUsuario({ email, senha }) {
     }
 }
 
+
 export async function obterDadosUsuario() {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(`${API_URL_USUARIOS}/me`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
+        const resposta = await axios.get('/usuarios/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-        return await tratarResposta(resposta);
+        return resposta.data;
     } catch (erro) {
         console.error('Erro ao obter dados do usuário:', erro.message);
         throw erro;
@@ -79,58 +60,41 @@ export async function obterDadosUsuario() {
 }
 
 export async function atualizarUsuario({ id, nome, sobrenome, email, saldo, senha, userImage }) {
-    const token = obterToken();  // Certifique-se de que obterToken() está correto
+    const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
   
     try {
-      const resposta = await fetch(`${API_URL_USUARIOS}/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          nome,
-          sobrenome,
-          email,
-          saldoConta: saldo,  // Certifique-se de que o nome do campo está correto
-          senha: senha || '',  // Envie senha somente se for fornecida
-          userImage: userImage || '' // Envie userImage somente se for fornecida
-        })
+      const resposta = await axios.put(`/usuarios/${id}`, {
+        nome,
+        sobrenome,
+        email,
+        saldoConta: saldo,
+        senha: senha || '',
+        userImage: userImage || ''
+      }, {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
-  
-      if (!resposta.ok) {
-        const erro = await resposta.text();
-        throw new Error(`Erro ao atualizar usuário: ${erro}`);
-      }
-  
-      return await resposta.json();
+      return resposta.data;
     } catch (erro) {
-      console.error('Erro ao atualizar usuário:', erro);
+      console.error('Erro ao atualizar usuário:', erro.message);
       throw erro;
     }
-  }
+}
   
   
-  
-  
-
 export async function excluirUsuario(id) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(`${API_URL_USUARIOS}/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
+        const resposta = await axios.delete(`/usuarios/${id}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (resposta.ok) {
+        if (resposta.status === 204) {
             removerToken();
             return true;
         }
-        return await tratarResposta(resposta);
+        return resposta.data;
     } catch (erro) {
         console.error('Erro ao excluir usuário:', erro.message);
         throw erro;
@@ -141,68 +105,58 @@ export function logout() {
     removerToken();
 }
 
+
 // Funções de Produtos
-export async function listarProdutos() {
+export async function listarProdutos(pagina = 1, tamanhoPagina = 100) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(API_URL_PRODUTOS, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json' // Adicione o Content-Type se necessário
-            }
+        const resposta = await axios.get(`/produtos?page=${pagina}&size=${tamanhoPagina}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-
-        if (!resposta.ok) {
-            throw new Error(`Erro ${resposta.status}: ${resposta.statusText}`);
+        const dados = resposta.data;
+        
+        if (dados.totalPages > pagina) {
+            const produtosRestantes = await listarProdutos(pagina + 1, tamanhoPagina);
+            return {
+                ...dados,
+                produtos: [...dados.produtos, ...produtosRestantes.produtos]
+            };
         }
 
-        const dados = await resposta.json();
-        return dados; // Certifique-se de que o formato de dados retornado está correto
+        return dados;
     } catch (erro) {
         console.error('Erro ao listar produtos:', erro.message);
         throw erro;
     }
 }
 
+
 export async function adicionarProduto({ referencia, descricao, categoria, preco, status, image, usuarioId }) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(API_URL_PRODUTOS, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ referencia, descricao, categoria, preco, status, image, usuarioId })
+        const resposta = await axios.post('/produtos', { referencia, descricao, categoria, preco, status, image, usuarioId }, {
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-        return await tratarResposta(resposta);
+        return resposta.data;
     } catch (erro) {
         console.error('Erro ao adicionar produto:', erro.message);
         throw erro;
     }
 }
 
-
 export async function atualizarProduto({ produtoId, referencia, descricao, categoria, preco, status, image }) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        console.log('Atualizando produto com ID:', produtoId);
-        const resposta = await fetch(`${API_URL_PRODUTOS}/${produtoId}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ produtoId, referencia, descricao, categoria, preco, status, image })
+        const resposta = await axios.put(`/produtos/${produtoId}`, { produtoId, referencia, descricao, categoria, preco, status, image }, {
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-        return await tratarResposta(resposta);
+        return resposta.data;
     } catch (erro) {
         console.error('Erro ao atualizar produto:', erro.message);
         throw erro;
@@ -211,36 +165,18 @@ export async function atualizarProduto({ produtoId, referencia, descricao, categ
 
 
 
-
 export async function excluirProduto(produtoId) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
 
     try {
-        const resposta = await fetch(`${API_URL_PRODUTOS}/${produtoId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+        const resposta = await axios.delete(`/produtos/${produtoId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-
-        if (resposta.ok) {
-            // Resposta bem-sucedida, pode não ter conteúdo
+        if (resposta.status === 204) {
             return true;
-        } else {
-            const mensagem = await resposta.text();
-            // Verifique se a resposta possui um corpo
-            if (mensagem) {
-                // Se a resposta contém uma mensagem de erro, trate-a como JSON se necessário
-                try {
-                    return JSON.parse(mensagem);
-                } catch (e) {
-                    throw new Error(`Erro ${resposta.status}: ${mensagem}`);
-                }
-            } else {
-                throw new Error(`Erro ${resposta.status}: Resposta vazia`);
-            }
         }
+        return resposta.data;
     } catch (erro) {
         console.error('Erro ao excluir produto:', erro.message);
         throw erro;

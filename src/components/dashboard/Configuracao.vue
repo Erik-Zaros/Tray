@@ -1,4 +1,27 @@
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { excluirUsuario } from '../../services/api';
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+const router = useRouter();
+
+
+const excluirConta = async () => {
+  try {
+    await excluirUsuario(usuario.value.id);
+    toast.success('Conta excluída com sucesso!');
+
+    // Aguarda 2 segundos (2000 milissegundos)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    router.push('/login');
+  } catch (erro) {
+    //console.error('Erro ao excluir conta:', erro); // Log mais detalhado
+    toast.error(`Erro ao excluir conta: ${erro.message}`);
+  }
+}
+
 </script>
 
 <template>
@@ -12,7 +35,7 @@
 
  
         <div class="col-md-4 col-12 p-2">
-            <div class="card p-4 frete">
+            <div class="card p-4 loja">
                 <h4 class="titulo-card mb-3"><i class="fas fa-store me-2"></i>Loja</h4>
                 <div class="item">
                     <router-link to="/dashboard/perfil">
@@ -30,7 +53,7 @@
                 </div>
             </div>
 
-            <div class="card p-4 mt-3 frete">
+            <div class="card p-4 mt-3 pedidos">
                 <h4 class="titulo-card mb-3"><i class="fa-solid fa-cart-shopping me-2"></i>Pedidos</h4>
                 <div class="item">
                     <h5 class="titulo">Devoluções</h5>
@@ -46,6 +69,13 @@
 
         <div class="col-md-4 col-12 p-2">
             <div class="card p-4 frete">
+                <h4 class="titulo-card mb-3"><i class="fa-solid fa-truck"></i> Frete e envio</h4>
+                <div class="item">
+                    <h5 class="titulo">Geral <button class="btn btn-primary p-1 py-0 ms-1 mb-1">Pré-ativa</button></h5>
+                    <p class="texto mb-0">Formas de envio, Correios, retirada na loja.</p>
+                </div>
+            </div>
+            <div class="card p-4 produtos mt-3">
                 <h4 class="titulo-card mb-3"><i class="fa-solid fa-tag me-2"></i>Produtos</h4>
                 <div class="item">
                     <router-link to="/dashboard/produtos">
@@ -65,31 +95,27 @@
                     <h5 class="titulo">Metodos de entrega</h5>
                     <p class="texto">Metodos de entrega o qual sua loja trabalha</p>
                 </div>
-                <div class="item">
-                    <h5 class="titulo">Metodos de rastreio</h5>
-                    <p class="texto">Rastreio usado para o usuario achar seu produto</p>
-                </div>
             </div>
         </div>
 
 
         <div class="col-md-4 col-12 p-2">
-            <div class="card p-4 frete">
-                <h4 class="titulo-card mb-3"><i class="fa-solid fa-truck"></i> Frete e envio</h4>
-                <div class="item">
-                    <h5 class="titulo">Geral <button class="btn btn-primary p-1 py-0 ms-1">Pré-ativa</button></h5>
-                    <p class="texto mb-0">Formas de envio, Correios, retirada na loja.</p>
-                </div>
-            </div>
-            <div class="card p-4 pagamento mt-3">
+            <div class="card p-4 pagamento">
                 <h4 class="titulo-card mb-3"><i class="fa-solid fa-money-bill"></i> Pagamentos</h4>
                 <div class="item">
-                    <h5 class="titulo">Formas de Pagamento <button class="btn btn-danger p-1 py-0 ms-1">Novo</button></h5>
+                    <h5 class="titulo">Formas de Pagamento <button class="btn btn-danger p-1 py-0 ms-1 mb-1">Novo</button></h5>
                     <p class="texto mb-0">Configure e organize seu checkout com diversas opções de gateways e intermediadores de pagamento</p>
                 </div>
                 <div class="item">
                     <h5 class="titulo">Vindi <i class="fa-solid fa-circle-question fs-6"></i></h5>
                     <p class="texto">Configurações do intermediador.</p>
+                </div>
+            </div>
+            <div class="card p-4 excluir mt-3">
+                <h4 class="titulo-card mb-3"><i class="fa-solid fa-delete-left"></i> Encerrar Assinatura</h4>
+                <div class="item" @click="excluirConta">
+                    <h5 class="titulo">Excluir Conta </h5>
+                    <p class="texto mb-0">Excluir loja, conta e cancelar assinatura.</p>
                 </div>
             </div>
         </div>

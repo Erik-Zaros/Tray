@@ -293,25 +293,25 @@ onMounted(async () => {
             </p>
           </div>
           <div class="col ordenar-item produto-descricao" @click="ordenar('descricao')">
-            <p class="ordenar-texto">
+            <p class="ordenar-texto ps-4 ms-1">
               Descrição
               <i :class="getSortIconClass('descricao')"></i>
             </p>
           </div>
           <div class="col ordenar-item produto-categoria" @click="ordenar('categoria')">
-            <p class="ordenar-texto">
+            <p class="ordenar-texto ps-3">
               Categoria
               <i :class="getSortIconClass('categoria')"></i>
             </p>
           </div>
           <div class="col ordenar-item produto-preco" @click="ordenar('preco')">
-            <p class="ordenar-texto">
+            <p class="ordenar-texto ps-4">
               Preço
               <i :class="getSortIconClass('preco')"></i>
             </p>
           </div>
           <div class="col ordenar-item produto-status" @click="ordenar('status')">
-            <p class="ordenar-texto">
+            <p class="ordenar-texto ps-4 ms-1">
               Status
             </p>
           </div>

@@ -119,8 +119,9 @@ onMounted(async () => {
 }
 
 .perfil {
-    height: 10%;
-    width: 30%;
+    height: 170px;
+    width: 170px;
+    object-fit: cover;
 }
 
 .texto {

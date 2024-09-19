@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { logout } from '../../../../services/api';
+import { logout } from '../../services/api';
 
 const router = useRouter();
 const menu = ref(false);

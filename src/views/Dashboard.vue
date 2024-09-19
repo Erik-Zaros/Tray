@@ -2,7 +2,7 @@
 import { obterDadosUsuario } from '../services/api';
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import Header from '../components/dashboard/components/Inicio/Header.vue';
+import Header from '../components/dashboard/Header.vue';
 import TourComponent from '../components/dashboard/components/Inicio/Tour.vue';
 
 const usuario = ref(null);

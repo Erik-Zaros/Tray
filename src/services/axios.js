@@ -3,7 +3,7 @@ import axios from 'axios';
 import store from '../store';
 
 const instance = axios.create({
-  baseURL: 'https://megev-affefxfrajedbqbw.brazilsouth-01.azurewebsites.net', 
+  baseURL: 'https://localhost:7205', 
   headers: {
     'Content-Type': 'application/json'
   }

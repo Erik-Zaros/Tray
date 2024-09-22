@@ -4,3 +4,16 @@
 * {
     font-family: "Inter", sans-serif; /* Inter é a fonte padrao da plataforma */ 
 }
+
+:root {
+    --navbar-color: #424242; 
+  }
+  
+  .navbar {
+    background-color: var(--navbar-color);
+  }
+  
+  .sidebar {
+    background-color: var(--navbar-color);
+  }
+  

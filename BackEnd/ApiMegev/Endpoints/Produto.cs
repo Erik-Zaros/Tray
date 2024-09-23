@@ -117,21 +117,31 @@ namespace megev.Endpoints
                 return Results.Created($"/produtos/{produto.Id}", produto);
             }).RequireAuthorization();
 
+
             // Endpoint para Atualizar um Produto
-            rotaProdutos.MapPut("/{id}", async (int id, MegevDbContext dbContext, Produto produto) =>
+            rotaProdutos.MapPut("/{id}", async (int id, MegevDbContext dbContext, Produto produto, HttpContext httpContext) =>
             {
-                var produtoExistente = await dbContext.Produto.SingleOrDefaultAsync(p => p.Id == id);
+                var usuarioId = int.Parse(httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                var produtoExistente = await dbContext.Produto.SingleOrDefaultAsync(p => p.Id == id && p.UsuarioId == usuarioId);
                 if (produtoExistente == null)
                 {
-                    return Results.NotFound("Produto não encontrado.");
+                    return Results.NotFound("Produto não encontrado ou não pertence ao usuário.");
                 }
 
-                produto.Id = id;
-                dbContext.Entry(produtoExistente).CurrentValues.SetValues(produto);
+                // Atualiza apenas os campos que podem ser modificados
+                produtoExistente.Referencia = produto.Referencia;
+                produtoExistente.Descricao = produto.Descricao;
+                produtoExistente.Categoria = produto.Categoria;
+                produtoExistente.Preco = produto.Preco;
+                produtoExistente.Status = produto.Status;
+                produtoExistente.Image = produto.Image;
+
                 await dbContext.SaveChangesAsync();
 
                 return Results.NoContent();
             }).RequireAuthorization();
+
 
             // Endpoint para Deletar um Produto
             rotaProdutos.MapDelete("/{id}", async (int id, MegevDbContext dbContext) =>

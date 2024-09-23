@@ -163,8 +163,6 @@ export async function atualizarProduto({ produtoId, referencia, descricao, categ
     }
 }
 
-
-
 export async function excluirProduto(produtoId) {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');

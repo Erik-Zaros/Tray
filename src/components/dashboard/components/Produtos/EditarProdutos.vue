@@ -55,20 +55,17 @@ const atualizaProduto = async () => {
         if (!token) throw new Error('Usuário não autenticado.');
 
         const produtoAtualizado = await atualizarProdutoAPI({
-            id: produto.value.id,
+            produtoId: produto.value.id,
             referencia: produto.value.referencia,
             descricao: produto.value.descricao,
             categoria: produto.value.categoria,
             preco: produto.value.preco,
             status: produto.value.status,
             image: produto.value.image,
-            usuarioId: produto.value.usuario.id, 
-            usuario: produto.value.usuario 
         }, token);
 
         emit('produtoEditado', produtoAtualizado);
 
-        
         const modalElement = document.getElementById('editProductModal');
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         if (modalInstance) {
@@ -78,9 +75,10 @@ const atualizaProduto = async () => {
         emit('closeModal');
     } catch (erro) {
         console.error('Erro ao atualizar produto:', erro.message);
-        alert('Erro ao atualizar produto.');
+        alert('Erro ao atualizar produto: ' + erro.message);
     }
 };
+
 </script>
 
 <template>

@@ -100,7 +100,7 @@ const deslogar = async () => {
         <label class="icon-wrapper my-2">
           <router-link to="/dashboard/configuracao">
             <i id="tour-7" class="fa-solid icon-menu fa-gear py-3 px-4 rounded"></i>
-            <span class="text-icon">Configurações</span>
+            <span class="text-icon">Definições</span>
           </router-link>
         </label>
 
@@ -110,12 +110,13 @@ const deslogar = async () => {
             <span class="text-icon">Ajuda</span>
           </router-link>
         </label>
+      </div>
 
-        <label class="icon-wrapper my-2" @click="deslogar">
+      <label class="icon-wrapper my-2" @click="deslogar">
           <i id="tour-9" class="fa-solid icon-menu fa-right-from-bracket py-3 px-4 rounded"></i>
           <span class="text-icon">Logout</span>
         </label>
-      </div>
+
     </div>
   </div>
 </template>
@@ -220,4 +221,11 @@ body {
     display: none;
   }
 }
+
+.text-icon {
+  display: none;
+  margin-left: 0px;
+  margin-right: 24px; 
+}
+
 </style>

@@ -1,4 +1,5 @@
 import axios from './axios';
+import { useRouter } from 'vue-router';
 
 function obterToken() {
     return localStorage.getItem('token');
@@ -20,7 +21,6 @@ async function tratarResposta(resposta) {
     return resposta.json();
 }
 
-
 export async function registrarUsuario({ nome, sobrenome, email, senha, saldo, image }) {
     try {
         const resposta = await axios.post('/usuarios/registrar', { nome, sobrenome, email, senha, saldoConta: saldo, userImage: image });
@@ -32,6 +32,12 @@ export async function registrarUsuario({ nome, sobrenome, email, senha, saldo, i
 }
 
 export async function loginUsuario({ email, senha }) {
+    const token = obterToken();
+    if (token) {
+        const router = useRouter(); // Certifique-se de ter o router disponível
+        return router.push('/dashboard/inicio'); // Redireciona para o dashboard se o token já existir
+    }
+    
     try {
         const resposta = await axios.post('/usuarios/login', { email, senha });
         const dados = resposta.data;
@@ -43,7 +49,6 @@ export async function loginUsuario({ email, senha }) {
     }
 }
 
-
 export async function obterDadosUsuario() {
     const token = obterToken();
     if (!token) throw new Error('Usuário não autenticado.');
@@ -54,6 +59,11 @@ export async function obterDadosUsuario() {
         });
         return resposta.data;
     } catch (erro) {
+        if (erro.response && erro.response.status === 401) {
+            removerToken(); // Remove o token se não estiver autenticado
+            const router = useRouter();
+            router.push('/login'); // Redireciona para a página de login
+        }
         console.error('Erro ao obter dados do usuário:', erro.message);
         throw erro;
     }
@@ -64,23 +74,22 @@ export async function atualizarUsuario({ id, nome, sobrenome, email, saldo, senh
     if (!token) throw new Error('Usuário não autenticado.');
   
     try {
-      const resposta = await axios.put(`/usuarios/${id}`, {
-        nome,
-        sobrenome,
-        email,
-        saldoConta: saldo,
-        senha: senha || '',
-        userImage: userImage || ''
-      }, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      return resposta.data;
+        const resposta = await axios.put(`/usuarios/${id}`, {
+            nome,
+            sobrenome,
+            email,
+            saldoConta: saldo,
+            senha: senha || '',
+            userImage: userImage || ''
+        }, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        return resposta.data;
     } catch (erro) {
-      console.error('Erro ao atualizar usuário:', erro.message);
-      throw erro;
+        console.error('Erro ao atualizar usuário:', erro.message);
+        throw erro;
     }
 }
-  
   
 export async function excluirUsuario(id) {
     const token = obterToken();
@@ -91,7 +100,7 @@ export async function excluirUsuario(id) {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (resposta.status === 204) {
-            removerToken();
+            removerToken(); // Remove o token se o usuário for excluído
             return true;
         }
         return resposta.data;
@@ -104,7 +113,6 @@ export async function excluirUsuario(id) {
 export function logout() {
     removerToken();
 }
-
 
 // Funções de Produtos
 export async function listarProdutos(pagina = 1, tamanhoPagina = 100) {
@@ -131,7 +139,6 @@ export async function listarProdutos(pagina = 1, tamanhoPagina = 100) {
         throw erro;
     }
 }
-
 
 export async function adicionarProduto({ referencia, descricao, categoria, preco, status, image, usuarioId }) {
     const token = obterToken();

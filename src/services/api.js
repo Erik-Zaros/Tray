@@ -42,7 +42,6 @@ export async function registrarUsuario({ nome, sobrenome, email, senha, saldo, i
     }
 }
 
-
 export async function loginUsuario({ email, senha }) {
     const token = obterToken();
     if (token) {

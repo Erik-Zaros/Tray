@@ -23,13 +23,25 @@ async function tratarResposta(resposta) {
 
 export async function registrarUsuario({ nome, sobrenome, email, senha, saldo, image }) {
     try {
-        const resposta = await axios.post('/usuarios/registrar', { nome, sobrenome, email, senha, saldoConta: saldo, userImage: image });
+        // Log dos dados antes do envio
+        console.log('Enviando dados para o servidor:', { nome, sobrenome, email, senha, saldoConta: saldo, userImage: image });
+
+        const resposta = await axios.post('/usuarios/registrar', {
+            nome,
+            sobrenome,
+            email,
+            senha,
+            saldoConta: saldo,
+            userImage: image
+        });
+
         return resposta.data;
     } catch (erro) {
-        console.error('Erro ao registrar usuário:', erro.message);
+        console.error('Erro ao registrar usuário:', erro.response?.data || erro.message);
         throw erro;
     }
 }
+
 
 export async function loginUsuario({ email, senha }) {
     const token = obterToken();

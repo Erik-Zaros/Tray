@@ -45,6 +45,7 @@ const excluirSelecionados = async () => {
       await excluirProduto(id);
     }
     produtosSelecionados.value = [];
+    toast.warning("Produtos selecionados excluidos com sucesso")
     await obterProdutos(); // Recarregar a lista de produtos após exclusão
   } catch (erro) {
     toast.error('Erro ao excluir produtos:', erro.message);

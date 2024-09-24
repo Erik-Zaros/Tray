@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import { atualizarProduto as atualizarProdutoAPI } from '../../../../services/api';
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 
 const props = defineProps({
     produto: {
@@ -70,12 +72,13 @@ const atualizaProduto = async () => {
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         if (modalInstance) {
             modalInstance.hide();
+            toast.success("Produto Alterado Com Sucesso")
         }
 
         emit('closeModal');
     } catch (erro) {
         console.error('Erro ao atualizar produto:', erro.message);
-        alert('Erro ao atualizar produto: ' + erro.message);
+        toast.error('Erro ao atualizar produto: ' + erro.message);
     }
 };
 

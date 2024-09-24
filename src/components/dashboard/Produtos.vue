@@ -342,7 +342,7 @@ onMounted(async () => {
     <AdicionarProdutos @produtoAdicionado="carregarProdutos" />
 
     <EditarProdutos v-if="showModalEditar" :produto="produtoAtual" :showModal="showModalEditar"
-      :categoriasUnicas="categoriasUnicas" @closeModal="closeModal" @produtoEditado="produtoEditado" />
+      :categoriasUnicas="categoriasUnicas" @closeModal="closeModal" @produtoEditado="carregarProdutos" />
 
   </div>
 </template>

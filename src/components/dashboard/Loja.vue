@@ -1,21 +1,21 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { obterDadosUsuario, listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
-// Notificacoes maneiras
+import { obterDadosUsuario, listarProdutos } from '../../services/api';
 import { useToast } from 'vue-toastification';
-import CardProdutos from './components/Loja/Card.vue'
-const toast = useToast();
+import CardProdutos from './components/Loja/Card.vue';
 
+const toast = useToast();
 const produtos = ref([]);
 const usuario = ref({});
 const router = useRouter();
-const categoriasUnicas = ref([]); // Constante para armazenar categorias únicas
+const categoriasUnicas = ref([]);
 
 const carregarProdutos = async () => {
     try {
         const resposta = await listarProdutos();
         produtos.value = resposta.produtos || [];
+
         // Extrai as categorias únicas
         const categorias = produtos.value.map(produto => produto.categoria);
         categoriasUnicas.value = [...new Set(categorias)];
@@ -24,9 +24,11 @@ const carregarProdutos = async () => {
     }
 };
 
+// Computed property para filtrar produtos com status verdadeiro
+const produtosAtivos = computed(() => produtos.value.filter(produto => produto.status === true));
+
 onMounted(async () => {
     try {
-        // Certifique-se de que o usuário esteja autenticado
         const token = localStorage.getItem('token');
         if (!token) {
             router.push('/login');
@@ -36,7 +38,6 @@ onMounted(async () => {
         const respostaUsuario = await obterDadosUsuario(token);
         usuario.value = respostaUsuario.usuario;
         await carregarProdutos();
-        //console.log(respostaUsuario) mostra dados do usuario logado
     } catch (erro) {
         console.error('Erro ao obter dados do usuário:', erro.message);
         router.push('/login');
@@ -79,6 +80,7 @@ onMounted(async () => {
                         </div>
                     </nav>
                 </header>
+
                 <div class="menu d-flex bg-primary">
                     <div class="textos m-auto">
                         <h1 class="titulo text-center"> SUA LOJA</h1>
@@ -89,29 +91,33 @@ onMounted(async () => {
                 <div class="categoria">
                     <div class="w-50 mx-auto bg-success d-flex">
                         <div class="col-md-3 d-flex mb-4">
-                                <p class="categoria m-auto pt-sm-4">Categoria 1</p>
+                            <p class="categoria m-auto pt-sm-4">Categoria 1</p>
                         </div>
                         <div class="col-md-3 d-flex mb-4">
-                                <p class="categoria m-auto pt-sm-4">Categoria 2</p>
+                            <p class="categoria m-auto pt-sm-4">Categoria 2</p>
                         </div>
                         <div class="col-md-3 d-flex mb-4">
-                                <p class="categoria m-auto pt-sm-4">Categoria 3</p>
+                            <p class="categoria m-auto pt-sm-4">Categoria 3</p>
                         </div>
                         <div class="col-md-3 d-flex mb-4">
-                                <p class="categoria m-auto pt-sm-4">Categoria 4</p>
+                            <p class="categoria m-auto pt-sm-4">Categoria 4</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="cards container p-3">
                     <div class="row">
-                        <div class="col-md-3 m-auto" v-for="produto in produtos" :key="produto.id">
-                            <CardProdutos :referencia="produto.referencia" :image="produto.image"
-                                :descricao="produto.descricao" :categoria="produto.categoria" :preco="produto.preco" />
+                        <!-- Aqui estamos usando o computed produtosAtivos -->
+                        <div class="col-md-3 m-auto" v-for="produto in produtosAtivos" :key="produto.id">
+                            <CardProdutos 
+                                :referencia="produto.referencia" 
+                                :image="produto.image"
+                                :descricao="produto.descricao" 
+                                :categoria="produto.categoria" 
+                                :preco="produto.preco" />
                         </div>
                     </div>
                 </div>
-
 
             </div>
 

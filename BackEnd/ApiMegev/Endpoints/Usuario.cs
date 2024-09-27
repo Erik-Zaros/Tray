@@ -2,12 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,169 +13,111 @@ namespace megev.Endpoints
         {
             var rotaUsuarios = rotas.MapGroup("/usuarios");
 
-            // Endpoint de Registro
-            rotaUsuarios.MapPost("/registrar", async (MegevDbContext dbContext, UsuarioDTO usuarioDto) =>
+            rotaUsuarios.MapGet("/", async (MegevDbContext dbContext, string? nome, string? sobrenome) =>
             {
-                var usuarioExistente = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Email == usuarioDto.Email);
-                if (usuarioExistente != null)
+                IQueryable<Usuario> usuariosFiltrados = dbContext.Usuario;
+
+                if (!string.IsNullOrEmpty(nome))
                 {
-                    return Results.BadRequest("Email já cadastrado.");
+                    usuariosFiltrados = usuariosFiltrados.Where(u => u.Nome.Contains(nome));
                 }
 
+                if (!string.IsNullOrEmpty(sobrenome))
+                {
+                    usuariosFiltrados = usuariosFiltrados.Where(u => u.Sobrenome.Contains(sobrenome));
+                }
+
+                var usuariosDto = await usuariosFiltrados
+                    .Select(u => new UsuarioOutputDto
+                    {
+                        Id = u.Id,
+                        Nome = u.Nome,
+                        Sobrenome = u.Sobrenome,
+                        Email = u.Email,
+                        SaldoConta = u.SaldoConta
+                    })
+                    .ToListAsync();
+
+                return TypedResults.Ok(usuariosDto);
+            });
+
+            rotaUsuarios.MapGet("/{id}", async (MegevDbContext dbContext, int id) =>
+            {
+                var usuario = await dbContext.Usuario.FindAsync(id);
+                if (usuario is null)
+                {
+                    return Results.NotFound();
+                }
+
+                var usuarioDto = new UsuarioOutputDto
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Sobrenome = usuario.Sobrenome,
+                    Email = usuario.Email,
+                    SaldoConta = usuario.SaldoConta
+                };
+
+                return TypedResults.Ok(usuarioDto);
+            }).Produces<UsuarioOutputDto>();
+
+            rotaUsuarios.MapPost("/", async (MegevDbContext dbContext, UsuarioInputDto usuarioDto) =>
+            {
                 var usuario = new Usuario(
                     usuarioDto.Nome,
                     usuarioDto.Sobrenome,
                     usuarioDto.Email,
-                    BCrypt.Net.BCrypt.HashPassword(usuarioDto.Senha),
-                    usuarioDto.SaldoConta,
-                    usuarioDto.UserImage
+                    usuarioDto.Senha,
+                    usuarioDto.SaldoConta
                 );
 
                 dbContext.Usuario.Add(usuario);
                 await dbContext.SaveChangesAsync();
 
-                return Results.Ok("Usuário registrado com sucesso.");
-            });
-
-            // Endpoint de Login
-            rotaUsuarios.MapPost("/login", async (MegevDbContext dbContext, UsuarioLoginDTO loginDto, IConfiguration config) =>
-            {
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Email == loginDto.Email);
-
-                if (usuario == null || !BCrypt.Net.BCrypt.Verify(loginDto.Senha, usuario.Senha))
-                {
-                    return Results.Unauthorized();
-                }
-
-                // Criar o token JWT
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, usuario.Email),
-                    new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString())
-                };
-
-                var jwtSettings = config.GetSection("JwtSettings");
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                var token = new JwtSecurityToken(
-                    issuer: jwtSettings["Issuer"],
-                    audience: jwtSettings["Audience"],
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["ExpirationInMinutes"])),
-                    signingCredentials: creds
-                );
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-                return Results.Ok(new
-                {
-                    Mensagem = "Login bem-sucedido.",
-                    UsuarioId = usuario.Id,
-                    Token = tokenString
-                });
-            });
-
-            // Endpoint de Logout (não faz nada com JWT, mas pode ser usado para frontend)
-            rotaUsuarios.MapPost("/logout", () =>
-            {
-                return Results.Ok("Logout realizado com sucesso.");
-            });
-
-            // Endpoint para Obter Dados do Usuário Logado
-            rotaUsuarios.MapGet("/me", async (HttpContext context, MegevDbContext dbContext) =>
-            {
-                var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                if (string.IsNullOrEmpty(userId))
-                {
-                    return Results.Unauthorized(); // Retorna 401 se não estiver autenticado
-                }
-
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id.ToString() == userId);
-
-                if (usuario == null)
-                {
-                    return Results.NotFound("Usuário não encontrado.");
-                }
-
-                var usuarioDto = new UsuarioOutputDto
+                var usuarioOutputDto = new UsuarioOutputDto
                 {
                     Id = usuario.Id,
                     Nome = usuario.Nome,
                     Sobrenome = usuario.Sobrenome,
                     Email = usuario.Email,
-                    SaldoConta = usuario.SaldoConta,
-                    UserImage = usuario.UserImage
+                    SaldoConta = usuario.SaldoConta
                 };
 
-                return TypedResults.Ok(usuarioDto);
-            }).RequireAuthorization();
-
-            // Endpoint para Obter Dados de Usuário por ID
-            rotaUsuarios.MapGet("/{id}", async (int id, MegevDbContext dbContext) =>
-            {
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id == id);
-
-                if (usuario == null)
-                {
-                    return Results.NotFound("Usuário não encontrado.");
-                }
-
-                var usuarioDto = new UsuarioOutputDto
-                {
-                    Id = usuario.Id,
-                    Nome = usuario.Nome,
-                    Sobrenome = usuario.Sobrenome,
-                    Email = usuario.Email,
-                    SaldoConta = usuario.SaldoConta,
-                    UserImage = usuario.UserImage
-                };
-
-                return TypedResults.Ok(usuarioDto);
+                return TypedResults.Created($"/usuarios/{usuario.Id}", usuarioOutputDto);
             });
 
-            // Endpoint para Atualizar Dados de um Usuário (PUT)
-            rotaUsuarios.MapPut("/{id}", async (int id, MegevDbContext dbContext, UsuarioDTO usuarioDto) =>
+            rotaUsuarios.MapPut("/{id}", async (MegevDbContext dbContext, int id, UsuarioInputDto usuarioDto) =>
             {
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id == id);
-
-                if (usuario == null)
+                var usuarioEncontrado = await dbContext.Usuario.FindAsync(id);
+                if (usuarioEncontrado is null)
                 {
-                    return Results.NotFound("Usuário não encontrado.");
+                    return Results.NotFound();
                 }
 
-                usuario.Nome = usuarioDto.Nome;
-                usuario.Sobrenome = usuarioDto.Sobrenome;
-                usuario.Email = usuarioDto.Email;
-                if (!string.IsNullOrEmpty(usuarioDto.Senha))
-                {
-                    usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuarioDto.Senha);
-                }
-                usuario.SaldoConta = usuarioDto.SaldoConta;
-                usuario.UserImage = usuarioDto.UserImage;
+                usuarioEncontrado.Nome = usuarioDto.Nome;
+                usuarioEncontrado.Sobrenome = usuarioDto.Sobrenome;
+                usuarioEncontrado.Email = usuarioDto.Email;
+                usuarioEncontrado.Senha = usuarioDto.Senha;
+                usuarioEncontrado.SaldoConta = usuarioDto.SaldoConta;
 
-                dbContext.Usuario.Update(usuario);
                 await dbContext.SaveChangesAsync();
 
-                return Results.Ok("Usuário atualizado com sucesso.");
-            }).RequireAuthorization();
+                return TypedResults.NoContent();
+            });
 
-            // Endpoint para Deletar um Usuário (DELETE)
-            rotaUsuarios.MapDelete("/{id}", async (int id, MegevDbContext dbContext) =>
+            rotaUsuarios.MapDelete("/{id}", async (MegevDbContext dbContext, int id) =>
             {
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id == id);
-
-                if (usuario == null)
+                var usuarioEncontrado = await dbContext.Usuario.FindAsync(id);
+                if (usuarioEncontrado is null)
                 {
-                    return Results.NotFound("Usuário não encontrado.");
+                    return Results.NotFound();
                 }
 
-                dbContext.Usuario.Remove(usuario);
+                dbContext.Usuario.Remove(usuarioEncontrado);
                 await dbContext.SaveChangesAsync();
 
-                return Results.Ok("Usuário deletado com sucesso.");
-            }).RequireAuthorization();
+                return TypedResults.NoContent();
+            });
         }
     }
 }

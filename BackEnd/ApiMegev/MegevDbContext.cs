@@ -33,18 +33,9 @@ namespace megev
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
                         .HasCharSet("utf8mb4");
 
-            // Configuração do relacionamento entre Produto e Usuario
-            modelBuilder.Entity<Produto>()
-                .HasOne(p => p.Usuario)
-                .WithMany(u => u.Produtos)
-                .HasForeignKey(p => p.UsuarioId)
-                .OnDelete(DeleteBehavior.Cascade); // Define o comportamento em caso de exclusão do usuário
-
-            // Configuração adicional, se necessário
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
-    

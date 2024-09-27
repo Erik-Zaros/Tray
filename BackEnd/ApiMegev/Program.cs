@@ -1,81 +1,65 @@
-using megev.Endpoints;
 using megev;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using megev.Endpoints;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
-public class Program
+namespace megev
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Configuração do Swagger
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        // Configuração CORS (Permitir que qualquer site use a API)
-        builder.Services.AddCors(options =>
+        public static void Main(string[] args)
         {
-            options.AddDefaultPolicy(policy =>
+            // Criação da WebApplication
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Configuração do Swagger
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            // Configuração CORS
+            builder.Services.AddCors(options =>
             {
-                policy.AllowAnyOrigin()   // Permite qualquer origem
-                      .AllowAnyMethod()   // Permite qualquer método (GET, POST, etc.)
-                      .AllowAnyHeader();  // Permite qualquer cabeçalho
-            });
-        });
-
-        // Configuração do DbContext
-        builder.Services.AddDbContext<MegevDbContext>(options =>
-        {
-            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                             ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")));
-        });
-
-        // Configuração do JWT
-        var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-        var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
-
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
+                options.AddDefaultPolicy(builder =>
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidAudience = jwtSettings["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
-                    ClockSkew = TimeSpan.Zero // Sem atraso na expiração do token
-                };
+                    builder.AllowAnyMethod()
+                           .AllowAnyOrigin()
+                           .AllowAnyHeader();
+                });
             });
 
-        // Configuração da Autorização
-        builder.Services.AddAuthorization();
+            // Configuração do DbContext
+            builder.Services.AddDbContext<MegevDbContext>(options =>
+            {
+                // Configure aqui a sua string de conexão ou leia de variáveis de ambiente
+                options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                                 ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")));
+            });
 
-        var app = builder.Build();
+            // Construção da WebApplication
+            var app = builder.Build();
 
+            // Middleware de desenvolvimento para Swagger
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
-            app.UseSwagger();
-            app.UseSwaggerUI();
-   
+            // Registro dos endpoints da API
+            app.RegistrarEndpointsUsuarios();
+            app.RegistrarEndpointsProdutos();
+            app.RegistrarEndpointsMetodoPagamento();
+            app.RegistrarEndpointsMetodosEntrega();
+            app.RegistrarEndpointsObjetivoLoja();
+            app.RegistrarEndpointsLoja();
+            app.RegistrarEndpointsCategoriaProduto();
 
-        app.UseCors(); // Aplicar a configuração de CORS
-        app.UseAuthentication();
-        app.UseAuthorization();
+            // Habilita CORS
+            app.UseCors();
 
-        // Registro dos endpoints da API
-        app.RegistrarEndpointsUsuarios();
-        app.RegistrarEndpointsProdutos();
-        app.RegistrarEndpointsMetodoPagamento();
-        app.RegistrarEndpointsMetodosEntrega();
-        app.RegistrarEndpointsObjetivoLoja();
-        app.RegistrarEndpointsLoja();
-        app.RegistrarEndpointsCategoriaProduto();
-
-        app.Run();
+            // Execução da aplicação
+            app.Run();
+        }
     }
 }

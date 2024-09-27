@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E17A2A70-F98E-42D1-B21D-9C2073960CCC}|BackEnd\\ApiMegev\\ApiMegev.csproj|c:\\users\\edmar\\onedrive\\documents\\github\\tray\\backend\\apimegev\\apimegev.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E17A2A70-F98E-42D1-B21D-9C2073960CCC}|BackEnd\\ApiMegev\\ApiMegev.csproj|solutionrelative:backend\\apimegev\\apimegev.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApiMegev.csproj",
+              "DocumentMoniker": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj",
+              "RelativeDocumentMoniker": "BackEnd\\ApiMegev\\ApiMegev.csproj",
+              "ToolTip": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj",
+              "RelativeToolTip": "BackEnd\\ApiMegev\\ApiMegev.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-09-27T14:58:08.236Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

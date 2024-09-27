@@ -117,7 +117,6 @@ namespace megev.Endpoints
                 return Results.Created($"/produtos/{produto.Id}", produto);
             }).RequireAuthorization();
 
-
             // Endpoint para Atualizar um Produto
             rotaProdutos.MapPut("/{id}", async (int id, MegevDbContext dbContext, Produto produto, HttpContext httpContext) =>
             {

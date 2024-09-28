@@ -166,7 +166,10 @@ body {
   transition: width 0.3s;
 }
 
-.vertical:hover,
+.vertical:hover {
+ width: 120px; 
+}
+
 .vertical.expanded {
   width: 200px;
 }

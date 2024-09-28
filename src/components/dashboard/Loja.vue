@@ -10,6 +10,23 @@ const produtos = ref([]);
 const usuario = ref({});
 const router = useRouter();
 const categoriasUnicas = ref([]);
+const categoriaSelecionada = ref(null);
+const indiceAtual = ref(0); // Adicionado para controlar a posição dos produtos
+
+// Método para selecionar a categoria
+const selecionarCategoria = (categoria) => {
+    categoriaSelecionada.value = categoria;
+    indiceAtual.value = 0; // Reinicia o índice ao mudar de categoria
+};
+
+// Computed property para filtrar produtos pela categoria
+const produtosFiltrados = computed(() => {
+    const produtosFiltradosPorCategoria = categoriaSelecionada.value
+        ? produtos.value.filter(produto => produto.categoria === categoriaSelecionada.value)
+        : produtos.value;
+
+    return produtosFiltradosPorCategoria.slice(indiceAtual.value, indiceAtual.value + 4); // Limita a 4 produtos
+});
 
 const carregarProdutos = async () => {
     try {
@@ -26,6 +43,29 @@ const carregarProdutos = async () => {
 
 // Computed property para filtrar produtos com status verdadeiro
 const produtosAtivos = computed(() => produtos.value.filter(produto => produto.status === true));
+
+// Computed properties para navegação
+const temProximo = computed(() => {
+    const total = categoriaSelecionada.value ? produtos.value.filter(produto => produto.categoria === categoriaSelecionada.value).length : produtos.value.length;
+    return (indiceAtual.value + 4) < total;
+});
+
+const temAnterior = computed(() => {
+    return indiceAtual.value > 0;
+});
+
+// Funções de navegação
+const proximoProduto = () => {
+    if (temProximo.value) {
+        indiceAtual.value += 4; // Mover para o próximo conjunto
+    }
+};
+
+const anteriorProduto = () => {
+    if (temAnterior.value) {
+        indiceAtual.value -= 4; // Voltar para o conjunto anterior
+    }
+};
 
 onMounted(async () => {
     try {
@@ -89,32 +129,24 @@ onMounted(async () => {
                 </div>
 
                 <div class="categoria">
-                    <div class="w-50 mx-auto bg-success d-flex">
-                        <div class="col-md-3 d-flex mb-4">
-                            <p class="categoria m-auto pt-sm-4">Categoria 1</p>
-                        </div>
-                        <div class="col-md-3 d-flex mb-4">
-                            <p class="categoria m-auto pt-sm-4">Categoria 2</p>
-                        </div>
-                        <div class="col-md-3 d-flex mb-4">
-                            <p class="categoria m-auto pt-sm-4">Categoria 3</p>
-                        </div>
-                        <div class="col-md-3 d-flex mb-4">
-                            <p class="categoria m-auto pt-sm-4">Categoria 4</p>
+                    <div class="w-100 mx-auto bg-success d-flex justify-content-center flex-wrap">
+                        <div class="col-md-3 d-flex mb-4" v-for="categoria in categoriasUnicas" :key="categoria"
+                            @click="selecionarCategoria(categoria)">
+                            <p class="categoria m-auto pt-sm-4">{{ categoria }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="cards container p-3">
+                    <div class="d-flex justify-content-between mb-3">
+                        <button class="btn btn-secondary" @click="anteriorProduto" :disabled="!temAnterior">Anterior</button>
+                        <button class="btn btn-secondary" @click="proximoProduto" :disabled="!temProximo">Próximo</button>
+                    </div>
+
                     <div class="row">
-                        <!-- Aqui estamos usando o computed produtosAtivos -->
-                        <div class="col-md-3 m-auto" v-for="produto in produtosAtivos" :key="produto.id">
-                            <CardProdutos 
-                                :referencia="produto.referencia" 
-                                :image="produto.image"
-                                :descricao="produto.descricao" 
-                                :categoria="produto.categoria" 
-                                :preco="produto.preco" />
+                        <div class="col-md-3 m-auto" v-for="produto in produtosFiltrados" :key="produto.id">
+                            <CardProdutos :referencia="produto.referencia" :image="produto.image"
+                                :descricao="produto.descricao" :categoria="produto.categoria" :preco="produto.preco" />
                         </div>
                     </div>
                 </div>
@@ -140,6 +172,9 @@ onMounted(async () => {
 }
 
 .categoria {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     color: azure;
 }
 

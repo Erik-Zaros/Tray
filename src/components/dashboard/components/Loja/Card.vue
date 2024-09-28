@@ -49,6 +49,12 @@ export default {
 <style scoped>
 .card {
     height: 420px;
+    transition: .2s;
+}
+
+.card:hover {
+    transform: scale(1.01); 
+    transition: .2s;
 }
 
 

@@ -1,12 +1,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue'; // Importar o modal de cadastro
-import EditarProdutos from './components/Produtos/EditarProdutos.vue'; // Importar o modal de cadastro
-import ImportarProdutos from './components/Produtos/ImportarProdutos.vue'; // Importar o modal de cadastro
-import Produto from './components/Produtos/Produto.vue'; // Importar o modal de cadastros
-import { obterDadosUsuario, listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; // Certifique-se de ajustar o caminho conforme necessário
-// Notificacoes maneiras
+import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue'; 
+import EditarProdutos from './components/Produtos/EditarProdutos.vue'; 
+import ImportarProdutos from './components/Produtos/ImportarProdutos.vue'; 
+import Produto from './components/Produtos/Produto.vue'; 
+import { obterDadosUsuario, listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; 
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 
@@ -46,7 +45,7 @@ const excluirSelecionados = async () => {
     }
     produtosSelecionados.value = [];
     toast.warning("Produtos selecionados excluidos com sucesso")
-    await obterProdutos(); // Recarregar a lista de produtos após exclusão
+    await obterProdutos(); 
   } catch (erro) {
     toast.error('Erro ao excluir produtos:', erro.message);
   }
@@ -55,17 +54,6 @@ const excluirSelecionados = async () => {
 const todosSelecionados = computed(() => {
   return produtos.value.length > 0 && produtos.value.every(produto => produtosSelecionados.value.includes(produto.id));
 });
-
-
-
-
-
-
-
-
-
-
-
 
 const produtos = ref([]);
 const usuario = ref({});
@@ -77,7 +65,7 @@ const filtro = ref({
   precoDe: '',
   precoAte: ''
 });
-const categoriasUnicas = ref([]); // Constante para armazenar categorias únicas
+const categoriasUnicas = ref([]); 
 
 const showModalEditar = ref(false);
 const produtoAtual = ref({ id: null, nome: '', preco: 0 });
@@ -96,7 +84,6 @@ const carregarProdutos = async () => {
   try {
     const resposta = await listarProdutos();
     produtos.value = resposta.produtos || [];
-    // Extrai as categorias únicas
     const categorias = produtos.value.map(produto => produto.categoria);
     categoriasUnicas.value = [...new Set(categorias)];
   } catch (erro) {
@@ -117,7 +104,6 @@ const excluirProduto = async (produtoId) => {
 const produtosFiltrados = computed(() => {
   return produtos.value
     .filter(produto => {
-      // Verificar se as propriedades do produto estão definidas e garantir que a operação de conversão para minúsculas não falhe
       const referencia = produto.referencia ? produto.referencia.toLowerCase() : '';
       const nome = produto.descricao ? produto.descricao.toLowerCase() : '';
       const categoria = produto.categoria || '';
@@ -154,10 +140,8 @@ const limparFiltro = () => {
 
 const ordenar = (campo) => {
   if (ordenacao.value.campo === campo) {
-    // Alternar a direção da ordenação
     ordenacao.value.direcao = ordenacao.value.direcao === 'asc' ? 'desc' : 'asc';
   } else {
-    // Mudar o campo de ordenação e definir a direção como crescente
     ordenacao.value.campo = campo;
     ordenacao.value.direcao = 'asc';
   }
@@ -169,16 +153,15 @@ const getSortIconClass = (campo) => {
       ? 'fa-solid fa-caret-up text-dark'
       : 'fa-solid fa-caret-down text-dark';
   } else {
-    return 'fa-solid fa-sort'; // Ícone padrão quando não está sendo ordenado
+    return 'fa-solid fa-sort'; 
   }
 };
 
-const ordenacao = ref({ campo: '', direcao: 'asc' }); // Inicializa com ordem crescente
+const ordenacao = ref({ campo: '', direcao: 'asc' }); 
 
 
 onMounted(async () => {
   try {
-    // Certifique-se de que o usuário esteja autenticado
     const token = localStorage.getItem('token');
     if (!token) {
       router.push('/login');
@@ -188,7 +171,6 @@ onMounted(async () => {
     const respostaUsuario = await obterDadosUsuario(token);
     usuario.value = respostaUsuario.usuario; 
     await carregarProdutos();
-    //console.log(respostaUsuario) mostra dados do usuario logado
   } catch (erro) {
     console.error('Erro ao obter dados do usuário:', erro.message);
     router.push('/login');
@@ -376,7 +358,6 @@ onMounted(async () => {
 
 .dropdown-toggle::after {
   display: none;
-  /* Oculta o ícone de seta */
 }
 
 .container {

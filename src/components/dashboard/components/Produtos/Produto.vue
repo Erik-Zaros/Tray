@@ -1,6 +1,6 @@
 <script setup>
 import Excluir from './Excluir.vue';
-import { defineEmits } from 'vue';
+import { defineEmits, defineProps } from 'vue';
 
 const produto = defineProps({
   image: String,
@@ -38,7 +38,6 @@ const emitirExcluir = () => {
   emit('excluirProduto', produto.id);
 };
 
-// Emitir evento de seleção ao clicar no checkbox
 const alterarSelecao = (event) => {
   emit('selecionarProduto', {
     id: produto.id,
@@ -50,39 +49,43 @@ const alterarSelecao = (event) => {
 <template>
   <div class="produto-card px-5 mx-4 p-3">
     <div class="row align-items-center">
-      <!-- Ajustando o layout dos produtos -->
       <div class="col-auto me-4">
         <input class="form-check-input" type="checkbox" :checked="selecionado" @change="alterarSelecao">
       </div>
+
       <div class="col-auto me-4">
         <p class="produto-referencia">{{ referencia }}</p>
       </div>
+
       <div class="col-auto me-4">
         <img class="produto-imagem" :src="image || '/noimg.jpeg'" alt="Imagem do Produto">
       </div>
+
       <div class="col me-auto">
         <p class="produto-descricao">{{ descricao }}</p>
       </div>
+
       <div class="col">
         <p class="produto-categoria">{{ categoria }}</p>
       </div>
+
       <div class="col">
         <p class="produto-preco">R$ {{ preco.toFixed(2) }}</p>
       </div>
+
       <div class="col">
-        <button :class="['produto-status btn', status ? 'btn-success' : 'btn-danger']">
+        <span :class="['produto-status badge', status ? 'badge-success' : 'badge-danger']">
           {{ status ? 'Ativo' : 'Inativo' }}
-        </button>
+        </span>
       </div>
+
       <div class="col-1 alterar d-flex justify-content-between">
         <div class="editar">
           <i class="fa-solid fa-pen-to-square fs-3" @click="emitirEditar"></i>
         </div>
         <div class="excluir">
-          <!-- Corrigido: adicionada a aspa de fechamento no lugar certo -->
           <i class="fa-solid fa-trash-can fs-3" @click="mostrarConfirmacaoExclusao(produto.id)"></i>
         </div>
-        <!-- Modal de exclusão -->
         <Excluir @confirmarExclusao="emitirExcluir" />
       </div>
     </div>
@@ -93,6 +96,7 @@ const alterarSelecao = (event) => {
 .produto-card {
   color: #333;
   border-top: 2px solid rgba(140, 140, 140, .3);
+  margin-bottom: 15px;
 }
 
 .produto-imagem {
@@ -108,14 +112,6 @@ const alterarSelecao = (event) => {
 
 .col-auto {
   flex: 0 0 auto;
-}
-
-.ordenar-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  white-space: nowrap;
 }
 
 .produto-referencia,
@@ -147,10 +143,19 @@ const alterarSelecao = (event) => {
 
 .produto-status {
   width: 100px;
+  font-size: 1.1rem; 
+  padding: 8px 12px; 
+  border-radius: 0.5rem; 
 }
 
-.alterar {
-  width: 100px;
+.produto-status.badge-success {
+  background-color: #28a745; 
+  color: white;
+}
+
+.produto-status.badge-danger {
+  background-color: #dc3545; 
+  color: white;
 }
 
 @media (max-width: 768px) {

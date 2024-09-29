@@ -11,21 +11,19 @@ const usuario = ref({});
 const router = useRouter();
 const categoriasUnicas = ref([]);
 const categoriaSelecionada = ref(null);
-const indiceAtual = ref(0); // Adicionado para controlar a posição dos produtos
+const indiceAtual = ref(0);
 
-// Método para selecionar a categoria
 const selecionarCategoria = (categoria) => {
     categoriaSelecionada.value = categoria;
-    indiceAtual.value = 0; // Reinicia o índice ao mudar de categoria
+    indiceAtual.value = 0; 
 };
 
-// Computed property para filtrar produtos pela categoria
 const produtosFiltrados = computed(() => {
-    const produtosFiltradosPorCategoria = categoriaSelecionada.value
-        ? produtos.value.filter(produto => produto.categoria === categoriaSelecionada.value)
-        : produtos.value;
+    const produtosAtivosPorCategoria = categoriaSelecionada.value
+        ? produtos.value.filter(produto => produto.categoria === categoriaSelecionada.value && produto.status === true)
+        : produtos.value.filter(produto => produto.status === true);
 
-    return produtosFiltradosPorCategoria.slice(indiceAtual.value, indiceAtual.value + 4); // Limita a 4 produtos
+    return produtosAtivosPorCategoria.slice(indiceAtual.value, indiceAtual.value + 4);
 });
 
 const carregarProdutos = async () => {
@@ -41,12 +39,10 @@ const carregarProdutos = async () => {
     }
 };
 
-// Computed property para filtrar produtos com status verdadeiro
-const produtosAtivos = computed(() => produtos.value.filter(produto => produto.status === true));
-
-// Computed properties para navegação
 const temProximo = computed(() => {
-    const total = categoriaSelecionada.value ? produtos.value.filter(produto => produto.categoria === categoriaSelecionada.value).length : produtos.value.length;
+    const total = categoriaSelecionada.value
+        ? produtos.value.filter(produto => produto.categoria === categoriaSelecionada.value && produto.status === true).length
+        : produtos.value.filter(produto => produto.status === true).length;
     return (indiceAtual.value + 4) < total;
 });
 
@@ -54,16 +50,15 @@ const temAnterior = computed(() => {
     return indiceAtual.value > 0;
 });
 
-// Funções de navegação
 const proximoProduto = () => {
     if (temProximo.value) {
-        indiceAtual.value += 4; // Mover para o próximo conjunto
+        indiceAtual.value += 4;
     }
 };
 
 const anteriorProduto = () => {
     if (temAnterior.value) {
-        indiceAtual.value -= 4; // Voltar para o conjunto anterior
+        indiceAtual.value -= 4; 
     }
 };
 
@@ -86,11 +81,8 @@ onMounted(async () => {
 </script>
 
 <template>
-
     <div class="store p-2 p-sm-5">
-
         <div class="loja bg-light rounded-5 p-3 p-sm-4 h-100">
-
             <div class="pagina-1 rounded-4 h-100">
 
                 <header class="header">
@@ -152,10 +144,8 @@ onMounted(async () => {
                 </div>
 
             </div>
-
         </div>
     </div>
-
 </template>
 
 <style scoped>

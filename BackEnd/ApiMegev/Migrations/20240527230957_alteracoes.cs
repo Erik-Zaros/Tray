@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace megev.Migrations
 {
     /// <inheritdoc />
-    public partial class alteracoes : Migration
+    public partial class Alteracoes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

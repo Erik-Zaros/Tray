@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj": {}
+    "C:\\Users\\Gustavo Diniz\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj": {}
   },
   "projects": {
-    "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj": {
+    "C:\\Users\\Gustavo Diniz\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj",
+        "projectUniqueName": "C:\\Users\\Gustavo Diniz\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj",
         "projectName": "ApiMegev",
-        "projectPath": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj",
-        "packagesPath": "C:\\Users\\edmar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\obj\\",
+        "projectPath": "C:\\Users\\Gustavo Diniz\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\ApiMegev.csproj",
+        "packagesPath": "C:\\Users\\Gustavo Diniz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gustavo Diniz\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\edmar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Gustavo Diniz\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

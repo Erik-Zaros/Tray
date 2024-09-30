@@ -12,7 +12,7 @@ namespace megev.Migrations
 {
     [DbContext(typeof(MegevDbContext))]
     [Migration("20240527230957_alteracoes")]
-    partial class alteracoes
+    partial class Alteracoes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

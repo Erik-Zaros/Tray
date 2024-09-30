@@ -1,7 +1,7 @@
 # Projeto Tray MEGEV - Universidade de Marília - Unimar
 
 [![Trello](https://img.shields.io/badge/Trello-0079BF?style=for-the-badge&logo=trello&logoColor=white)](https://trello.com/b/PO8GLwIj/megev)
-[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com)
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=XRParHe_kQA)
 
 ## Objetivo do projeto
 
@@ -58,6 +58,12 @@ Observação: Utilize o CMD/prompt de comando em vez do PowerShell.
 
 ## Atualizando o Banco de Dados
 - Abra o terminal no Visual Studio na pasta raiz do projeto `ApiMegev` e execute o seguinte comando:
+  
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+Esse comando serve para instalar o dotnet ef. Após a instalação do dotnet ef, execute o seguinte comando:
 
 ```bash
 dotnet ef database update
@@ -137,7 +143,7 @@ Observação: Verifique no arquivo `axios.js` se a porta é a mesma que a do Swa
 - Arquivo: Loja.vue
 - Nesta tela, o usuário pode visualizar todos os produtos cadastrados, dispostos de maneira organizada por categoria. Cada produto é exibido com seu respectivo valor, facilitando a navegação e a gestão do inventário.
 
-![image](https://github.com/user-attachments/assets/dbcbf6a6-9ef7-4fb3-a0be-c7783bb321ba)
+![image](https://github.com/user-attachments/assets/2638a3a2-d2ec-498b-afb7-1ec205f83a03)
 
 ## Tela 08
 
@@ -149,9 +155,9 @@ Observação: Verifique no arquivo `axios.js` se a porta é a mesma que a do Swa
 ## Tela 09
 
 - Arquivo: Templates.vue
-- Nesta tela, o usuário pode selecionar a cor desejada para aplicar à navbar e à sidebar do sistema. A cor escolhida é apresentada em formato hexadecimal, permitindo uma visualização clara e precisa da seleção feita.
+Nesta tela, o usuário pode selecionar a cor desejada para aplicar à navbar e à sidebar do sistema. A cor escolhida é apresentada em formato hexadecimal, permitindo uma visualização clara e precisa da seleção feita. Além disso, o usuário poderá escolher o tema que será aplicado à sua loja virtual.
 
-![image](https://github.com/user-attachments/assets/3918b264-0c8a-4d08-8521-6941a58409c1)
+![image](https://github.com/user-attachments/assets/c1b92249-912d-450f-ab55-98d8d59eca7c)
 
 ## Tela 10
 

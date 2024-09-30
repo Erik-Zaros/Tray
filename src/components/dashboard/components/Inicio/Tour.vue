@@ -1,13 +1,12 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, nextTick } from 'vue';
 import introJs from 'intro.js';
 import 'intro.js/introjs.css';
 
-// AJUSTAR PROBLEMA TOUR
-
 const startTour = () => {
-  introJs().setOptions({
-    steps: [
+  setTimeout(() => {
+    introJs().setOptions({
+      steps: [
       {
         element: '#tour-1',
         intro: '<strong class="text-center">Este é o menu de acesso.</strong>',
@@ -69,10 +68,11 @@ const startTour = () => {
         position: 'bottom',
       }
     ],
-    showStepNumbers: true,
-    showBullets: true,
-    showProgress: true
-  }).start();
+      showStepNumbers: true,
+      showBullets: true,
+      showProgress: true
+    }).start();
+  }, 100); // ajuste o tempo conforme necessário
 };
 
 onMounted(() => {

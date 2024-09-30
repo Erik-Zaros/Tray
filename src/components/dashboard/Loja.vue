@@ -12,10 +12,13 @@ const router = useRouter();
 const categoriasUnicas = ref([]);
 const categoriaSelecionada = ref(null);
 const indiceAtual = ref(0);
+const lightColor = ref('');
+const intermediateColor = ref('');
+const strongColor = ref('')
 
 const selecionarCategoria = (categoria) => {
     categoriaSelecionada.value = categoria;
-    indiceAtual.value = 0; 
+    indiceAtual.value = 0;
 };
 
 const produtosFiltrados = computed(() => {
@@ -58,7 +61,7 @@ const proximoProduto = () => {
 
 const anteriorProduto = () => {
     if (temAnterior.value) {
-        indiceAtual.value -= 4; 
+        indiceAtual.value -= 4;
     }
 };
 
@@ -73,20 +76,34 @@ onMounted(async () => {
         const respostaUsuario = await obterDadosUsuario(token);
         usuario.value = respostaUsuario.usuario;
         await carregarProdutos();
+
+
+
+
+        // Carregar a cor do localStorage
+        const savedColors = JSON.parse(localStorage.getItem('selectedProduct'));
+        if (savedColors && savedColors.lightColor) {
+            lightColor.value = savedColors.lightColor;
+            intermediateColor.value = savedColors.intermediateColor;
+            strongColor.value = savedColors.strongColor
+        }
+
     } catch (erro) {
         console.error('Erro ao obter dados do usuário:', erro.message);
         router.push('/login');
     }
 });
+
+
 </script>
 
 <template>
     <div class="store p-2 p-sm-5">
         <div class="loja bg-light rounded-5 p-3 p-sm-4 h-100">
-            <div class="pagina-1 rounded-4 h-100">
+            <div class="pagina-1 rounded-4 h-100 w-100 d-flex flex-column" :style="{ backgroundColor: lightColor }">
 
                 <header class="header">
-                    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <nav class="navbar navbar-expand-lg" :style="{ backgroundColor: strongColor }">
                         <div class="container-fluid">
                             <a class="navbar-brand" href="#">SUA LOJA</a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -96,24 +113,24 @@ onMounted(async () => {
                             </button>
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    <li class="nav-item">
+                                    <li class="nav-item" hidden>
                                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" hidden>
                                         <a class="nav-link" href="#">Link</a>
                                     </li>
                                 </ul>
                                 <form class="d-flex" role="search">
                                     <input class="form-control me-2" type="search" placeholder="Search"
                                         aria-label="Search">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                    <button class="btn btn-success" type="submit">Search</button>
                                 </form>
                             </div>
                         </div>
                     </nav>
                 </header>
 
-                <div class="menu d-flex bg-primary">
+                <div class="menu d-flex" :style="{ backgroundColor: lightColor }">
                     <div class="textos m-auto">
                         <h1 class="titulo text-center"> SUA LOJA</h1>
                         <p class="sub-titulo text-center">loja maneira e descolada!</p>
@@ -121,7 +138,8 @@ onMounted(async () => {
                 </div>
 
                 <div class="categoria">
-                    <div class="w-100 mx-auto bg-success d-flex justify-content-center flex-wrap">
+                    <div class="w-100 mx-auto d-flex justify-content-center flex-wrap"
+                        :style="{ backgroundColor: intermediateColor }">
                         <div class="col-md-3 d-flex mb-4" v-for="categoria in categoriasUnicas" :key="categoria"
                             @click="selecionarCategoria(categoria)">
                             <p class="categoria m-auto pt-sm-4">{{ categoria }}</p>
@@ -129,11 +147,8 @@ onMounted(async () => {
                     </div>
                 </div>
 
-                <div class="cards container p-3">
-                    <div class="d-flex justify-content-between mb-3">
-                        <button class="btn btn-secondary" @click="anteriorProduto" :disabled="!temAnterior">Anterior</button>
-                        <button class="btn btn-secondary" @click="proximoProduto" :disabled="!temProximo">Próximo</button>
-                    </div>
+                <div class="cards mx-auto d-flex align-items-center p-3">
+                    <i class="fas fs-2 p-2 fa-chevron-left" @click="anteriorProduto" :disabled="!temAnterior"></i>
 
                     <div class="row">
                         <div class="col-md-3 m-auto" v-for="produto in produtosFiltrados" :key="produto.id">
@@ -141,6 +156,7 @@ onMounted(async () => {
                                 :descricao="produto.descricao" :categoria="produto.categoria" :preco="produto.preco" />
                         </div>
                     </div>
+                    <i class="fas fs-2 p-2 fa-chevron-right" @click="proximoProduto" :disabled="!temProximo"></i>
                 </div>
 
             </div>
@@ -172,4 +188,5 @@ onMounted(async () => {
     cursor: pointer;
     color: rgb(210, 213, 213);
 }
+
 </style>

@@ -31,7 +31,6 @@ function mudarMenu() {
 const deslogar = async () => {
   try {
     await logout();
-    localStorage.removeItem('navbarColor'); // Limpa cor ao deslogar
     router.push('/login');
   } catch (error) {
     console.error('Erro ao fazer logout:', error);

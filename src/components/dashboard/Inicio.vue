@@ -2,7 +2,7 @@
 import { obterDadosUsuario } from '../../services/api';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import Progress from './components/Inicio/Progress.vue'
+import Progress from './components/Inicio/Progress.vue';
 
 const usuario = ref(null);
 const router = useRouter();
@@ -26,11 +26,10 @@ onMounted(async () => {
   
         <div id="tour-10" class="content-1 shadow-sm m-3 p-3 rounded-4 d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
-            <!-- Imagem do usuário -->
             <img class="perfil ms-2 ms-md-5 shadow-sm rounded-circle" :src="usuario.userImage || '/image/logoroll.png'" alt="">
             <div class="dados ms-2 ms-md-4">
               <h3 class="nome">{{ usuario.nome }}</h3>
-              <span class="texto">{{ usuario.email }}</span> <!-- Alterar para data de criação da conta se necessário -->
+              <span class="texto">{{ usuario.email }}</span>
             </div>
           </div>
           <div class="implantacao pe-2 pe-md-4 d-flex flex-column align-items-center justify-content-center">

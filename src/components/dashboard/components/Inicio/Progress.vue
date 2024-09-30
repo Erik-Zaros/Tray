@@ -1,7 +1,42 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { obterDadosUsuario, listarProdutos } from '@/services/api.js';
 
-const progress = ref(45);
+const progress = ref(0);
+
+const calcularProgresso = (fotoCadastrada, produtosCadastrados) => {
+  let progressoAtual = 0;
+
+  if (fotoCadastrada) {
+    progressoAtual += 50;
+  }
+
+  const produtosMaximo = Math.min(produtosCadastrados, 5);
+  progressoAtual += produtosMaximo * 10;
+
+  return progressoAtual;
+};
+
+const atualizarProgresso = async () => {
+  try {
+    const usuario = await obterDadosUsuario();
+    const fotoCadastrada = !!usuario.userImage; 
+    const dadosProdutos = await listarProdutos();
+    const produtosCadastrados = dadosProdutos.produtos.length;
+
+    progress.value = calcularProgresso(fotoCadastrada, produtosCadastrados);
+
+    if (fotoCadastrada && progress.value < 50) {
+      progress.value = 50;
+    }
+  } catch (erro) {
+    console.error('Erro ao atualizar progresso:', erro);
+  }
+};
+
+onMounted(() => {
+  atualizarProgresso();
+});
 
 const rightBarStyle = computed(() => {
   const progressAngle = (progress.value > 50 ? 180 : (progress.value / 50) * 180);
@@ -16,7 +51,6 @@ const leftBarStyle = computed(() => {
     transform: `rotate(${progressAngle}deg)`
   };
 });
-
 </script>
 
 <template>
@@ -36,8 +70,6 @@ const leftBarStyle = computed(() => {
     </div>
   </div>
 </template>
-
-
 
 <style scoped>
 .progress {

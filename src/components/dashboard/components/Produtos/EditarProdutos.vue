@@ -33,7 +33,9 @@ onMounted(() => {
     if (props.showModal) {
         const modalElement = document.getElementById('editProductModal');
         if (modalElement) {
-            const modalInstance = new bootstrap.Modal(modalElement);
+            const modalInstance = new bootstrap.Modal(modalElement, {
+                backdrop: 'static' // Para evitar que o modal feche ao clicar fora dele
+            });
             modalInstance.show();
         }
     }
@@ -42,7 +44,7 @@ onMounted(() => {
 watch(() => props.showModal, (newVal) => {
     const modalElement = document.getElementById('editProductModal');
     if (modalElement) {
-        const modalInstance = new bootstrap.Modal(modalElement);
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
         if (newVal) {
             modalInstance.show();
         } else {
@@ -72,7 +74,7 @@ const atualizaProduto = async () => {
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         if (modalInstance) {
             modalInstance.hide();
-            toast.success("Produto Alterado Com Sucesso")
+            toast.success("Produto Alterado Com Sucesso");
         }
 
         emit('closeModal');
@@ -82,16 +84,24 @@ const atualizaProduto = async () => {
     }
 };
 
+const closeModal = () => {
+    const modalElement = document.getElementById('editProductModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+        emit('closeModal');
+    }
+};
 </script>
 
 <template>
     <div v-if="showModal" class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-        aria-hidden="true">
+        aria-hidden="true" @click.self="closeModal"> <!-- Adicionado @click.self para fechar ao clicar fora -->
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editProductModalLabel">Editar Produto</h5>
-                    <button type="button" class="btn-close" @click="emit('closeModal')" aria-label="Close"></button>
+                    <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button> <!-- Mudei para closeModal -->
                 </div>
                 <div class="modal-body">
                     <form @submit.prevent="atualizaProduto">
@@ -131,7 +141,7 @@ const atualizaProduto = async () => {
                             </select>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" @click="emit('closeModal')">Fechar</button>
+                            <button type="button" class="btn btn-secondary" @click="closeModal">Cancelar</button> <!-- Mudei para Cancelar -->
                             <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>

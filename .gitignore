@@ -1,3 +1,8 @@
+# Ignorar arquivos de configuração de appsettings
+BackEnd/ApiMegev/appsettings.json
+BackEnd/ApiMegev/appsettings.Development.json
+
+
 # Logs
 logs
 *.log
@@ -14,6 +19,7 @@ coverage
 
 /cypress/videos/
 /cypress/screenshots/
+
 
 # Editor directories and files
 .vscode/*

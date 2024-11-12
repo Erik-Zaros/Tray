@@ -47,7 +47,7 @@ onMounted(async () => {
         <div id="tour-11" class="content-2 m-3 p-3 rounded-4">
           <div class="post m-0 px-4 d-flex justify-content-between">
             <div class="profile m-0 d-flex align-items-center">
-              <img class="perfil-post shadow-sm rounded-circle m-auto" src="https://media.licdn.com/dms/image/v2/D4D03AQFLze0nV7nPaA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1692813895295?e=1730332800&v=beta&t=6pPp6ccRwbdO00DTtdwFe4r4Y9VV6WqS-UJ3SUCF298" alt="">
+              <img class="perfil-post shadow-sm rounded-circle m-auto" src="https://yt3.googleusercontent.com/FT6pXxVU0FBLbpD9oZSemD59fAVUdIGG58d0zdjOJR20Sm_PHRWgoJdDlZGfXG8r89OY3vUS=s900-c-k-c0x00ffffff-no-rj" alt="">
               <div class="textos ps-3">
                 <h4 class="titulo mb-0 mt-2">Dicas do Especialista</h4>
                 <p class="texto">Thiago Sarraf</p>

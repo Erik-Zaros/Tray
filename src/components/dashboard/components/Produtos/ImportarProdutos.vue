@@ -123,7 +123,7 @@ async function salvaProdutosImportados() {
 <template>
     <div>
         <!-- Botão para abrir o modal -->
-        <button class="btn btn-secondary py-2 px-3 ms-3 rounded-0" @click="abreModal">Importar Produtos</button>
+        <button id="tour-produtos-1" class="btn btn-secondary py-2 px-3 ms-3 rounded-0" @click="abreModal">Importar Produtos</button>
 
         <!-- Modal -->
         <div v-if="modalAberto" class="modal fade show" style="display: block;" tabindex="-1">

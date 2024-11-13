@@ -1,15 +1,18 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue'; 
-import EditarProdutos from './components/Produtos/EditarProdutos.vue'; 
-import ImportarProdutos from './components/Produtos/ImportarProdutos.vue'; 
-import Produto from './components/Produtos/Produto.vue'; 
-import { obterDadosUsuario, listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api'; 
+import AdicionarProdutos from './components/Produtos/AdicionarProdutos.vue';
+import EditarProdutos from './components/Produtos/EditarProdutos.vue';
+import ImportarProdutos from './components/Produtos/ImportarProdutos.vue';
+import Produto from './components/Produtos/Produto.vue';
+import TourProdutos from './components/Produtos/TourProdutos.vue';
+import { obterDadosUsuario, listarProdutos, excluirProduto as apiExcluirProduto } from '../../services/api';
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 
 const produtosSelecionados = ref([]);
+
+const mostraTutorial = computed(() => localStorage.getItem('tutorialProduto') === 'true'); // tutorial
 
 const obterProdutos = async () => {
   try {
@@ -45,7 +48,7 @@ const excluirSelecionados = async () => {
     }
     produtosSelecionados.value = [];
     toast.warning("Produtos selecionados excluidos com sucesso")
-    await obterProdutos(); 
+    await obterProdutos();
   } catch (erro) {
     toast.error('Erro ao excluir produtos:', erro.message);
   }
@@ -65,7 +68,7 @@ const filtro = ref({
   precoDe: '',
   precoAte: ''
 });
-const categoriasUnicas = ref([]); 
+const categoriasUnicas = ref([]);
 
 const showModalEditar = ref(false);
 const produtoAtual = ref({ id: null, nome: '', preco: 0 });
@@ -153,11 +156,11 @@ const getSortIconClass = (campo) => {
       ? 'fa-solid fa-caret-up text-dark'
       : 'fa-solid fa-caret-down text-dark';
   } else {
-    return 'fa-solid fa-sort'; 
+    return 'fa-solid fa-sort';
   }
 };
 
-const ordenacao = ref({ campo: '', direcao: 'asc' }); 
+const ordenacao = ref({ campo: '', direcao: 'asc' });
 
 
 onMounted(async () => {
@@ -169,11 +172,15 @@ onMounted(async () => {
     }
 
     const respostaUsuario = await obterDadosUsuario(token);
-    usuario.value = respostaUsuario.usuario; 
+    usuario.value = respostaUsuario.usuario;
     await carregarProdutos();
   } catch (erro) {
     console.error('Erro ao obter dados do usuário:', erro.message);
     router.push('/login');
+  }
+
+  if (mostraTutorial.value) {
+    localStorage.removeItem('tutorialProduto');
   }
 });
 </script>
@@ -200,33 +207,33 @@ onMounted(async () => {
         </ul>
 
         <ImportarProdutos @produtoAdicionado="carregarProdutos" />
-        <button class="btn btn-primary py-2 px-3 ms-3 rounded-0" data-bs-toggle="modal" data-bs-target="#productModal">
+        <button id="tour-produtos-2" class="btn btn-primary py-2 px-3 ms-3 rounded-0" data-bs-toggle="modal" data-bs-target="#productModal">
           Adicionar Produto
         </button>
       </div>
     </div>
 
-    <div class="lista shadow-sm rounded-2 m-auto">
+    <div id="tour-produtos-0"  class="lista shadow-sm rounded-2 m-auto">
       <div class="container pt-4">
-        <form @submit.prevent="aplicarFiltro">
+        <form id="tour-produtos-3" @submit.prevent="aplicarFiltro">
           <h4 class="filtro-texto pb-3">Filtrar Produtos</h4>
           <div class="row g-3 border-bottom border-top pb-4">
-            
-            <div class="col-md-6">
+
+            <div id="tour-produtos-4" class="col-md-6">
               <label for="codigoReferencia" class="form-label">Código ou Referência</label>
               <input v-model="filtro.codigoReferencia" type="text" class="form-control" id="codigoReferencia"
                 placeholder="Digite o código ou referência">
             </div>
 
-    
-            <div class="col-md-6">
+
+            <div id="tour-produtos-5" class="col-md-6">
               <label for="nomeProduto" class="form-label">Nome do Produto</label>
               <input v-model="filtro.nomeProduto" type="text" class="form-control" id="nomeProduto"
                 placeholder="Digite o nome do produto">
             </div>
 
-    
-            <div class="col-md-6">
+
+            <div id="tour-produtos-6" class="col-md-6">
               <label for="categorias" class="form-label">Categorias</label>
               <select v-model="filtro.categorias" id="categorias" class="form-select">
                 <option value="">Selecione...</option>
@@ -237,8 +244,8 @@ onMounted(async () => {
             </div>
 
 
-    
-            <div class="col-md-6">
+
+            <div id="tour-produtos-7" class="col-md-6">
               <label for="precoDe" class="form-label">Faixa de Preço</label>
               <div class="input-group">
                 <span class="preco m-auto p-2 fw-bold">De R$</span>
@@ -251,16 +258,16 @@ onMounted(async () => {
             </div>
 
           </div>
-  
+
           <div class="col-12 d-flex justify-content-end pt-3">
           </div>
         </form>
       </div>
 
       <div class="pt-4">
-        <div class="ordem row align-items-center mx-5 p-3 px-3">
-  
-          <div class="col-auto me-4 mb-3 ordenar-item">
+        <div id="tour-produtos-8" class="ordem row align-items-center mx-5 p-3 px-3">
+
+          <div id="tour-produtos-9" class="col-auto me-4 mb-3 ordenar-item">
             <input class="form-check-input" type="checkbox" @change="selecionarTodos" :checked="todosSelecionados">
           </div>
           <div class="col-auto me-5 ordenar-item produto-referencia" @click="ordenar('referencia')">
@@ -269,7 +276,7 @@ onMounted(async () => {
               <i :class="getSortIconClass('referencia')"></i>
             </p>
           </div>
-  
+
           <div class="col-auto ordenar-item produto-imagem" @click="ordenar('imagem')">
             <p class="ordenar-texto">
               Imagem
@@ -284,7 +291,7 @@ onMounted(async () => {
           <div class="col ordenar-item produto-categoria" @click="ordenar('categoria')">
             <p class="ordenar-texto ps-3">
               Categoria
-              <i :class="getSortIconClass('categoria')"></i>
+              <i id="tour-produtos-10" :class="getSortIconClass('categoria')"></i>
             </p>
           </div>
           <div class="col ordenar-item produto-preco" @click="ordenar('preco')">
@@ -299,17 +306,17 @@ onMounted(async () => {
             </p>
           </div>
           <div class="ordenar-item limpar_filtro">
-            <button type="button" class="btn btn-outline-dark rounded-0" @click="limparFiltro"><i
+            <button id="tour-produtos-11" type="button" class="btn btn-outline-dark rounded-0" @click="limparFiltro"><i
                 class="fa-solid text-secondary fa-circle-info"></i> Limpar Filtros</button>
 
-            <button type="button" class="btn btn-outline-danger rounded-0 ms-2" @click="excluirSelecionados">Excluir
+            <button id="tour-produtos-12" type="button" class="btn btn-outline-danger rounded-0 ms-2" @click="excluirSelecionados">Excluir
               Todos</button>
           </div>
 
         </div>
 
 
-        <div class="produto-lista">
+        <div id="tour-produtos-13" class="produto-lista">
           <div class="lista-produtos" v-for="produto in produtosFiltrados" :key="produto.id">
             <Produto :referencia="produto.referencia" :image="produto.image" :descricao="produto.descricao"
               :categoria="produto.categoria" :preco="produto.preco" :status="produto.status" :id="produto.id"
@@ -321,6 +328,8 @@ onMounted(async () => {
       </div>
 
     </div>
+
+    <TourProdutos v-if="mostraTutorial" />
 
     <AdicionarProdutos @produtoAdicionado="carregarProdutos" />
 
@@ -433,8 +442,7 @@ onMounted(async () => {
   width: 280px;
 }
 
-.ordem {
-}
+.ordem {}
 
 @media (max-width: 768px) {
 

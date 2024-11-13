@@ -10,6 +10,7 @@ import Produtos from '../components/dashboard/Produtos.vue';
 import Templates from '../components/dashboard/Templates.vue';
 import Configuracao from '../components/dashboard/Configuracao.vue';
 import Ajuda from '../components/dashboard/Ajuda.vue';
+import Confetti from '../components/dashboard/components/Loja/Confetti.vue';
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
         path: 'inicio',
         name: 'Inicio',
         component: Inicio
+      },
+      {
+        path: 'confetti',
+        name: 'Confetti',
+        component: Confetti
       },
       {
         path: 'perfil',

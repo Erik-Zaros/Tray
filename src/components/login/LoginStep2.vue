@@ -16,7 +16,6 @@ const login = async () => {
 
   try {
     const resposta = await loginUsuario({ email, senha: password.value });
-
     // Armazena o usuário no localStorage e redireciona para o dashboard
     localStorage.setItem('user', JSON.stringify(resposta));
     router.push('/dashboard/inicio');

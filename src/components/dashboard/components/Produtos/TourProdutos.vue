@@ -14,67 +14,67 @@ const startTour = () => {
       },
       {
         element: '#tour-produtos-1',
-        intro: 'Aqui e onde importa seus produtos.</strong>',
+        intro: 'Aqui é onde você importa seus produtos.</strong>',
         position: 'bottom'
       },
       {
         element: '#tour-produtos-2',
-        intro: 'Aqui é onde cadastra produtos unitariamente.',
+        intro: 'Aqui é onde você cadastra o seus produtos.',
         position: 'bottom'
       },
       {
         element: '#tour-produtos-3',
-        intro: 'Onde voce filtra e pesquisa seus produtos.',
+        intro: 'Onde você filtra e pesquisa seus produtos.',
         position: 'bottom'
       },
       {
         element: '#tour-produtos-4', 
-        intro: 'Busca pela referencia ou codigo.',
+        intro: 'Aqui você consegue consultar pela referência ou código.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-5',
-        intro: 'Busca pelo nome.',
+        intro: 'Aqui você consegue buscar o produto pelo nome.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-6',
-        intro: 'Busca por categoria.',
+        intro: 'Aqui você consegue buscar o produto pela categoria.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-7',
-        intro: 'busca por faixa de preco.',
+        intro: 'Aqui você consegue buscar produtos por faixa de preço.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-8',
-        intro: 'Menu de selecao e opcoes.',
+        intro: 'Aqui é o menu de seleções e opções.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-9',
-        intro: 'Selecao de todos os itens.',
+        intro: 'Aqui você consegue selecionar todos os produtos.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-10',
-        intro: 'Ordena por ondem alfabetica/numerica.',
+        intro: 'Aqui você consegue ordenar os seus produtos.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-11',
-        intro: 'Remove os filtros de pesquisa.',
+        intro: 'Aqui você consegue remover os filtros.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-12',
-        intro: 'Logout</strong></br>Exclui produtos selecionados.',
+        intro: 'Logout</strong></br>Aqui você consgue excluir os produto selecionados.',
         position: 'bottom',
       },
       {
         element: '#tour-produtos-13',
-        intro: 'Logout</strong></br>Aqui ficam todos seus produtos.',
+        intro: 'Logout</strong></br>Aqui é onde você consegue visualizar todos os produtos cadastrados.',
         position: 'bottom',
       }
     ],

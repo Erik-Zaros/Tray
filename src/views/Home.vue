@@ -5,5 +5,5 @@ import Screen from '../components/home/Screen.vue'
 
 <template>
     <Header />
-    <Screen />
+    <Screen  />
 </template>

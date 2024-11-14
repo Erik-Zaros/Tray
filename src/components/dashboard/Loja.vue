@@ -15,6 +15,7 @@ const indiceAtual = ref(0);
 const lightColor = ref('');
 const intermediateColor = ref('');
 const strongColor = ref('')
+const store = ref(false);
 
 const selecionarCategoria = (categoria) => {
     categoriaSelecionada.value = categoria;
@@ -78,6 +79,9 @@ onMounted(async () => {
         await carregarProdutos();
 
 
+        const storeValue = localStorage.getItem('store');
+        store.value = storeValue === 'true';
+        console.log('Store Value:', store.value);
 
 
         // Carregar a cor do localStorage
@@ -98,12 +102,13 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="store p-2 p-sm-5">
+    <div class="store position-relative p-2 p-sm-5">
         <div class="loja bg-light rounded-5 p-3 p-sm-4 h-100">
-            <div class="pagina-1 rounded-4 h-100 w-100 d-flex flex-column" :style="{ backgroundColor: lightColor }">
+            <div v-if="store" class="pagina-1 rounded-4 h-100 w-100 d-flex flex-column"
+                :style="{ backgroundColor: lightColor }">
 
                 <header class="header">
-                    <nav class="navbar navbar-expand-lg" :style="{ backgroundColor: strongColor }">
+                    <nav class="navbar navbar-expand-lg rounded-top-4" :style="{ backgroundColor: strongColor }">
                         <div class="container-fluid">
                             <a class="navbar-brand" href="#">SUA LOJA</a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -160,6 +165,23 @@ onMounted(async () => {
                 </div>
 
             </div>
+
+            <div v-else class="h-100 w-100 d-flex position-relative justify-content-center align-items-center">
+                <div class="error rounded-4 w-100 h-100 d-flex justify-content-center align-items-center">
+                    <div class="erro drop-shadow z-2 text-white text-center">
+                        <p class="">Sua loja esta inativa!</p>
+                        <p>
+                            Para ativa-la, basta apertar o botao na tela inicial.
+                        </p>
+                        <RouterLink to="/dashboard/inicio" class="text-primary cursor-pointer">
+                            ir para tela inicial.</RouterLink>
+                    </div>
+                </div>
+                <div class="error-img position-absolute z-1">
+                    <img class="" src="https://cdn-icons-png.flaticon.com/512/8373/8373648.png" alt="">
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -189,4 +211,13 @@ onMounted(async () => {
     color: rgb(210, 213, 213);
 }
 
+.error {
+    background-color: rgb(190, 190, 190);
+}
+
+.erro {
+    font-size: 3rem;
+    font-weight: bolder;
+    color: rgb(161, 160, 160);
+}
 </style>

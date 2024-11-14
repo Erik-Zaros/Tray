@@ -16,6 +16,7 @@ const image = ref('');
 
 const emailError = ref('');
 const senhaError = ref('');
+const store = ref(false);
 
 async function registrar() {
     senhaError.value = '';
@@ -47,6 +48,10 @@ async function registrar() {
         localStorage.setItem('token', dadosLogin.token);
         // Inicie o tutorial e redirecione para o dashboard
         localStorage.setItem('tutorial', 'true');
+        localStorage.setItem('tutorialProduto', 'true');
+        localStorage.setItem('store', store.value); // Armazena 'store' como booleano
+
+        
         toast.success('Usuário registrado com sucesso!');
         setTimeout(() => {
             router.push('/dashboard/inicio');

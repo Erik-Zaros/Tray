@@ -3,20 +3,20 @@
     public class ProdutoDto
     {
         public int Id { get; set; }
-        public string Referencia { get; set; }
-        public string Descricao { get; set; }
-        public string Categoria { get; set; }
+        public string Referencia { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
+        public CategoriaProduto Categoria { get; set; } = null!;
         public decimal? Preco { get; set; }
         public bool Status { get; set; }
-        public string Image { get; set; }
-        public UsuarioDto Usuario { get; set; }
+        public byte[] Image { get; set; } = Array.Empty<byte>();
+        public UsuarioDto Usuario { get; set; } = null!;
     }
 
     public class UsuarioDto
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Sobrenome { get; set; }
-        public string Email { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public string Sobrenome { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
     }
 }

@@ -1,14 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\",
+  "WorkspaceRootPath": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{860B4C69-682D-4165-B1C3-3178D1AA88ED}|ApiMegev\\ApiMegev.csproj|c:\\users\\edmar\\onedrive\\documents\\github\\tray\\backend\\apimegev\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{860B4C69-682D-4165-B1C3-3178D1AA88ED}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\apimegev\\static\\formulario_crud_usuarios_db.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\static\\formulario_crud_usuarios_db.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{860B4C69-682D-4165-B1C3-3178D1AA88ED}|ApiMegev\\ApiMegev.csproj|c:\\users\\edmar\\onedrive\\documents\\github\\tray\\backend\\apimegev\\endpoints\\produto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{860B4C69-682D-4165-B1C3-3178D1AA88ED}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\endpoints\\produto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\apimegev\\endpoints\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\endpoints\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{889AE5C8-ABB6-4B1F-914D-C41A27031DBD}|Megev.Test\\Megev.Test.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\megev.test\\systemtests\\userflowtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{889AE5C8-ABB6-4B1F-914D-C41A27031DBD}|Megev.Test\\Megev.Test.csproj|solutionrelative:megev.test\\systemtests\\userflowtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\apimegev\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{889AE5C8-ABB6-4B1F-914D-C41A27031DBD}|Megev.Test\\Megev.Test.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\megev.test\\systemtests\\profileeditformtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{889AE5C8-ABB6-4B1F-914D-C41A27031DBD}|Megev.Test\\Megev.Test.csproj|solutionrelative:megev.test\\systemtests\\profileeditformtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\apimegev\\static\\formulario_crud_usuarios.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\static\\formulario_crud_usuarios.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\apimegev\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{889AE5C8-ABB6-4B1F-914D-C41A27031DBD}|Megev.Test\\Megev.Test.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\megev.test\\integrationtests\\databaseintegrationtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{889AE5C8-ABB6-4B1F-914D-C41A27031DBD}|Megev.Test\\Megev.Test.csproj|solutionrelative:megev.test\\integrationtests\\databaseintegrationtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|c:\\users\\erikz\\onedrive\\desktop\\tray\\backend\\apimegev\\megevdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70563B8D-5FBA-4B6E-BC55-D48C90A57CA1}|ApiMegev\\ApiMegev.csproj|solutionrelative:apimegev\\megevdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,48 +46,119 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\appsettings.json",
-              "RelativeDocumentMoniker": "ApiMegev\\appsettings.json",
-              "ToolTip": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\appsettings.json",
-              "RelativeToolTip": "ApiMegev\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAACKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-27T21:37:40.161Z",
+              "Title": "formulario_crud_usuarios_db.html",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Static\\formulario_crud_usuarios_db.html",
+              "RelativeDocumentMoniker": "ApiMegev\\Static\\formulario_crud_usuarios_db.html",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Static\\formulario_crud_usuarios_db.html",
+              "RelativeToolTip": "ApiMegev\\Static\\formulario_crud_usuarios_db.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAOcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-11-24T20:50:34.136Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Produto.cs",
-              "DocumentMoniker": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\Endpoints\\Produto.cs",
-              "RelativeDocumentMoniker": "ApiMegev\\Endpoints\\Produto.cs",
-              "ToolTip": "C:\\Users\\edmar\\OneDrive\\Documents\\GitHub\\Tray\\BackEnd\\ApiMegev\\Endpoints\\Produto.cs",
-              "RelativeToolTip": "ApiMegev\\Endpoints\\Produto.cs",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAgwHYAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "UserFlowTest.cs",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\Megev.Test\\SystemTests\\UserFlowTest.cs",
+              "RelativeDocumentMoniker": "Megev.Test\\SystemTests\\UserFlowTest.cs",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\Megev.Test\\SystemTests\\UserFlowTest.cs",
+              "RelativeToolTip": "Megev.Test\\SystemTests\\UserFlowTest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T21:28:18.499Z",
+              "WhenOpened": "2024-11-24T20:19:27.714Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DatabaseIntegrationTest.cs",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\Megev.Test\\IntegrationTests\\DatabaseIntegrationTest.cs",
+              "RelativeDocumentMoniker": "Megev.Test\\IntegrationTests\\DatabaseIntegrationTest.cs",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\Megev.Test\\IntegrationTests\\DatabaseIntegrationTest.cs",
+              "RelativeToolTip": "Megev.Test\\IntegrationTests\\DatabaseIntegrationTest.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-24T18:38:05.444Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "formulario_crud_usuarios.html",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Static\\formulario_crud_usuarios.html",
+              "RelativeDocumentMoniker": "ApiMegev\\Static\\formulario_crud_usuarios.html",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Static\\formulario_crud_usuarios.html",
+              "RelativeToolTip": "ApiMegev\\Static\\formulario_crud_usuarios.html",
+              "ViewState": "AQIAAJwAAAAAAAAAAAAQwLAAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-11-24T18:36:52.591Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MegevDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\MegevDbContext.cs",
+              "RelativeDocumentMoniker": "ApiMegev\\MegevDbContext.cs",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\MegevDbContext.cs",
+              "RelativeToolTip": "ApiMegev\\MegevDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-24T16:09:16.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Endpoints\\Usuario.cs",
+              "RelativeDocumentMoniker": "ApiMegev\\Endpoints\\Usuario.cs",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Endpoints\\Usuario.cs",
+              "RelativeToolTip": "ApiMegev\\Endpoints\\Usuario.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-24T16:04:53.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Program.cs",
+              "RelativeDocumentMoniker": "ApiMegev\\Program.cs",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\Program.cs",
+              "RelativeToolTip": "ApiMegev\\Program.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAgwA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-24T16:02:45.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\appsettings.json",
+              "RelativeDocumentMoniker": "ApiMegev\\appsettings.json",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\ApiMegev\\appsettings.json",
+              "RelativeToolTip": "ApiMegev\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-24T15:52:33.209Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProfileEditFormTest.cs",
+              "DocumentMoniker": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\Megev.Test\\SystemTests\\ProfileEditFormTest.cs",
+              "RelativeDocumentMoniker": "Megev.Test\\SystemTests\\ProfileEditFormTest.cs",
+              "ToolTip": "C:\\Users\\erikz\\OneDrive\\Desktop\\Tray\\BackEnd\\Megev.Test\\SystemTests\\ProfileEditFormTest.cs",
+              "RelativeToolTip": "Megev.Test\\SystemTests\\ProfileEditFormTest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-24T14:57:03.713Z",
               "EditorCaption": ""
             }
           ]

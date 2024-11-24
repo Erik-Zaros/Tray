@@ -11,31 +11,34 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Configuração do Swagger
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        // Configuração CORS (Permitir que qualquer site use a API)
         builder.Services.AddCors(options =>
         {
             options.AddDefaultPolicy(policy =>
             {
-                policy.AllowAnyOrigin()   // Permite qualquer origem
-                      .AllowAnyMethod()   // Permite qualquer método (GET, POST, etc.)
-                      .AllowAnyHeader();  // Permite qualquer cabeçalho
+                policy.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
             });
         });
 
-        // Configuração do DbContext
         builder.Services.AddDbContext<MegevDbContext>(options =>
         {
             options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                              ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")));
         });
 
-        // Configuração do JWT
         var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-        var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
+        var secretKey = jwtSettings["SecretKey"];
+
+        if (string.IsNullOrEmpty(secretKey))
+        {
+            throw new InvalidOperationException("Chave secreta do JWT não está configurada.");
+        }
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -48,26 +51,34 @@ public class Program
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidAudience = jwtSettings["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
-                    ClockSkew = TimeSpan.Zero // Sem atraso na expiração do token
+                    IssuerSigningKey = key,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
-        // Configuração da Autorização
         builder.Services.AddAuthorization();
+        builder.Services.AddControllers();  
 
         var app = builder.Build();
 
+        var staticFileOptions = new StaticFileOptions
+        {
+            FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+                Path.Combine(app.Environment.ContentRootPath, "Static")
+            ),
+            RequestPath = "/static"
+        };
+        app.UseStaticFiles(staticFileOptions);
 
-            app.UseSwagger();
-            app.UseSwaggerUI();
-   
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
-        app.UseCors(); // Aplicar a configuração de CORS
+        app.UseCors();
+
         app.UseAuthentication();
         app.UseAuthorization();
 
-        // Registro dos endpoints da API
+        app.MapControllers();
         app.RegistrarEndpointsUsuarios();
         app.RegistrarEndpointsProdutos();
         app.RegistrarEndpointsMetodoPagamento();

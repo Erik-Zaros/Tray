@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Usuários com Banco de Dados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <style>
+        .titulo {
+            background-color: #596d9b;
+            color: white;
+            padding: 10px;
+            margin-bottom: 0px;
+            border-radius: 4px;
+        }
+
+        #usuarioForm {
+            background-color: #D9E2EF;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs {
+            justify-content: center;
+        }
+
+            .nav-tabs .nav-item {
+                margin-bottom: -1px;
+            }
+
+            .nav-tabs .nav-link {
+                border: 1px solid #ddd;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                color: #000;
+                margin-right: 2px;
+            }
+
+                .nav-tabs .nav-link.active {
+                    background-color: green;
+                    color: #fff;
+                }
+
+        .sub-nav {
+            display: flex;
+            justify-content: center;
+            background-color: #f8f9fa;
+            padding: 10px 0;
+        }
+
+            .sub-nav a {
+                margin: 0 10px;
+                color: #000;
+                text-decoration: none;
+            }
+
+                .sub-nav a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="titulo">Cadastro de Usuário (Persistência com Banco de Dados)</h2>
+        <div class="row">
+            <div class="col">
+                <form id="usuarioForm">
+                    <input type="hidden" id="usuarioId">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required maxlength="80">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sobrenome" class="form-label">Sobrenome</label>
+                        <input type="text" class="form-control" id="sobrenome" name="sobrenome" required maxlength="50">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required maxlength="100">
+                    </div>
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha" required maxlength="255">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="salvarUsuario()">Gravar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col">
+                <h2 class="titulo">Usuários Cadastrados (Persistência com Banco de Dados)</h2>
+                <table class="table table-bordered" id="tabelaUsuarios">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Sobrenome</th>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            renderizarUsuarios();
+        });
+
+        function salvarUsuario() {
+            const usuarioId = $('#usuarioId').val();
+            const usuario = {
+                nome: $('#nome').val(),
+                sobrenome: $('#sobrenome').val(),
+                email: $('#email').val(),
+                senha: $('#senha').val()
+            };
+
+            if (usuarioId) {
+                $.ajax({
+                    url: `http://localhost:5116/usuarios/editar-usuario/${usuarioId}`,
+                    type: "PUT",
+                    contentType: "application/json",
+                    data: JSON.stringify(usuario),
+                    success: function () {
+                        swal("Sucesso!", "Usuário atualizado com sucesso!", "success");
+                        renderizarUsuarios();
+                        limparFormulario();
+                    },
+                    error: function (xhr) {
+                        swal("Erro!", "Não foi possível salvar o usuário. Status: " + xhr.status, "error");
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: "http://localhost:5116/usuarios/registrar-usuario",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(usuario),
+                    success: function () {
+                        swal("Sucesso!", "Usuário criado com sucesso!", "success");
+                        renderizarUsuarios();
+                        limparFormulario();
+                    },
+                    error: function (xhr) {
+                        swal("Erro!", "Não foi possível salvar o usuário. Status: " + xhr.status, "error");
+                    }
+                });
+            }
+        }
+
+        function renderizarUsuarios() {
+            $.ajax({
+                url: "http://localhost:5116/usuarios/",
+                type: "GET",
+                success: function (usuarios) {
+                    const tbody = $("#tabelaUsuarios tbody");
+                    tbody.empty();
+
+                    usuarios.forEach(function (usuario) {
+                        tbody.append(`
+                                <tr>
+                                    <td>${usuario.nome}</td>
+                                    <td>${usuario.sobrenome}</td>
+                                    <td>${usuario.email}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm" onclick="editarUsuario(${usuario.id})">Editar</button>
+                                        <button class="btn btn-danger btn-sm" onclick="excluirUsuario(${usuario.id})">Excluir</button>
+                                    </td>
+                                </tr>
+                            `);
+                    });
+                },
+                error: function () {
+                    swal("Erro!", "Não foi possível carregar os usuários.", "error");
+                }
+            });
+        }
+
+        function editarUsuario(id) {
+            $.ajax({
+                url: `http://localhost:5116/usuarios/${id}`,
+                type: "GET",
+                success: function (usuario) {
+                    $('#usuarioId').val(usuario.id);
+                    $('#nome').val(usuario.nome);
+                    $('#sobrenome').val(usuario.sobrenome);
+                    $('#email').val(usuario.email);
+                    $('#senha').val("");
+                },
+                error: function () {
+                    swal("Erro!", "Não foi possível carregar os dados do usuário.", "error");
+                }
+            });
+        }
+
+        function excluirUsuario(id) {
+            $.ajax({
+                url: `http://localhost:5116/usuarios/excluir-usuario/${id}`,
+                type: "DELETE",
+                success: function () {
+                    swal("Sucesso!", "Usuário excluído com sucesso!", "success");
+                    renderizarUsuarios();
+                },
+                error: function () {
+                    swal("Erro!", "Não foi possível excluir o usuário.", "error");
+                }
+            });
+        }
+
+        function limparFormulario() {
+            $('#usuarioId').val("");
+            $('#nome').val("");
+            $('#sobrenome').val("");
+            $('#email').val("");
+            $('#senha').val("");
+        }
+    </script>
+</body>
+
+</html>

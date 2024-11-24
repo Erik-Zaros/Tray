@@ -8,8 +8,8 @@ namespace megev.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string UrlLoja { get; set; }
+        public string Nome { get; set; }  = string.Empty;
+        public string UrlLoja { get; set; } = string.Empty;
 
         private Loja() { }
 

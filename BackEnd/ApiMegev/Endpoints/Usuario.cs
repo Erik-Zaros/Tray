@@ -19,31 +19,24 @@ namespace megev.Endpoints
         {
             var rotaUsuarios = rotas.MapGroup("/usuarios");
 
-            // Endpoint de Registro
-            rotaUsuarios.MapPost("/registrar", async (MegevDbContext dbContext, UsuarioDTO usuarioDto) =>
+            rotaUsuarios.MapPost("/registrar-usuario", async (MegevDbContext dbContext, UsuarioDTO usuarioDto) =>
             {
-                var usuarioExistente = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Email == usuarioDto.Email);
-                if (usuarioExistente != null)
+                var usuario = new Usuario
                 {
-                    return Results.BadRequest("Email já cadastrado.");
-                }
-
-                var usuario = new Usuario(
-                    usuarioDto.Nome,
-                    usuarioDto.Sobrenome,
-                    usuarioDto.Email,
-                    BCrypt.Net.BCrypt.HashPassword(usuarioDto.Senha),
-                    usuarioDto.SaldoConta,
-                    usuarioDto.UserImage
-                );
+                    Nome = usuarioDto.Nome,
+                    Sobrenome = usuarioDto.Sobrenome,
+                    Email = usuarioDto.Email,
+                    Senha = BCrypt.Net.BCrypt.HashPassword(usuarioDto.Senha),
+                    SaldoConta = usuarioDto.SaldoConta,
+                    UserImage = usuarioDto.UserImage
+                };
 
                 dbContext.Usuario.Add(usuario);
                 await dbContext.SaveChangesAsync();
 
-                return Results.Ok("Usuário registrado com sucesso.");
+                return Results.Created($"/usuarios/{usuario.Id}", usuario);
             });
 
-            // Endpoint de Login
             rotaUsuarios.MapPost("/login", async (MegevDbContext dbContext, UsuarioLoginDTO loginDto, IConfiguration config) =>
             {
                 var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Email == loginDto.Email);
@@ -53,7 +46,6 @@ namespace megev.Endpoints
                     return Results.Unauthorized();
                 }
 
-                // Criar o token JWT
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, usuario.Email),
@@ -61,7 +53,14 @@ namespace megev.Endpoints
                 };
 
                 var jwtSettings = config.GetSection("JwtSettings");
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
+                var secretKey = jwtSettings["SecretKey"];
+
+                if (string.IsNullOrEmpty(secretKey))
+                {
+                    return Results.Problem("Chave secreta do JWT não configurada corretamente.", statusCode: 500);
+                }
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var token = new JwtSecurityToken(
@@ -82,69 +81,9 @@ namespace megev.Endpoints
                 });
             });
 
-            // Endpoint de Logout (não faz nada com JWT, mas pode ser usado para frontend)
-            rotaUsuarios.MapPost("/logout", () =>
+            rotaUsuarios.MapPut("/editar-usuario/{id:int}", async (int id, MegevDbContext dbContext, UsuarioDTO usuarioDto) =>
             {
-                return Results.Ok("Logout realizado com sucesso.");
-            });
-
-            // Endpoint para Obter Dados do Usuário Logado
-            rotaUsuarios.MapGet("/me", async (HttpContext context, MegevDbContext dbContext) =>
-            {
-                var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                if (string.IsNullOrEmpty(userId))
-                {
-                    return Results.Unauthorized(); // Retorna 401 se não estiver autenticado
-                }
-
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id.ToString() == userId);
-
-                if (usuario == null)
-                {
-                    return Results.NotFound("Usuário não encontrado.");
-                }
-
-                var usuarioDto = new UsuarioOutputDto
-                {
-                    Id = usuario.Id,
-                    Nome = usuario.Nome,
-                    Sobrenome = usuario.Sobrenome,
-                    Email = usuario.Email,
-                    SaldoConta = usuario.SaldoConta,
-                    UserImage = usuario.UserImage
-                };
-
-                return TypedResults.Ok(usuarioDto);
-            }).RequireAuthorization();
-
-            // Endpoint para Obter Dados de Usuário por ID
-            rotaUsuarios.MapGet("/{id}", async (int id, MegevDbContext dbContext) =>
-            {
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id == id);
-
-                if (usuario == null)
-                {
-                    return Results.NotFound("Usuário não encontrado.");
-                }
-
-                var usuarioDto = new UsuarioOutputDto
-                {
-                    Id = usuario.Id,
-                    Nome = usuario.Nome,
-                    Sobrenome = usuario.Sobrenome,
-                    Email = usuario.Email,
-                    SaldoConta = usuario.SaldoConta,
-                    UserImage = usuario.UserImage
-                };
-
-                return TypedResults.Ok(usuarioDto);
-            });
-
-            // Endpoint para Atualizar Dados de um Usuário (PUT)
-            rotaUsuarios.MapPut("/{id}", async (int id, MegevDbContext dbContext, UsuarioDTO usuarioDto) =>
-            {
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id == id);
+                var usuario = await dbContext.Usuario.FindAsync(id);
 
                 if (usuario == null)
                 {
@@ -154,10 +93,7 @@ namespace megev.Endpoints
                 usuario.Nome = usuarioDto.Nome;
                 usuario.Sobrenome = usuarioDto.Sobrenome;
                 usuario.Email = usuarioDto.Email;
-                if (!string.IsNullOrEmpty(usuarioDto.Senha))
-                {
-                    usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuarioDto.Senha);
-                }
+                usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuarioDto.Senha);
                 usuario.SaldoConta = usuarioDto.SaldoConta;
                 usuario.UserImage = usuarioDto.UserImage;
 
@@ -165,12 +101,11 @@ namespace megev.Endpoints
                 await dbContext.SaveChangesAsync();
 
                 return Results.Ok("Usuário atualizado com sucesso.");
-            }).RequireAuthorization();
+            });
 
-            // Endpoint para Deletar um Usuário (DELETE)
-            rotaUsuarios.MapDelete("/{id}", async (int id, MegevDbContext dbContext) =>
+            rotaUsuarios.MapDelete("/excluir-usuario/{id:int}", async (int id, MegevDbContext dbContext) =>
             {
-                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id == id);
+                var usuario = await dbContext.Usuario.FindAsync(id);
 
                 if (usuario == null)
                 {
@@ -180,8 +115,47 @@ namespace megev.Endpoints
                 dbContext.Usuario.Remove(usuario);
                 await dbContext.SaveChangesAsync();
 
-                return Results.Ok("Usuário deletado com sucesso.");
-            }).RequireAuthorization();
+                return Results.Ok("Usuário excluído com sucesso.");
+            });
+
+            rotaUsuarios.MapGet("/{id:int}", async (int id, MegevDbContext dbContext) =>
+            {
+                var usuario = await dbContext.Usuario.SingleOrDefaultAsync(u => u.Id == id);
+
+                if (usuario == null)
+                {
+                    return Results.NotFound("Usuário não encontrado.");
+                }
+
+                var usuarioDto = new UsuarioOutputDto
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Sobrenome = usuario.Sobrenome,
+                    Email = usuario.Email,
+                    SaldoConta = usuario.SaldoConta,
+                    UserImage = usuario.UserImage
+                };
+
+                return TypedResults.Ok(usuarioDto);
+            });
+
+            rotaUsuarios.MapGet("/", async (MegevDbContext dbContext) =>
+            {
+                var usuarios = await dbContext.Usuario
+                    .Select(u => new UsuarioOutputDto
+                    {
+                        Id = u.Id,
+                        Nome = u.Nome,
+                        Sobrenome = u.Sobrenome,
+                        Email = u.Email,
+                        SaldoConta = u.SaldoConta,
+                        UserImage = u.UserImage
+                    })
+                    .ToListAsync();
+
+                return TypedResults.Ok(usuarios);
+            });
         }
     }
 }

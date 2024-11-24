@@ -79,8 +79,6 @@ function confettiStart() {
   }
   frame();
 }
-
-
 </script>
 
 <template>
@@ -90,8 +88,7 @@ function confettiStart() {
 
       <div id="tour-10" class="content-1 shadow-sm m-3 p-3 rounded-4 d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center">
-          <img class="perfil ms-2 ms-md-5 shadow-sm rounded-circle" :src="usuario.userImage || '/image/logoroll.png'"
-            alt="">
+          <img class="perfil ms-2 ms-md-5 shadow-sm rounded-circle" :src="usuario.userImage || '/image/logoroll.png'" alt="">
           <div class="dados ms-2 ms-md-4">
             <h3 class="nome">{{ usuario.nome }}</h3>
             <span class="texto">{{ usuario.email }}</span>
@@ -101,30 +98,12 @@ function confettiStart() {
         <div class="implantacao pe-2 pe-md-4 d-flex flex-column align-items-center justify-content-center">
           <div class="texto text-center">
             <span>Loja em Implantação <i class="fa-regular fa-circle-up"></i></span>
-  
-        <div id="tour-11" class="content-2 m-3 p-3 rounded-4">
-          <div class="post m-0 px-4 d-flex justify-content-between">
-            <div class="profile m-0 d-flex align-items-center">
-              <img class="perfil-post shadow-sm rounded-circle m-auto" src="https://yt3.googleusercontent.com/FT6pXxVU0FBLbpD9oZSemD59fAVUdIGG58d0zdjOJR20Sm_PHRWgoJdDlZGfXG8r89OY3vUS=s900-c-k-c0x00ffffff-no-rj" alt="">
-              <div class="textos ps-3">
-                <h4 class="titulo mb-0 mt-2">Dicas do Especialista</h4>
-                <p class="texto">Thiago Sarraf</p>
-              </div>
-            </div>
-            <div class="ver d-flex m-0 ps-1 align-items-center">
-              <a class="text-decoration-none text-center" href="https://br.linkedin.com/in/thiagosarraf" target="_blank">Ver Mais</a>
-            </div>
-
-          </div>
-          <div class="inaugurar mt-2">
-            <button id="confetti" class="fs-5" :class="store ? 'btn btn-danger' : 'btn btn-primary'" @click="toggleIniciado">
-              {{ store ? 'Parar' : 'Iniciar' }}
-            </button>
-            <!-- <button id="confettiStart" @click="confettiStart">Make it rain</button> -->
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="col-12 col-md-6">
       <div id="tour-11" class="content-2 m-3 p-3 rounded-4">
         <div class="post m-0 px-4 d-flex justify-content-between">
           <div class="profile m-0 d-flex align-items-center">
@@ -156,12 +135,8 @@ function confettiStart() {
           <p class="text-post">Transforme a experiência do seu usuário e veja os resultados! 🚀</p>
         </div>
       </div>
-    </div>
-
-    <div class="col-12 col-md-6">
 
       <div id="tour-12" class="content-3 ms-1 my-sm-3 me-3 px-5 rounded-4">
-
         <div class="plano d-flex justify-content-between align-items-center">
           <h3 class="titulo fw-bold">Meu Plano</h3>
           <a class="text-decoration-none" href="https://tray.com.br/planos-precos/">Gerenciar Plano</a>
@@ -171,14 +146,11 @@ function confettiStart() {
           <h5 class="conclusao position-absolute pt-4">Cadastro da Loja</h5>
           <Progress class="progress-circle m-auto pt-5" />
         </div>
-
       </div>
-
     </div>
 
   </div>
 </template>
-
 
 <style scoped>
 .html {
@@ -244,7 +216,6 @@ function confettiStart() {
 }
 
 @media (max-width: 724px) {
-
   .container-fluid {
     height: 150vh;
     background-color: var(--background-secondary);

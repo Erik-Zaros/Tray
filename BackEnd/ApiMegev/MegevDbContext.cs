@@ -15,16 +15,15 @@ namespace megev
 
         public MegevDbContext(DbContextOptions<MegevDbContext> options)
             : base(options)
-        {
-        }
+        {}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION_STRING")
-                                       ?? throw new InvalidOperationException("Connection string not found.");
-                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                optionsBuilder
+                    .UseInMemoryDatabase("TestDatabase") 
+                    .EnableSensitiveDataLogging();
             }
         }
 
@@ -33,12 +32,11 @@ namespace megev
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
                         .HasCharSet("utf8mb4");
 
-            // Configuração do relacionamento entre Produto e Usuario
             modelBuilder.Entity<Produto>()
                 .HasOne(p => p.Usuario)
                 .WithMany(u => u.Produtos)
                 .HasForeignKey(p => p.UsuarioId)
-                .OnDelete(DeleteBehavior.Cascade); // Define o comportamento em caso de exclusão do usuário
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Configuração adicional, se necessário
             OnModelCreatingPartial(modelBuilder);

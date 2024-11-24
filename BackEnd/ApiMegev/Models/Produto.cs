@@ -11,15 +11,14 @@ namespace megev.Models
 
         [Required]
         [StringLength(50)]
-        public string Referencia { get; set; }
+        public string Referencia { get; set; } = string.Empty;
 
         [Required]
         [StringLength(200)]
-        public string Descricao { get; set; }
+        public string Descricao { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(50)]
-        public string Categoria { get; set; }
+        public CategoriaProduto Categoria { get; set; } = null!; 
 
         [Required]
         public decimal Preco { get; set; }
@@ -28,13 +27,26 @@ namespace megev.Models
         public bool Status { get; set; }
 
         [Required]
-        public string Image { get; set; }
+        public byte[] Image { get; set; } = Array.Empty<byte>();
 
-        // Chave estrangeira para o usuário
         [Required]
         public int UsuarioId { get; set; }
 
-        // Navegação para o usuário
-        public Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; } = null!;
+
+        public Produto()
+        {
+        }
+
+        public Produto(string referencia, string descricao, CategoriaProduto categoria, decimal preco, bool status, byte[] image, int usuarioId)
+        {
+            Referencia = referencia;
+            Descricao = descricao;
+            Categoria = categoria;
+            Preco = preco;
+            Status = status;
+            Image = image ?? throw new ArgumentNullException(nameof(image));
+            UsuarioId = usuarioId;
+        }
     }
 }
